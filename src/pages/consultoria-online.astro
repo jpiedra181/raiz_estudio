@@ -1,0 +1,456 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/layout/Navbar.astro";
+import Footer from "../components/layout/Footer.astro";
+---
+
+<BaseLayout title="Consultoría Online">
+    <Navbar />
+
+    <main>
+        <!-- Image Hero -->
+        <section class="hero-video relative">
+            <div class="hero-bg">
+                <img
+                    src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=1800&q=90&fit=crop"
+                    alt="Interiorismo cálido con lino y madera"
+                    decoding="async"
+                    fetchpriority="high"
+                    class="bg-img"
+                    sizes="100vw"
+                />
+                <div class="hero-overlay"></div>
+            </div>
+
+            <div class="container relative z-10 hero-video-content anim-up">
+                <h1 class="font-heading text-hero text-white mb-6">
+                    Diseño profesional para tu hogar,<br
+                        class="hidden-md-down"
+                    /> desde donde estés.
+                </h1>
+                <p class="font-body text-xl text-surface max-w-2xl font-light">
+                    La distancia no es un obstáculo para vivir en un espacio
+                    diseñado especialmente para ti. Descubre nuestras
+                    modalidades de consultoría a medida.
+                </p>
+            </div>
+        </section>
+
+        <!-- Pricing Cards -->
+        <section class="pricing-section bg-surface py-24">
+            <div class="container max-w-5xl mx-auto">
+                <div class="grid grid-cols gap-8">
+                    <!-- Card 1 -->
+                    <div class="pricing-card bg-bg border-card">
+                        <h3 class="font-heading text-2xl mb-2">
+                            Primera Consulta
+                        </h3>
+                        <p class="font-accent label-accent text-accent mb-6">
+                            1h videollamada
+                        </p>
+                        <p class="font-light text-ink-muted mb-8 min-h-[4rem]">
+                            Diagnóstico rápido y orientación. Ideal si tienes
+                            dudas específicas sobre distribución, color o qué
+                            piezas comprar.
+                        </p>
+                        <div class="price font-heading text-3xl mb-8">
+                            95€ / sesión
+                        </div>
+                        <a
+                            href="/contacto?servicio=consultoria-online"
+                            class="btn-outline w-full text-center"
+                            >Reservar sesión</a
+                        >
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="pricing-card bg-bg border-card scale-up">
+                        <div
+                            class="popular-tag bg-accent text-white font-accent text-xs tracking-widest uppercase py-1 px-4 text-center absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full shadow-lg"
+                        >
+                            Más solicitado
+                        </div>
+                        <h3 class="font-heading text-2xl mb-2">
+                            Pack Esencial
+                        </h3>
+                        <p class="font-accent label-accent text-accent mb-6">
+                            3 sesiones + Moodboard
+                        </p>
+                        <p class="font-light text-ink-muted mb-8 min-h-[4rem]">
+                            El empujón perfecto para transformar una estancia.
+                            Definimos estilo, colores y te entregamos un mapa
+                            visual para guiar tus compras.
+                        </p>
+                        <div class="price font-heading text-3xl mb-8">
+                            250€ / pack
+                        </div>
+                        <a
+                            href="/contacto?servicio=consultoria-online"
+                            class="btn-primary w-full text-center"
+                            >Elegir Pack</a
+                        >
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="pricing-card bg-bg border-card">
+                        <h3 class="font-heading text-2xl mb-2">
+                            Proyecto Completo
+                        </h3>
+                        <p class="font-accent label-accent text-accent mb-6">
+                            Seguimiento integral
+                        </p>
+                        <p class="font-light text-ink-muted mb-8 min-h-[4rem]">
+                            Diseñamos toda tu vivienda a distancia. Te
+                            entregamos planos, infografías y listado exacto de
+                            compras.
+                        </p>
+                        <div class="price font-heading text-3xl mb-8">
+                            Presupuesto personalizado
+                        </div>
+                        <a
+                            href="/contacto?servicio=consultoria-online"
+                            class="btn-outline w-full text-center"
+                            >Solicitar info</a
+                        >
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline / Steps -->
+        <section class="timeline-section py-24">
+            <div class="container">
+                <h2 class="font-heading text-3xl text-center mb-16">
+                    Cómo funciona
+                </h2>
+
+                <div class="steps-horizontal">
+                    <div class="step-h">
+                        <span
+                            class="step-num font-heading text-4xl text-surface-deep mb-4 block"
+                            >01</span
+                        >
+                        <h4 class="font-heading text-xl mb-2">
+                            Cuestionario previo
+                        </h4>
+                        <p class="font-light text-ink-muted text-sm">
+                            Nos cuentas qué necesitas, envías fotos y medidas
+                            básicas del espacio.
+                        </p>
+                    </div>
+                    <div class="step-h">
+                        <span
+                            class="step-num font-heading text-4xl text-surface-deep mb-4 block"
+                            >02</span
+                        >
+                        <h4 class="font-heading text-xl mb-2">Análisis</h4>
+                        <p class="font-light text-ink-muted text-sm">
+                            Estudiamos tus necesidades y preparamos las primeras
+                            ideas.
+                        </p>
+                    </div>
+                    <div class="step-h">
+                        <span
+                            class="step-num font-heading text-4xl text-surface-deep mb-4 block"
+                            >03</span
+                        >
+                        <h4 class="font-heading text-xl mb-2">Sesión Online</h4>
+                        <p class="font-light text-ink-muted text-sm">
+                            Nos conectamos por videollamada para compartir
+                            pantalla, ideas y resolver dudas en directo.
+                        </p>
+                    </div>
+                    <div class="step-h">
+                        <span
+                            class="step-num font-heading text-4xl text-surface-deep mb-4 block"
+                            >04</span
+                        >
+                        <h4 class="font-heading text-xl mb-2">
+                            Entrega de dosier
+                        </h4>
+                        <p class="font-light text-ink-muted text-sm">
+                            Te enviamos el resumen de la sesión o el proyecto
+                            completo, listo para que lo ejecutes a tu ritmo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <Footer />
+</BaseLayout>
+
+<script>
+    import { gsap } from "../scripts/gsap-init";
+
+    document.addEventListener("astro:page-load", () => {
+        // Basic init animation
+        const isReduced = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+        ).matches;
+        if (!isReduced) {
+            gsap.fromTo(
+                ".anim-up",
+                { opacity: 0, y: 50 },
+                { opacity: 1, y: 0, duration: 1.2, ease: "power3.out" },
+            );
+        } else {
+            gsap.set(".anim-up", { opacity: 1, y: 0 });
+        }
+    });
+</script>
+
+<style>
+    html:not(.no-js) .anim-up {
+        opacity: 0;
+    }
+
+    .hero-video {
+        height: 100vh;
+        height: 100svh;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    .bg-video,
+    .bg-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+    }
+
+    .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.85) 0%,
+            rgba(30, 23, 16, 0.2) 15%,
+            rgba(30, 23, 16, 0.9) 100%
+        );
+    }
+
+    .hero-video-content {
+        margin-top: 15vh; /* Push down a bit for header */
+    }
+
+    /* Pricing */
+    .grid-cols {
+        display: grid !important;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+    @media (min-width: 1024px) {
+        .grid-cols {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+
+    .gap-8 {
+        gap: 2rem;
+    }
+    .py-24 {
+        padding-block: 6rem;
+    }
+    .max-w-5xl {
+        /* max-width: 64rem; */
+    }
+    .mx-auto {
+        /* margin-inline: auto; */
+    }
+    .bg-surface {
+        background-color: var(--color-surface);
+    }
+    .bg-bg {
+        background-color: var(--color-bg);
+    }
+    .text-white {
+        color: var(--color-white);
+    }
+    .text-surface {
+        color: var(--color-surface);
+    }
+    .text-accent {
+        color: var(--color-accent);
+    }
+    .text-surface-deep {
+        color: var(--color-surface-deep);
+    }
+    .popular-tag {
+        background-color: var(--color-accent);
+    }
+
+    .pricing-card {
+        position: relative;
+        padding: 3rem 2rem;
+        border: 1px solid var(--color-surface-deep);
+        display: flex;
+        flex-direction: column;
+        transition:
+            transform 0.3s,
+            border-color 0.3s,
+            box-shadow 0.3s;
+    }
+
+    .price {
+        font-size: var(--text-2xl);
+        font-weight: 500;
+    }
+
+    @media (pointer: fine) {
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(30, 23, 16, 0.05);
+            border-color: var(--color-accent-light);
+        }
+    }
+
+    .scale-up {
+        transform: scale(1);
+        box-shadow: 0 10px 30px rgba(30, 23, 16, 0.05);
+        border-color: var(--color-accent-light);
+    }
+
+    @media (min-width: 768px) {
+        .scale-up {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+        .scale-up:hover {
+            transform: scale(1.05) translateY(-8px);
+        }
+    }
+
+    /* Utils */
+    .text-center {
+        text-align: center;
+    }
+    .w-full {
+        width: 100%;
+    }
+    .mb-2 {
+        margin-bottom: 0.5rem;
+    }
+    .mb-4 {
+        margin-bottom: 1rem;
+    }
+    .mb-6 {
+        margin-bottom: 1.5rem;
+    }
+    .mb-8 {
+        margin-bottom: 2rem;
+    }
+    .mb-16 {
+        margin-bottom: 4rem;
+    }
+    .min-h-\[4rem\] {
+        min-height: 4rem;
+    }
+
+    .btn-outline,
+    .btn-primary {
+        display: inline-block;
+        padding: 1rem 1.5rem;
+        font-family: var(--font-family-body);
+        font-size: var(--text-sm);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        transition: all 0.3s;
+        text-decoration: none;
+        margin-top: auto; /* Push to bottom */
+    }
+
+    .btn-outline {
+        border: 1px solid var(--color-ink);
+        background: transparent;
+        color: var(--color-ink);
+    }
+
+    .btn-outline:hover {
+        background: var(--color-ink);
+        color: var(--color-white);
+    }
+
+    .btn-primary {
+        background-color: var(--color-accent);
+        color: var(--color-white);
+    }
+
+    .btn-primary:hover {
+        background-color: var(--color-accent-light);
+    }
+
+    .absolute {
+        position: absolute;
+    }
+    .top-0 {
+        top: 0;
+    }
+    .left-1\/2 {
+        left: 50%;
+    }
+    .-translate-x-1\/2 {
+        transform: translateX(-50%);
+    }
+    .-translate-y-1\/2 {
+        transform: translateY(-50%);
+    }
+    .rounded-full {
+        border-radius: 9999px;
+    }
+    .shadow-lg {
+        box-shadow:
+            0 10px 15px -3px rgba(0, 0, 0, 0.1),
+            0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    .py-1 {
+        padding-block: 0.25rem;
+    }
+    .px-4 {
+        padding-inline: 1rem;
+    }
+    .text-xs {
+        font-size: var(--text-xs);
+    }
+    .tracking-widest {
+        letter-spacing: 0.1em;
+    }
+
+    /* Timeline Horizontal */
+    .steps-horizontal {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        position: relative;
+    }
+
+    @media (min-width: 768px) {
+        .steps-horizontal {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .steps-horizontal::after {
+            content: "";
+            position: absolute;
+            top: 2rem; /* roughly center of numbers */
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background-color: var(--color-surface-deep);
+            z-index: 0;
+        }
+    }
+
+    .step-h {
+        position: relative;
+        z-index: 1;
+        background-color: var(--color-bg); /* to cover line */
+        padding-inline: 1rem;
+        text-align: center;
+    }
+</style>

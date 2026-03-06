@@ -1,0 +1,210 @@
+---
+import { Image } from "astro:assets";
+---
+
+<section class="hero-home texture-bg">
+    <div class="hero-bg">
+        <img
+            src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1800&q=90&fit=crop"
+            alt="Interiorismo cálido con lino y madera"
+            decoding="async"
+            fetchpriority="high"
+            class="hero-img"
+            sizes="100vw"
+        />
+        <div class="hero-overlay"></div>
+    </div>
+
+    <div class="container hero-content">
+        <div class="hero-inner">
+            <span class="label-accent hero-tag hero-anim"
+                >Interiorismo residencial · España</span
+            >
+
+            <h1 class="hero-title font-heading hero-anim">
+                Tu casa debería<br />
+                sentirse como tú.
+            </h1>
+
+            <p class="hero-text text-lg font-light hero-anim">
+                En Raíz Estudio diseñamos hogares que nacen de quién eres, no de
+                las tendencias del momento.
+            </p>
+
+            <div class="hero-actions hero-anim">
+                <a href="/proyectos" class="btn-primary">Ver proyectos</a>
+                <a href="/contacto" class="link-secondary"
+                    >Empieza tu proyecto &rarr;</a
+                >
+            </div>
+        </div>
+    </div>
+
+    <div class="scroll-indicator hero-anim">
+        <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="animate-bounce"
+        >
+            <path d="M12 5v14M19 12l-7 7-7-7"></path>
+        </svg>
+    </div>
+</section>
+
+<script>
+    import { gsap } from "../../scripts/gsap-init";
+
+    document.addEventListener("astro:page-load", () => {
+        const isReduced = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+        ).matches;
+        if (isReduced) {
+            gsap.set(".hero-anim", { opacity: 1, y: 0 });
+            gsap.set(".hero-overlay", { opacity: 1 });
+            return;
+        }
+
+        const tl = gsap.timeline();
+
+        tl.fromTo(
+            ".hero-overlay",
+            { opacity: 0 },
+            { opacity: 1, duration: 1.2, ease: "power2.inOut" },
+        ).fromTo(
+            ".hero-anim",
+            { opacity: 0, y: 50 },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 1.2,
+                stagger: 0.15,
+                ease: "power3.out",
+            },
+            "-=0.7",
+        );
+    });
+</script>
+
+<style>
+    .hero-home {
+        position: relative;
+        height: 100vh;
+        height: 100svh;
+        width: 100%;
+        display: flex;
+        align-items: flex-end;
+        overflow: hidden;
+    }
+
+    .hero-bg {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+    }
+
+    .hero-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.85) 0%,
+            rgba(30, 23, 16, 0) 25%,
+            rgba(30, 23, 16, 0.8) 100%
+        );
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        padding-bottom: clamp(3rem, 10vh, 6rem);
+        pointer-events: none; /* Let clicks pass through empty space */
+    }
+
+    .hero-inner {
+        max-width: 700px;
+        pointer-events: auto; /* Re-enable clicks for text/buttons */
+    }
+
+    .hero-tag {
+        display: block;
+        color: var(--color-surface);
+        margin-bottom: 2rem;
+    }
+
+    .hero-title {
+        font-size: var(--text-hero);
+        color: var(--color-white);
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-text {
+        color: var(--color-surface);
+        max-width: 500px;
+        margin-bottom: 3rem;
+    }
+
+    .hero-actions {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--color-accent);
+        color: var(--color-white);
+        padding: 1rem 2rem;
+        font-size: var(--text-sm);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        border-radius: 2px;
+        transition: background-color 0.3s;
+        text-decoration: none;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--color-accent-light);
+    }
+
+    .link-secondary {
+        color: var(--color-white);
+        text-decoration: none;
+        font-size: var(--text-base);
+        transition: color 0.3s;
+    }
+
+    .link-secondary:hover {
+        color: var(--color-surface-deep);
+    }
+
+    .scroll-indicator {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        color: var(--color-white);
+        opacity: 0.8;
+    }
+
+    /* Initial state for GSAP */
+    html:not(.no-js) .hero-anim {
+        opacity: 0;
+    }
+</style>

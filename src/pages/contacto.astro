@@ -1,0 +1,834 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/layout/Navbar.astro";
+import Footer from "../components/layout/Footer.astro";
+---
+
+<BaseLayout title="Contacto">
+    <Navbar />
+
+    <main class="page-top-padding">
+        <section class="container py-20 pb-32">
+            <div class="contact-grid">
+                <!-- Info Column -->
+                <div class="contact-info anim-reveal slide-right">
+                    <h1 class="font-heading text-hero mb-8 text-ink">
+                        Hablemos
+                    </h1>
+                    <p class="font-light text-ink-muted text-lg mb-12 max-w-sm">
+                        Cuéntanos sobre tu espacio, tus necesidades y cómo
+                        imaginas vivir en él. Estaremos encantadas de darle
+                        forma juntas.
+                    </p>
+
+                    <div class="info-block mb-10">
+                        <h3 class="font-accent label-accent text-accent mb-4">
+                            Email
+                        </h3>
+                        <a
+                            href="mailto:hola@raizestudio.es"
+                            class="font-heading text-2xl hover:text-accent transition-colors block"
+                            >hola@raizestudio.es</a
+                        >
+                    </div>
+
+                    <div class="info-block mb-10">
+                        <h3 class="font-accent label-accent text-accent mb-4">
+                            Teléfono
+                        </h3>
+                        <a
+                            href="tel:+34600000000"
+                            class="font-heading text-2xl hover:text-accent transition-colors block"
+                            >+34 600 000 000</a
+                        >
+                        <p class="font-light text-ink-muted text-sm mt-2">
+                            L-V de 9:00 a 18:00h
+                        </p>
+                    </div>
+
+                    <div class="info-block mb-12">
+                        <h3 class="font-accent label-accent text-accent mb-4">
+                            Estudio
+                        </h3>
+                        <address
+                            class="font-body font-light text-ink not-italic text-lg"
+                        >
+                            Calle de la Madera, 15<br />
+                            28004 Madrid, España
+                        </address>
+                    </div>
+
+                    <!-- Leaflet Map Container -->
+                    <div id="map" class="map-container relative z-0"></div>
+                </div>
+
+                <!-- Form Column -->
+                <div
+                    class="contact-form-wrap anim-reveal slide-left pt-12 md:pt-0"
+                >
+                    <form
+                        id="contact-form"
+                        class="contact-form bg-surface p-8 md:p-12 relative overflow-hidden"
+                        novalidate
+                    >
+                        <div class="form-group slide-up-field">
+                            <label
+                                for="name"
+                                class="font-accent label-accent text-ink block mb-2"
+                                >Nombre completo *</label
+                            >
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                required
+                                class="form-input"
+                                placeholder="Tu nombre"
+                            />
+                            <span
+                                class="error-msg font-light text-xs text-[#d32f2f] mt-1 hidden"
+                                >Por favor, indica tu nombre.</span
+                            >
+                        </div>
+
+                        <div class="form-group slide-up-field">
+                            <label
+                                for="email"
+                                class="font-accent label-accent text-ink block mb-2"
+                                >Email *</label
+                            >
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                required
+                                class="form-input"
+                                placeholder="tu@email.com"
+                            />
+                            <span
+                                class="error-msg font-light text-xs text-[#d32f2f] mt-1 hidden"
+                                >Introduce un email válido.</span
+                            >
+                        </div>
+
+                        <div class="form-group slide-up-field">
+                            <label
+                                for="phone"
+                                class="font-accent label-accent text-ink block mb-2"
+                                >Teléfono</label
+                            >
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                class="form-input"
+                                placeholder="+34..."
+                            />
+                        </div>
+
+                        <div class="form-group slide-up-field">
+                            <label
+                                for="service"
+                                class="font-accent label-accent text-ink block mb-2"
+                                >Tipo de servicio *</label
+                            >
+                            <div class="select-wrapper">
+                                <select
+                                    id="service"
+                                    name="service"
+                                    required
+                                    class="form-input form-select"
+                                >
+                                    <option value="" disabled selected
+                                        >Selecciona una opción</option
+                                    >
+                                    <option value="interiorismo-completo"
+                                        >Interiorismo completo</option
+                                    >
+                                    <option value="consultoria-online"
+                                        >Consultoría online</option
+                                    >
+                                    <option value="solo-habitacion"
+                                        >Solo una habitación</option
+                                    >
+                                    <option value="orientacion"
+                                        >No sé, necesito orientación</option
+                                    >
+                                </select>
+                                <div class="select-arrow">
+                                    <svg
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        ><path d="M6 9l6 6 6-6"></path></svg
+                                    >
+                                </div>
+                            </div>
+                            <span
+                                class="error-msg font-light text-xs text-[#d32f2f] mt-1 hidden"
+                                >Mejor selecciona qué necesitas.</span
+                            >
+                        </div>
+
+                        <div class="form-group slide-up-field">
+                            <label
+                                for="budget"
+                                class="font-accent label-accent text-ink block mb-2"
+                                >Presupuesto orientativo</label
+                            >
+                            <div class="select-wrapper">
+                                <select
+                                    id="budget"
+                                    name="budget"
+                                    class="form-input form-select"
+                                >
+                                    <option value="" disabled selected
+                                        >Selecciona un rango</option
+                                    >
+                                    <option value="menos-5k"
+                                        >Menos de 5.000€</option
+                                    >
+                                    <option value="5k-15k"
+                                        >5.000€ – 15.000€</option
+                                    >
+                                    <option value="15k-30k"
+                                        >15.000€ – 30.000€</option
+                                    >
+                                    <option value="mas-30k"
+                                        >Más de 30.000€</option
+                                    >
+                                    <option value="prefiero-no-decirlo"
+                                        >Prefiero no decirlo</option
+                                    >
+                                </select>
+                                <div class="select-arrow">
+                                    <svg
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        ><path d="M6 9l6 6 6-6"></path></svg
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group slide-up-field pb-4">
+                            <label
+                                for="message"
+                                class="font-accent label-accent text-ink block mb-2"
+                                >Cuéntanos un poco más *</label
+                            >
+                            <textarea
+                                id="message"
+                                name="message"
+                                required
+                                class="form-input"
+                                rows="4"
+                                placeholder="¿Cómo es el espacio? ¿Qué te gustaría conseguir?"
+                            ></textarea>
+                            <span
+                                class="error-msg font-light text-xs text-[#d32f2f] mt-1 hidden"
+                                >Déjanos un breve mensaje para poder ayudarte.</span
+                            >
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="btn-submit slide-up-field w-full relative"
+                        >
+                            <span
+                                class="submit-text font-body text-sm uppercase tracking-widest text-white"
+                                >Enviar consulta</span
+                            >
+                            <svg
+                                class="spinner hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 text-white"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <circle
+                                    class="opacity-25"
+                                    cx="12"
+                                    cy="12"
+                                    r="10"
+                                    stroke="currentColor"
+                                    stroke-width="4"></circle>
+                                <path
+                                    class="opacity-75"
+                                    fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                ></path>
+                            </svg>
+                        </button>
+
+                        <!-- Success State Overlay -->
+                        <div
+                            class="success-state absolute inset-0 bg-accent flex flex-col items-center justify-center text-center p-8 opacity-0 pointer-events-none z-10 transition-opacity duration-500"
+                        >
+                            <svg
+                                class="success-icon mb-6 w-16 h-16 text-white"
+                                viewBox="0 0 52 52"
+                            >
+                                <circle
+                                    class="success-circle"
+                                    cx="26"
+                                    cy="26"
+                                    r="25"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"></circle>
+                                <path
+                                    class="success-check"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="3"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M14.1 27.2l7.1 7.2 16.7-16.8"></path>
+                            </svg>
+                            <h3 class="font-heading text-3xl text-white mb-4">
+                                ¡Gracias por escribirnos!
+                            </h3>
+                            <p class="font-light text-white text-lg max-w-sm">
+                                Hemos recibido tu mensaje correctamente. Te
+                                responderemos en muy poquito tiempo.
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <Footer />
+</BaseLayout>
+
+<!-- Load Leaflet inside the client once Astro is ready -->
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+/>
+<script
+    is:inline
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+
+<script>
+    import { gsap, ScrollTrigger } from "../scripts/gsap-init";
+    import { animateWithReducedMotion } from "../scripts/gsap-init";
+
+    document.addEventListener("astro:page-load", () => {
+        // 1. Initial Animations
+        animateWithReducedMotion(() => {
+            const tl = gsap.timeline();
+
+            tl.fromTo(
+                ".slide-right",
+                { opacity: 0, x: -50 },
+                { opacity: 1, x: 0, duration: 1, ease: "power3.out" },
+            )
+                .fromTo(
+                    ".slide-left",
+                    { opacity: 0, x: 50 },
+                    { opacity: 1, x: 0, duration: 1, ease: "power3.out" },
+                    "-=0.7",
+                )
+                .fromTo(
+                    ".slide-up-field",
+                    { opacity: 0, y: 30 },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        stagger: 0.1,
+                        ease: "power2.out",
+                    },
+                    "-=0.5",
+                );
+        });
+
+        // 2. Query param handling (e.g. ?servicio=consultoria-online)
+        const urlParams = new URLSearchParams(window.location.search);
+        const serviceParam = urlParams.get("servicio");
+        if (serviceParam) {
+            const serviceSelect = document.getElementById(
+                "service",
+            ) as HTMLSelectElement;
+            if (
+                serviceSelect &&
+                serviceSelect.querySelector(`option[value="${serviceParam}"]`)
+            ) {
+                serviceSelect.value = serviceParam;
+            }
+        }
+
+        // 3. Form Validation & Submission
+        const form = document.getElementById("contact-form") as HTMLFormElement;
+        if (form) {
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+
+                // Basic HTML5 Validity check + custom hints
+                let isValid = true;
+                const fields = form.querySelectorAll(
+                    "input[required], select[required], textarea[required]",
+                ) as NodeListOf<
+                    HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+                >;
+
+                fields.forEach((field) => {
+                    const errorMsg =
+                        field.parentElement?.querySelector(".error-msg");
+                    if (!field.checkValidity()) {
+                        field.classList.add("invalid");
+                        errorMsg?.classList.remove("hidden");
+                        isValid = false;
+                    } else {
+                        field.classList.remove("invalid");
+                        errorMsg?.classList.add("hidden");
+                    }
+                });
+
+                if (isValid) {
+                    // Simulate loading state
+                    const submitBtn = form.querySelector(
+                        ".btn-submit",
+                    ) as HTMLButtonElement;
+                    const submitText = submitBtn.querySelector(
+                        ".submit-text",
+                    ) as HTMLElement;
+                    const spinner = submitBtn.querySelector(
+                        ".spinner",
+                    ) as HTMLElement;
+
+                    submitBtn.disabled = true;
+                    submitText.style.opacity = "0";
+                    spinner.classList.remove("hidden");
+
+                    // Fake API Call Delay
+                    setTimeout(() => {
+                        const successState = document.querySelector(
+                            ".success-state",
+                        ) as HTMLElement;
+                        // Reset loading
+                        submitBtn.disabled = false;
+                        submitText.style.opacity = "1";
+                        spinner.classList.add("hidden");
+
+                        // Show success
+                        successState.classList.remove(
+                            "opacity-0",
+                            "pointer-events-none",
+                        );
+                        successState.classList.add(
+                            "opacity-100",
+                            "pointer-events-auto",
+                        );
+
+                        // Animate checkmark
+                        const check = document.querySelector(
+                            ".success-check",
+                        ) as SVGPathElement;
+                        if (check) {
+                            const len = check.getTotalLength();
+                            gsap.set(check, {
+                                strokeDasharray: len,
+                                strokeDashoffset: len,
+                            });
+                            gsap.to(check, {
+                                strokeDashoffset: 0,
+                                duration: 0.5,
+                                delay: 0.2,
+                                ease: "power2.out",
+                            });
+                        }
+
+                        form.reset();
+                    }, 1500);
+                }
+            });
+
+            // Remove error on input
+            form.addEventListener("input", (e) => {
+                const field = e.target as HTMLElement;
+                if (field.classList.contains("invalid")) {
+                    field.classList.remove("invalid");
+                    const errorMsg =
+                        field.parentElement?.querySelector(".error-msg");
+                    errorMsg?.classList.add("hidden");
+                }
+            });
+        }
+
+        // 4. Initialize Leaflet Map (if L is available globally)
+        // Needs slight timeout to ensure L is loaded from CDN if script is inline
+        setTimeout(() => {
+            // @ts-ignore
+            if (typeof L !== "undefined" && document.getElementById("map")) {
+                // @ts-ignore
+                const map = L.map("map", {
+                    scrollWheelZoom: false, // Prevent scroll trap
+                    zoomControl: false, // custom look
+                }).setView([40.42245, -3.70409], 14); // Coordinates roughly in Madrid (Calle Madera)
+
+                // Minimalist dark/light tile layer
+                // @ts-ignore
+                L.tileLayer(
+                    "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                    {
+                        attribution:
+                            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                        subdomains: "abcd",
+                        maxZoom: 20,
+                    },
+                ).addTo(map);
+
+                // Custom elegant marker
+                // @ts-ignore
+                const customIcon = L.divIcon({
+                    className: "custom-map-marker",
+                    html: '<div style="background-color:var(--color-accent);width:16px;height:16px;border-radius:50%;border:4px solid white;box-shadow:0 0 10px rgba(0,0,0,0.3);"></div>',
+                    iconSize: [16, 16],
+                    iconAnchor: [8, 8],
+                });
+
+                // @ts-ignore
+                L.marker([40.42245, -3.70409], { icon: customIcon }).addTo(map);
+            }
+        }, 500);
+    });
+</script>
+
+<style>
+    html:not(.no-js) .anim-reveal,
+    html:not(.no-js) .slide-up-field {
+        opacity: 0;
+    }
+
+    .page-top-padding {
+        padding-top: 100px;
+    }
+
+    .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+
+    @media (min-width: 1024px) {
+        .contact-grid {
+            grid-template-columns: 1fr 1.2fr;
+            gap: 6rem;
+        }
+    }
+
+    /* Info Formating */
+    .transition-colors {
+        transition: color 0.3s ease;
+    }
+    .hover\:text-accent:hover {
+        color: var(--color-accent);
+    }
+
+    /* Map Container */
+    .map-container {
+        height: 300px;
+        width: 100%;
+        margin-top: 3rem;
+        border-radius: 2px;
+        overflow: hidden;
+        background-color: var(--color-surface);
+        filter: invert(0%) sepia(20%) saturate(800%) hue-rotate(340deg)
+            brightness(98%) contrast(90%); /* Gives slight warm tone to standard map, or normal cartocdn is fine */
+    }
+
+    /* Form */
+    .contact-form {
+        box-shadow: 0 10px 40px rgba(30, 23, 16, 0.05);
+    }
+
+    .form-group {
+        margin-bottom: 2rem;
+    }
+
+    .form-input {
+        width: 100%;
+        background-color: transparent;
+        border: none;
+        border-bottom: 1px solid var(--color-surface-deep);
+        padding: 0.75rem 0;
+        font-family: var(--font-family-body);
+        font-size: var(--text-base);
+        color: var(--color-ink);
+        transition: border-color 0.3s ease;
+    }
+
+    .form-input:focus {
+        outline: none;
+        border-color: var(--color-accent);
+    }
+
+    .form-input.invalid {
+        border-color: #d32f2f;
+    }
+
+    .form-input::placeholder {
+        color: var(--color-ink-muted);
+        opacity: 0.5;
+    }
+
+    /* Override browser autofill background */
+    .form-input:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0 50px var(--color-surface) inset;
+        -webkit-text-fill-color: var(--color-ink);
+    }
+
+    .select-wrapper {
+        position: relative;
+    }
+
+    .form-select {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        cursor: pointer;
+        padding-right: 2rem; /* space for arrow */
+    }
+
+    .select-arrow {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: var(--color-accent);
+    }
+
+    .btn-submit {
+        display: block;
+        background-color: var(--color-accent);
+        color: var(--color-white);
+        padding: 1.25rem 2rem;
+        border-radius: 2px;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-submit:hover:not(:disabled) {
+        background-color: var(--color-accent-light);
+    }
+
+    .btn-submit:disabled {
+        cursor: not-allowed;
+        opacity: 0.9;
+    }
+
+    .success-check {
+        stroke-dasharray: 100;
+        stroke-dashoffset: 100; /* JS will animate it */
+    }
+
+    /* Utils Utilities */
+    .py-20 {
+        padding-block: 5rem;
+    }
+    .pb-32 {
+        padding-bottom: 8rem;
+    }
+    .mb-8 {
+        margin-bottom: 2rem;
+    }
+    .mb-10 {
+        margin-bottom: 2.5rem;
+    }
+    .mb-12 {
+        margin-bottom: 3rem;
+    }
+    .mb-2 {
+        margin-bottom: 0.5rem;
+    }
+    .mb-4 {
+        margin-bottom: 1rem;
+    }
+    .mt-1 {
+        margin-top: 0.25rem;
+    }
+    .mt-2 {
+        margin-top: 0.5rem;
+    }
+    .pb-4 {
+        padding-bottom: 1rem;
+    }
+    .text-hero {
+        font-size: var(--text-hero);
+    }
+    .text-lg {
+        font-size: var(--text-lg);
+    }
+    .text-2xl {
+        font-size: var(--text-2xl);
+    }
+    .text-3xl {
+        font-size: var(--text-3xl);
+    }
+    .text-xs {
+        font-size: var(--text-xs);
+    }
+    .text-sm {
+        font-size: var(--text-sm);
+    }
+    .max-w-sm {
+        max-width: 24rem;
+    }
+    .text-ink {
+        color: var(--color-ink);
+    }
+    .text-ink-muted {
+        color: var(--color-ink-muted);
+    }
+    .text-accent {
+        color: var(--color-accent);
+    }
+    .text-white {
+        color: var(--color-white);
+    }
+    .text-\[\#d32f2f\] {
+        color: #d32f2f;
+    }
+    .block {
+        display: block;
+    }
+    .w-full {
+        width: 100%;
+    }
+    .relative {
+        position: relative;
+    }
+    .absolute {
+        position: absolute;
+    }
+    .inset-0 {
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+    .z-0 {
+        z-index: 0;
+    }
+    .z-10 {
+        z-index: 10;
+    }
+    .top-1\/2 {
+        top: 50%;
+    }
+    .left-1\/2 {
+        left: 50%;
+    }
+    .-translate-x-1\/2 {
+        transform: translateX(-50%);
+    }
+    .-translate-y-1\/2 {
+        transform: translateY(-50%);
+    }
+    .w-5 {
+        width: 1.25rem;
+    }
+    .h-5 {
+        height: 1.25rem;
+    }
+    .w-16 {
+        width: 4rem;
+    }
+    .h-16 {
+        height: 4rem;
+    }
+    .bg-surface {
+        background-color: var(--color-surface);
+    }
+    .bg-accent {
+        background-color: var(--color-accent);
+    }
+    .p-8 {
+        padding: 2rem;
+    }
+    .pt-12 {
+        padding-top: 3rem;
+    }
+    @media (min-width: 768px) {
+        .md\:p-12 {
+            padding: 3rem;
+        }
+        .md\:pt-0 {
+            padding-top: 0;
+        }
+    }
+    .overflow-hidden {
+        overflow: hidden;
+    }
+    .hidden {
+        display: none !important;
+    }
+    .opacity-25 {
+        opacity: 0.25;
+    }
+    .opacity-75 {
+        opacity: 0.75;
+    }
+    .opacity-0 {
+        opacity: 0;
+    }
+    .opacity-100 {
+        opacity: 1;
+    }
+    .pointer-events-none {
+        pointer-events: none;
+    }
+    .pointer-events-auto {
+        pointer-events: auto;
+    }
+    .transition-opacity {
+        transition-property: opacity;
+    }
+    .duration-500 {
+        transition-duration: 500ms;
+    }
+    .flex {
+        display: flex;
+    }
+    .flex-col {
+        flex-direction: column;
+    }
+    .items-center {
+        align-items: center;
+    }
+    .justify-center {
+        justify-content: center;
+    }
+    .text-center {
+        text-align: center;
+    }
+    .mb-6 {
+        margin-bottom: 1.5rem;
+    }
+    .uppercase {
+        text-transform: uppercase;
+    }
+    .tracking-widest {
+        letter-spacing: 0.1em;
+    }
+</style>

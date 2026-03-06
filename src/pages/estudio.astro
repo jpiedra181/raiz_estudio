@@ -1,0 +1,447 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/layout/Navbar.astro";
+import Footer from "../components/layout/Footer.astro";
+---
+
+<BaseLayout title="El Estudio">
+    <Navbar />
+
+    <main class="estudio-page">
+        <section class="hero-about container">
+            <div class="hero-img-wrap anim-entry-left">
+                <img
+                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1800&q=90&fit=crop"
+                    alt="Elena Vidal en el estudio"
+                    class="hero-img"
+                    loading="eager"
+                    decoding="async"
+                />
+            </div>
+            <div class="hero-text-wrap anim-entry-right">
+                <h1 class="font-heading title-about">
+                    Nacimos de la convicción de que tu casa merece ser única.
+                </h1>
+                <div class="text-about font-body font-light">
+                    <p>
+                        Raíz Estudio surgió de una necesidad muy personal:
+                        devolver el alma a los espacios habitados. Durante años
+                        vimos cómo las tendencias estandarizaban los hogares,
+                        convirtiéndolos en lugares hermosos pero fríos.
+                    </p>
+                    <p>
+                        Creemos que el interiorismo no va de imponer un estilo,
+                        sino de traducir quién eres al lenguaje del espacio, la
+                        luz y los materiales. Trabajamos con texturas naturales,
+                        maderas cálidas y una paleta inspirada en la tierra
+                        porque son los elementos que nos conectan con la calma.
+                    </p>
+                    <p>
+                        Nuestro enfoque es humano, cercano y totalmente a
+                        medida. Porque, al final del día, tu casa es el lugar
+                        más importante del mundo.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Equipo -->
+        <section class="team-section container">
+            <h2 class="font-heading mb-12 text-center text-3xl">El equipo</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-img-wrap">
+                        <img
+                            src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800&q=90&fit=crop"
+                            alt="Elena Vidal"
+                            class="member-img grayscale-transition"
+                        />
+                    </div>
+                    <h3 class="font-heading member-name">Elena Vidal</h3>
+                    <p class="font-accent label-accent member-role">
+                        Fundadora & Directora de Diseño
+                    </p>
+                    <p class="font-light italic mt-4">
+                        "Para mí, el lujo verdadero es entrar en casa y sentir
+                        que respiras más despacio."
+                    </p>
+                </div>
+
+                <div class="team-member">
+                    <div class="member-img-wrap">
+                        <img
+                            src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=800&q=90&fit=crop"
+                            alt="Ana Ruiz"
+                            class="member-img grayscale-transition"
+                        />
+                    </div>
+                    <h3 class="font-heading member-name">Ana Ruiz</h3>
+                    <p class="font-accent label-accent member-role">
+                        Arquitecta de Interiores
+                    </p>
+                    <p class="font-light italic mt-4">
+                        "Busco la proporción perfecta entre la luz natural, el
+                        vacío y los materiales honestos."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Valores -->
+        <section class="values-section">
+            <div class="container relative">
+                <h2 class="font-heading mb-12 text-center text-3xl text-white">
+                    Lo que nos mueve
+                </h2>
+                <div class="values-grid">
+                    <div class="value-card border-card">
+                        <span class="value-number font-heading">01</span>
+                        <h3
+                            class="value-title font-heading text-xl text-white mb-2"
+                        >
+                            Escucha Activa
+                        </h3>
+                        <p class="font-light text-surface">
+                            Ningún proyecto empieza sin una conversación
+                            sincera. Tu visión es nuestro único punto de
+                            partida.
+                        </p>
+                    </div>
+                    <div class="value-card border-card">
+                        <span class="value-number font-heading">02</span>
+                        <h3
+                            class="value-title font-heading text-xl text-white mb-2"
+                        >
+                            Materiales Honestos
+                        </h3>
+                        <p class="font-light text-surface">
+                            Seleccionamos cada elemento por su calidad y su
+                            capacidad para envejecer con dignidad y belleza.
+                        </p>
+                    </div>
+                    <div class="value-card border-card">
+                        <span class="value-number font-heading">03</span>
+                        <h3
+                            class="value-title font-heading text-xl text-white mb-2"
+                        >
+                            Diseño Funcional
+                        </h3>
+                        <p class="font-light text-surface">
+                            Un espacio hermoso debe ser, ante todo, vivible.
+                            Diseñamos para tu día a día, sin renunciar a la
+                            estética.
+                        </p>
+                    </div>
+                    <div class="value-card border-card">
+                        <span class="value-number font-heading">04</span>
+                        <h3
+                            class="value-title font-heading text-xl text-white mb-2"
+                        >
+                            Proceso Transparente
+                        </h3>
+                        <p class="font-light text-surface">
+                            Te acompañamos en cada paso con claridad, cumpliendo
+                            plazos y respetando el presupuesto acordado.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Clientes / Marcas -->
+        <section class="brands-section container">
+            <h2 class="font-accent label-accent text-center mb-8">
+                Confiamos en primeras marcas
+            </h2>
+            <div class="marquee-track">
+                <div class="marquee-content">
+                    <!-- Replacements for actual SVGs -->
+                    <span class="font-heading text-2xl px-8 opacity-40"
+                        >Mutina</span
+                    >
+                    <span class="font-heading text-2xl px-8 opacity-40"
+                        >Flos</span
+                    >
+                    <span class="font-heading text-2xl px-8 opacity-40"
+                        >Kvadrat</span
+                    >
+                    <span class="font-heading text-2xl px-8 opacity-40"
+                        >B&B Italia</span
+                    >
+                    <span class="font-heading text-2xl px-8 opacity-40"
+                        >Santa & Cole</span
+                    >
+                    <span class="font-heading text-2xl px-8 opacity-40"
+                        >Carl Hansen</span
+                    >
+                </div>
+                <div class="marquee-content aria-hidden">
+                    <span class="font-heading text-2xl px-8 opacity-40"
+                        >Mutina</span
+                    >
+                    <span class="font-heading text-2xl px-8 opacity-40"
+                        >Flos</span
+                    >
+                    <span class="font-heading text-2xl px-8 opacity-40"
+                        >Kvadrat</span
+                    >
+                    <span class="font-heading text-2xl px-8 opacity-40"
+                        >B&B Italia</span
+                    >
+                    <span class="font-heading text-2xl px-8 opacity-40"
+                        >Santa & Cole</span
+                    >
+                    <span class="font-heading text-2xl px-8 opacity-40"
+                        >Carl Hansen</span
+                    >
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <Footer />
+</BaseLayout>
+
+<script>
+    import { gsap } from "../scripts/gsap-init";
+
+    document.addEventListener("astro:page-load", () => {
+        const isReduced = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+        ).matches;
+        if (isReduced) {
+            gsap.set(".anim-entry-left, .anim-entry-right", {
+                opacity: 1,
+                x: 0,
+            });
+            return;
+        }
+
+        const tl = gsap.timeline();
+
+        // Header space offset logic handled implicitly if navbar is fixed (hero section has pt)
+        tl.fromTo(
+            ".anim-entry-left",
+            { opacity: 0, x: -80 },
+            { opacity: 1, x: 0, duration: 1, ease: "power3.out" },
+        ).fromTo(
+            ".anim-entry-right",
+            { opacity: 0, x: 80 },
+            { opacity: 1, x: 0, duration: 1, ease: "power3.out" },
+            "-=0.7",
+        );
+    });
+</script>
+
+<style>
+    .estudio-page {
+        padding-top: 120px; /* offset fixed navbar */
+    }
+
+    .hero-about {
+        display: flex;
+        flex-direction: column;
+        gap: 4rem;
+        padding-block: var(--section-padding);
+        overflow: hidden;
+    }
+
+    @media (min-width: 1024px) {
+        .hero-about {
+            flex-direction: row;
+            align-items: center;
+            gap: 6rem;
+        }
+
+        .hero-img-wrap {
+            flex: 1;
+            height: 70vh;
+        }
+
+        .hero-text-wrap {
+            flex: 1;
+        }
+    }
+
+    .hero-img-wrap {
+        width: 100%;
+        max-height: 80vh;
+        overflow: hidden;
+    }
+
+    .hero-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .title-about {
+        font-size: var(--text-3xl);
+        line-height: 1.1;
+        margin-bottom: 2rem;
+    }
+
+    .text-about {
+        color: var(--color-ink-muted);
+        font-size: var(--text-lg);
+    }
+
+    .text-about p {
+        margin-bottom: 1.5rem;
+    }
+
+    /* Pre-animation states */
+    html:not(.no-js) .anim-entry-left,
+    html:not(.no-js) .anim-entry-right {
+        opacity: 0;
+    }
+
+    /* Equipo */
+    .team-section {
+        padding-block: var(--section-padding);
+    }
+
+    .team-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 4rem;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    @media (min-width: 768px) {
+        .team-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+    }
+
+    .team-member {
+        text-align: center;
+    }
+
+    .member-img-wrap {
+        aspect-ratio: 1;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+    }
+
+    .member-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .grayscale-transition {
+        filter: grayscale(1);
+        transition: filter 0.5s ease;
+    }
+
+    .member-img-wrap:hover .grayscale-transition {
+        filter: grayscale(0);
+    }
+
+    .member-name {
+        font-size: var(--text-2xl);
+        margin-bottom: 0.25rem;
+    }
+
+    /* Valores */
+    .values-section {
+        background-color: var(--color-dark-section);
+        padding-block: var(--section-padding);
+    }
+
+    .values-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+        .values-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    .border-card {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 3rem;
+    }
+
+    .value-number {
+        font-size: var(--text-2xl);
+        color: var(--color-accent);
+        display: block;
+        margin-bottom: 1rem;
+        opacity: 0.8;
+    }
+
+    /* Clientes / Marquee */
+    .brands-section {
+        padding-block: 6rem;
+        overflow: hidden;
+    }
+
+    .marquee-track {
+        display: flex;
+        width: fit-content;
+        animation: marquee 20s linear infinite;
+    }
+
+    /* Accessibility pause on focus/hover if needed */
+    .marquee-track:hover {
+        animation-play-state: paused;
+    }
+
+    .marquee-content {
+        display: flex;
+        white-space: nowrap;
+        align-items: center;
+    }
+
+    @keyframes marquee {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+
+    /* Generic utils used */
+    .mb-12 {
+        margin-bottom: 3rem;
+    }
+    .text-center {
+        text-align: center;
+    }
+    .text-3xl {
+        font-size: var(--text-3xl);
+    }
+    .text-white {
+        color: var(--color-white);
+    }
+    .text-xl {
+        font-size: var(--text-xl);
+    }
+    .mb-2 {
+        margin-bottom: 0.5rem;
+    }
+    .text-surface {
+        color: var(--color-surface);
+        opacity: 0.9;
+    }
+    .mb-8 {
+        margin-bottom: 2rem;
+    }
+    .px-8 {
+        padding-inline: 2rem;
+    }
+    .opacity-40 {
+        opacity: 0.4;
+    }
+    .mt-4 {
+        margin-top: 1rem;
+    }
+</style>

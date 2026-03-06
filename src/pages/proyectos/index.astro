@@ -1,0 +1,230 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Navbar from "../../components/layout/Navbar.astro";
+import Footer from "../../components/layout/Footer.astro";
+import ProjectCard from "../../components/shared/ProjectCard.astro";
+import { projects } from "../../data/projects";
+
+// Extract unique styles for filters
+const styles = [...new Set(projects.map((p) => p.style))];
+---
+
+<BaseLayout title="Portfolio">
+    <Navbar />
+
+    <main class="page-top-padding">
+        <header class="container pt-12 pb-16">
+            <h1 class="font-heading text-hero mb-12">
+                Hogares que<br class="hidden-md-down" /> hemos creado
+            </h1>
+
+            <!-- Filters -->
+            <div class="filters-container flex flex-wrap gap-4">
+                <button
+                    class="filter-btn active font-accent text-xs tracking-widest uppercase"
+                    data-filter="all"
+                >
+                    Todos
+                </button>
+                {
+                    styles.map((style) => (
+                        <button
+                            class="filter-btn font-accent text-xs tracking-widest uppercase"
+                            data-filter={style}
+                        >
+                            {style}
+                        </button>
+                    ))
+                }
+            </div>
+        </header>
+
+        <section class="portfolio-grid container pb-24">
+            {
+                projects.map((project, index) => (
+                    <div
+                        class="portfolio-item anim-reveal"
+                        data-category={project.style}
+                        style={
+                            index % 3 === 0
+                                ? "grid-row: span 2; min-height: 600px;"
+                                : "grid-row: span 1; min-height: 400px;"
+                        }
+                    >
+                        <ProjectCard project={project} class="w-full h-full" />
+                    </div>
+                ))
+            }
+        </section>
+    </main>
+
+    <Footer />
+</BaseLayout>
+
+<script>
+    import { gsap, ScrollTrigger } from "../../scripts/gsap-init";
+    import { animateWithReducedMotion } from "../../scripts/gsap-init";
+
+    document.addEventListener("astro:page-load", () => {
+        // 1. Initial reveal animation
+        animateWithReducedMotion(() => {
+            const items = document.querySelectorAll(".anim-reveal");
+
+            gsap.fromTo(
+                items,
+                { opacity: 0, y: 50 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    stagger: 0.1,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: ".portfolio-grid",
+                        start: "top 85%",
+                        once: true,
+                    },
+                },
+            );
+        });
+
+        // 2. Filter logic
+        const filterBtns = document.querySelectorAll(".filter-btn");
+        const projectItems = document.querySelectorAll(
+            ".portfolio-item",
+        ) as NodeListOf<HTMLElement>;
+
+        filterBtns.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                // Update active class
+                filterBtns.forEach((b) => b.classList.remove("active"));
+                btn.classList.add("active");
+
+                const filterValue = btn.getAttribute("data-filter");
+
+                // Simple opacity toggle (GSAP Flip is better but overkill for simple fade)
+                projectItems.forEach((item) => {
+                    const category = item.getAttribute("data-category");
+
+                    if (filterValue === "all" || category === filterValue) {
+                        // Show
+                        gsap.to(item, {
+                            opacity: 1,
+                            scale: 1,
+                            duration: 0.4,
+                            display: "block",
+                            ease: "power2.out",
+                        });
+                    } else {
+                        // Hide
+                        gsap.to(item, {
+                            opacity: 0,
+                            scale: 0.95,
+                            duration: 0.4,
+                            display: "none",
+                            ease: "power2.inOut",
+                        });
+                    }
+                });
+
+                // Refresh ScrollTrigger after layout shift
+                setTimeout(() => ScrollTrigger.refresh(), 500);
+            });
+        });
+    });
+</script>
+
+<style>
+    html:not(.no-js) .anim-reveal {
+        opacity: 0;
+    }
+
+    .page-top-padding {
+        padding-top: 100px; /* Account for navbar */
+    }
+
+    .filter-btn {
+        padding: 0.5rem 1.25rem;
+        border: 1px solid var(--color-surface-deep);
+        border-radius: 4px;
+        background: transparent;
+        color: var(--color-ink-muted);
+        transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover {
+        color: var(--color-ink);
+        border-color: var(--color-ink);
+    }
+
+    .filter-btn.active {
+        background-color: var(--color-ink);
+        color: var(--color-white);
+        border-color: var(--color-ink);
+    }
+
+    .portfolio-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        /* CSS Columns alternative if items are purely masonry */
+        /* column-count: 2; column-gap: 2rem; */
+    }
+
+    @media (min-width: 768px) {
+        .portfolio-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .portfolio-grid {
+            align-items: stretch;
+            /* Using masonry-like spans */
+            gap: 3rem;
+        }
+    }
+
+    .portfolio-item {
+        width: 100%;
+        break-inside: avoid; /* if using columns */
+    }
+
+    /* Utils */
+    .pt-12 {
+        padding-top: 3rem;
+    }
+    .pb-16 {
+        padding-bottom: 4rem;
+    }
+    .pb-24 {
+        padding-bottom: 6rem;
+    }
+    .mb-12 {
+        margin-bottom: 3rem;
+    }
+    .flex {
+        display: flex;
+    }
+    .flex-wrap {
+        flex-wrap: wrap;
+    }
+    .gap-4 {
+        gap: 1rem;
+    }
+    .w-full {
+        width: 100%;
+    }
+    .h-full {
+        height: 100%;
+    }
+    .text-xs {
+        font-size: var(--text-xs);
+    }
+    .tracking-widest {
+        letter-spacing: 0.1em;
+    }
+    .uppercase {
+        text-transform: uppercase;
+    }
+</style>

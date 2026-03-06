@@ -1,0 +1,187 @@
+---
+import "../../styles/global.css";
+---
+
+<footer class="footer">
+    <div class="container footer-grid">
+        <div class="footer-brand">
+            <a href="/" class="logo font-heading">
+                <span>Raíz</span>
+                <br />
+                <strong>Estudio</strong>
+            </a>
+            <p class="tagline font-body font-light">
+                Diseño cálido, honesto y atemporal.
+            </p>
+        </div>
+
+        <div class="footer-links">
+            <h3 class="label-accent">Navegación</h3>
+            <ul>
+                <li>
+                    <a href="/estudio" class="font-body hover-accent"
+                        >El Estudio</a
+                    >
+                </li>
+                <li>
+                    <a href="/proyectos" class="font-body hover-accent"
+                        >Proyectos</a
+                    >
+                </li>
+                <li>
+                    <a href="/proceso" class="font-body hover-accent">Proceso</a
+                    >
+                </li>
+            </ul>
+        </div>
+
+        <div class="footer-links">
+            <h3 class="label-accent">Servicios</h3>
+            <ul>
+                <li>
+                    <a href="/servicios" class="font-body hover-accent"
+                        >Interiorismo Residencial</a
+                    >
+                </li>
+                <li>
+                    <a href="/consultoria-online" class="font-body hover-accent"
+                        >Consultoría Online</a
+                    >
+                </li>
+            </ul>
+        </div>
+
+        <div class="footer-contact">
+            <h3 class="label-accent">Contacto</h3>
+            <p class="font-body">
+                <a href="mailto:hola@raizestudio.es" class="hover-accent"
+                    >hola@raizestudio.es</a
+                >
+            </p>
+            <div class="social-links mt-4">
+                <a
+                    href="https://instagram.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="hover-accent label-accent"
+                    aria-label="Instagram">IG</a
+                >
+                <a
+                    href="https://pinterest.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="hover-accent label-accent"
+                    aria-label="Pinterest">PI</a
+                >
+                <a
+                    href="https://linkedin.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="hover-accent label-accent"
+                    aria-label="LinkedIn">IN</a
+                >
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <div class="container">
+            <p class="font-body font-light text-sm">
+                © {new Date().getFullYear()} Raíz Estudio. Diseñado con cuidado. Como
+                tus espacios.
+            </p>
+        </div>
+    </div>
+</footer>
+
+<style>
+    .footer {
+        background-color: var(--color-dark-section);
+        color: var(--color-white);
+        padding-top: var(--section-padding);
+    }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        padding-bottom: 4rem;
+    }
+
+    @media (min-width: 768px) {
+        .footer-grid {
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 2rem;
+        }
+    }
+
+    .logo {
+        display: inline-block;
+        color: var(--color-white);
+        text-decoration: none;
+        line-height: 1;
+        margin-bottom: 1rem;
+    }
+
+    .logo span {
+        font-size: var(--text-2xl);
+        font-weight: var(--font-weight-regular);
+    }
+
+    .logo strong {
+        font-size: var(--text-lg);
+        font-weight: var(--font-weight-bold);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        opacity: 0.8;
+    }
+
+    .tagline {
+        color: var(--color-surface-deep);
+        margin-top: 0.5rem;
+    }
+
+    h3.label-accent {
+        color: var(--color-accent-light);
+        margin-bottom: 1.5rem;
+    }
+
+    .footer-links ul {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .footer-links a,
+    .footer-contact a {
+        color: var(--color-surface);
+        transition: color 0.3s ease;
+    }
+
+    .hover-accent:hover {
+        color: var(--color-accent-light);
+    }
+
+    .social-links {
+        display: flex;
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .social-links a {
+        color: var(--color-white);
+    }
+
+    .footer-bottom {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-block: 2rem;
+        text-align: center;
+        color: var(--color-surface-deep);
+    }
+
+    @media (min-width: 768px) {
+        .footer-bottom {
+            text-align: left;
+        }
+    }
+</style>

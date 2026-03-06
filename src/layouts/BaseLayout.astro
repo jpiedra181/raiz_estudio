@@ -1,0 +1,62 @@
+---
+import { ViewTransitions } from "astro:transitions";
+import "../styles/global.css";
+import "../styles/typography.css";
+import "../styles/animations.css";
+
+interface Props {
+    title: string;
+    description?: string;
+}
+
+const {
+    title,
+    description = "Raíz Estudio - Interiorismo residencial y consultoría de diseño online en España. Hogares con calidez orgánica, materiales honestos y conexión natural.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/png" href="/favicon.png" />
+        <meta name="description" content={description} />
+        <title>{title} | Raíz Estudio</title>
+
+        <!-- Preconnect Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500&display=swap"
+            rel="stylesheet"
+        />
+
+        <ViewTransitions />
+    </head>
+    <body>
+        <slot />
+
+        <!-- Custom Cursor -->
+        <div
+            id="custom-cursor"
+            class="fixed pointer-events-none z-[9999] top-0 left-0 flex items-center justify-center rounded-full"
+            style="width: 8px; height: 8px; border: 1px solid var(--color-accent); mix-blend-mode: difference; transition: width 0.3s, height 0.3s, background-color 0.3s;"
+        >
+            <span
+                class="cursor-text opacity-0 font-accent text-[10px] uppercase tracking-widest text-white transition-opacity duration-300"
+            ></span>
+        </div>
+
+        <script>
+            //import { initCursor } from "../scripts/cursor";
+
+            // Run cursor init exactly once on initial load, it handles page-load event itself
+            //initCursor();
+        </script>
+    </body>
+</html>
+
+<style>
+    /* Utility class for cursor styling if needed, otherwise handled inline / JS */
+</style>

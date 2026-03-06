@@ -1,0 +1,68 @@
+---
+
+---
+
+<div id="scroll-progress-container">
+    <div id="scroll-progress-bar"></div>
+</div>
+
+<style>
+    #scroll-progress-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        z-index: 100;
+        pointer-events: none;
+    }
+
+    #scroll-progress-bar {
+        height: 100%;
+        width: 0%;
+        background-color: var(--color-accent);
+        transform-origin: left center;
+    }
+
+    /* Optional: native CSS scroll timeline if supported */
+    @supports (animation-timeline: scroll()) {
+        #scroll-progress-bar {
+            width: 100%;
+            scale: 0 1;
+            animation: scroll-progress auto linear;
+            animation-timeline: scroll();
+        }
+    }
+
+    @keyframes scroll-progress {
+        to {
+            scale: 1 1;
+        }
+    }
+</style>
+
+<script>
+    // Fallback JS for browsers not supporting animation-timeline
+    if (!CSS.supports("animation-timeline", "scroll()")) {
+        const updateScrollProgress = () => {
+            const bar = document.getElementById("scroll-progress-bar");
+            if (!bar) return;
+            const scrollHeight =
+                document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (window.scrollY / scrollHeight) * 100;
+            bar.style.width = `${progress}%`;
+        };
+
+        window.addEventListener("scroll", updateScrollProgress, {
+            passive: true,
+        });
+
+        document.addEventListener(
+            "astro:before-preparation",
+            () => {
+                window.removeEventListener("scroll", updateScrollProgress);
+            },
+            { once: true },
+        );
+    }
+</script>

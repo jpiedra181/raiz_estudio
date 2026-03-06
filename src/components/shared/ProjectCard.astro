@@ -1,0 +1,134 @@
+---
+import type { Project } from "../../data/projects";
+
+interface Props {
+    project: Project;
+    class?: string;
+    lazy?: boolean;
+}
+
+const { project, class: className = "", lazy = true } = Astro.props;
+---
+
+<a
+    href={`/proyectos/${project.slug}`}
+    class={`project-card ${className}`}
+    data-cursor-image
+>
+    <div class="card-image-wrapper">
+        <img
+            src={project.images[0]}
+            alt={`Proyecto ${project.name} en ${project.location}`}
+            class="card-image"
+            loading={lazy ? "lazy" : "eager"}
+            decoding="async"
+            width="800"
+            height="1200"
+        />
+        <div class="card-overlay">
+            <div class="card-content">
+                <h3 class="font-heading card-title">{project.name}</h3>
+                <p class="font-accent card-meta text-xs">
+                    <span>{project.location}</span>
+                    <span class="separator"> · </span>
+                    <span>{project.year}</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</a>
+
+<style>
+    .project-card {
+        display: block;
+        position: relative;
+        overflow: hidden;
+        text-decoration: none;
+        border-radius: 2px;
+    }
+
+    .card-image-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: var(--color-surface);
+    }
+
+    /* Aspect ratios will be handled by the parent grid but give a default */
+    .card-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .project-card:hover .card-image {
+        transform: scale(1.04);
+    }
+
+    .card-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            180deg,
+            rgba(30, 23, 16, 0) 50%,
+            rgba(30, 23, 16, 0.7) 100%
+        );
+        display: flex;
+        align-items: flex-end;
+        padding: 2rem;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+
+    @media (max-width: 767px) {
+        /* On mobile, always show overlay slightly or rely on touch */
+        .card-overlay {
+            opacity: 1;
+            background: linear-gradient(
+                180deg,
+                rgba(30, 23, 16, 0) 60%,
+                rgba(30, 23, 16, 0.6) 100%
+            );
+        }
+    }
+
+    .project-card:hover .card-overlay {
+        opacity: 1;
+    }
+
+    .card-content {
+        transform: translateY(10px);
+        transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        color: var(--color-white);
+    }
+
+    @media (max-width: 767px) {
+        .card-content {
+            transform: translateY(0);
+        }
+    }
+
+    .project-card:hover .card-content {
+        transform: translateY(0);
+    }
+
+    .card-title {
+        font-size: var(--text-2xl);
+        margin-bottom: 0.5rem;
+        line-height: 1.1;
+        color: inherit;
+    }
+
+    .card-meta {
+        color: var(--color-surface);
+        opacity: 0.9;
+        letter-spacing: 0.1em;
+    }
+
+    .separator {
+        color: var(--color-accent-light);
+        margin-inline: 0.25rem;
+    }
+</style>

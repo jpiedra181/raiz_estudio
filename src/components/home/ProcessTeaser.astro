@@ -1,0 +1,205 @@
+---
+import SectionTitle from "../shared/SectionTitle.astro";
+
+const steps = [
+    {
+        number: "01",
+        title: "Nos conocemos",
+        description:
+            "Llamada o videollamada sin compromiso para entender qué buscas.",
+    },
+    {
+        number: "02",
+        title: "Diseñamos juntos",
+        description:
+            "Propuesta adaptada a ti, con moodboard, planos y texturas.",
+    },
+    {
+        number: "03",
+        title: "Tu hogar, listo",
+        description:
+            "Acompañamiento hasta el final, cuidando cada mínimo detalle.",
+    },
+];
+---
+
+<section class="process-teaser-section">
+    <div class="container relative">
+        <SectionTitle
+            title="Trabajar con nosotras es sencillo"
+            tag="El Proceso"
+        />
+
+        <div class="process-steps">
+            <!-- Decorative line (Desktop mainly) -->
+            <svg
+                class="process-line hidden-md-down"
+                viewBox="0 0 1000 50"
+                preserveAspectRatio="none"
+            >
+                <path
+                    d="M 50,25 L 950,25"
+                    fill="none"
+                    stroke="var(--color-surface-deep)"
+                    stroke-width="2"
+                    stroke-dasharray="10 10"></path>
+            </svg>
+
+            <!-- Animated line overlay -->
+            <svg
+                class="process-line process-line-animated hidden-md-down"
+                viewBox="0 0 1000 50"
+                preserveAspectRatio="none"
+            >
+                <path
+                    d="M 50,25 L 950,25"
+                    fill="none"
+                    class="animated-path"
+                    stroke="var(--color-wood)"
+                    stroke-width="2"></path>
+            </svg>
+
+            {
+                steps.map((step) => (
+                    <div class="process-step">
+                        <div class="step-header">
+                            <span class="step-number font-heading">
+                                {step.number}
+                            </span>
+                        </div>
+                        <div class="step-content">
+                            <h3 class="step-title font-heading">
+                                {step.title}
+                            </h3>
+                            <p class="step-description font-light">
+                                {step.description}
+                            </p>
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>
+
+<script>
+    import { gsap, ScrollTrigger } from "../../scripts/gsap-init";
+    import { animateWithReducedMotion } from "../../scripts/gsap-init";
+
+    document.addEventListener("astro:page-load", () => {
+        animateWithReducedMotion(() => {
+            // Line drawing animation
+            const path = document.querySelector(
+                ".animated-path",
+            ) as SVGPathElement;
+
+            if (path) {
+                const length = path.getTotalLength();
+                gsap.set(path, {
+                    strokeDasharray: length,
+                    strokeDashoffset: length,
+                });
+
+                ScrollTrigger.create({
+                    trigger: ".process-steps",
+                    start: "top 70%",
+                    end: "bottom 30%",
+                    animation: gsap.to(path, {
+                        strokeDashoffset: 0,
+                        ease: "none",
+                    }),
+                    scrub: 1, // smooth scrubbing
+                });
+            }
+
+            // Steps staggered reveal
+            gsap.fromTo(
+                ".process-step",
+                { opacity: 0, y: 30 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    stagger: 0.2,
+                    scrollTrigger: {
+                        trigger: ".process-steps",
+                        start: "top 80%",
+                        once: true,
+                    },
+                },
+            );
+        });
+    });
+</script>
+
+<style>
+    .process-teaser-section {
+        padding-block: var(--section-padding);
+        background-color: var(--color-bg);
+    }
+
+    .process-steps {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 4rem;
+        padding-top: 2rem;
+    }
+
+    .process-line {
+        position: absolute;
+        top: 3.5rem; /* align roughly with the numbers */
+        left: 0;
+        width: 100%;
+        height: 50px;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .process-line-animated {
+        z-index: 1;
+    }
+
+    @media (min-width: 768px) {
+        .process-steps {
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .process-step {
+            flex: 1;
+            text-align: center;
+        }
+    }
+
+    .process-step {
+        position: relative;
+        z-index: 2;
+    }
+
+    .step-header {
+        margin-bottom: 1.5rem;
+    }
+
+    .step-number {
+        display: inline-block;
+        font-size: var(--text-hero);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-surface-deep);
+        line-height: 1;
+        background-color: var(--color-bg);
+        padding: 0 1rem; /* cover the line behind it */
+    }
+
+    .step-title {
+        font-size: var(--text-2xl);
+        margin-bottom: 0.5rem;
+    }
+
+    .step-description {
+        color: var(--color-ink-muted);
+        margin: 0 auto;
+        max-width: 300px;
+    }
+</style>

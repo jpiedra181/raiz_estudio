@@ -1,0 +1,527 @@
+---
+import ProjectLayout from "../../layouts/ProjectLayout.astro";
+import { projects } from "../../data/projects";
+
+export function getStaticPaths() {
+    return projects.map((project) => ({
+        params: { slug: project.slug },
+        props: { project },
+    }));
+}
+
+const { project } = Astro.props;
+
+// Exclude first image from remaining gallery, as it is hero
+const galleryImages = project.images.slice(1);
+---
+
+<ProjectLayout project={project}>
+    <!-- Hero Fullscreen -->
+    <header class="project-hero">
+        <div class="hero-img-wrap">
+            <img
+                src={project.images[0]}
+                alt={project.name}
+                class="project-hero-img"
+                transition:name={`project-image-${project.slug}`}
+            />
+            <div class="hero-overlay"></div>
+        </div>
+
+        <div class="container relative z-10 hero-content">
+            <div class="header-bottom anim-reveal-slow">
+                <h1 class="font-heading project-title text-white">
+                    {project.name}
+                </h1>
+
+                <div
+                    class="project-meta font-accent uppercase tracking-widest text-xs flex flex-wrap gap-8 text-surface"
+                >
+                    <div class="meta-item">
+                        <span class="block text-accent-light mb-1"
+                            >Superficie</span
+                        >
+                        <span class="font-light">{project.sqm} m²</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="block text-accent-light mb-1"
+                            >Ubicación</span
+                        >
+                        <span class="font-light">{project.location}</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="block text-accent-light mb-1">Año</span>
+                        <span class="font-light">{project.year}</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="block text-accent-light mb-1">Estilo</span>
+                        <span class="font-light">{project.style}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Descripción -->
+    <section class="project-intro container py-24">
+        <div
+            class="max-w-2xl mx-auto text-ink-muted text-lg font-light space-y-6 intro-text-anim"
+        >
+            {project.description.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+    </section>
+
+    <!-- Galería Masonry -->
+    <section class="project-gallery container pb-24">
+        <div class="gallery-grid">
+            {
+                galleryImages.map((imgSrc, index) => (
+                    <div
+                        class={`gallery-item ${index % 3 === 0 ? "w-full span-2" : ""}`}
+                    >
+                        <button
+                            class="gallery-trigger w-full h-full block relative cursor-none"
+                            data-src={imgSrc}
+                            aria-label={`Ver imagen ${index + 2} de ${project.name} en grande`}
+                        >
+                            <img
+                                src={imgSrc}
+                                alt={`Vista interior de ${project.name}`}
+                                class="gallery-img reveal-clip"
+                                loading="lazy"
+                            />
+                        </button>
+                    </div>
+                ))
+            }
+        </div>
+    </section>
+
+    <!-- Materiales -->
+    <section class="project-materials bg-surface py-20">
+        <div class="container text-center">
+            <h3 class="font-heading text-2xl mb-12">La Paleta</h3>
+            <div class="materials-flex">
+                {
+                    project.materials.map((mat) => (
+                        <div class="material-chip">
+                            <div
+                                class="color-swatch"
+                                style={`background-color: ${mat.colorHex};`}
+                            />
+                            <span class="font-accent text-xs tracking-widest uppercase mt-4 block">
+                                {mat.name}
+                            </span>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div
+        id="lightbox"
+        class="lightbox fixed inset-0 z-50 bg-dark-section hidden"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Visor de imagen"
+    >
+        <button
+            class="close-btn absolute top-6 right-6 text-white p-2 hover:text-accent transition-colors"
+            aria-label="Cerrar visor"
+        >
+            <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+            >
+                <path d="M18 6L6 18M6 6l12 12"></path>
+            </svg>
+        </button>
+        <div
+            class="lightbox-content flex items-center justify-center w-full h-full p-4 md:p-12"
+        >
+            <img
+                src=""
+                alt="Imagen ampliada"
+                class="lightbox-img max-h-full max-w-full object-contain"
+            />
+        </div>
+    </div>
+</ProjectLayout>
+
+<script>
+    import { gsap, ScrollTrigger } from "../../scripts/gsap-init";
+    import { animateWithReducedMotion } from "../../scripts/gsap-init";
+
+    document.addEventListener("astro:page-load", () => {
+        // Page load animations
+        animateWithReducedMotion(() => {
+            gsap.fromTo(
+                ".anim-reveal-slow",
+                { opacity: 0, y: 30 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1.5,
+                    ease: "power2.out",
+                    delay: 0.3,
+                },
+            );
+
+            // Intro text reveal
+            gsap.fromTo(
+                ".intro-text-anim p",
+                { opacity: 0, y: 20 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    stagger: 0.2,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: ".project-intro",
+                        start: "top 80%",
+                        once: true,
+                    },
+                },
+            );
+
+            // Gallery clip reveal
+            const reveals = document.querySelectorAll(".reveal-clip");
+            reveals.forEach((reveal) => {
+                gsap.fromTo(
+                    reveal,
+                    { clipPath: "inset(0 0 100% 0)" },
+                    {
+                        clipPath: "inset(0 0 0% 0)",
+                        duration: 1.2,
+                        ease: "power3.inOut",
+                        scrollTrigger: {
+                            trigger: reveal,
+                            start: "top 90%",
+                            once: true,
+                        },
+                    },
+                );
+            });
+        });
+
+        // Lightbox Logic natively inside Astro
+        const triggers = document.querySelectorAll(".gallery-trigger");
+        const lightbox = document.getElementById("lightbox");
+        const lbImg = lightbox?.querySelector(
+            ".lightbox-img",
+        ) as HTMLImageElement;
+        const closeBtn = lightbox?.querySelector(".close-btn");
+
+        if (lightbox && lbImg && closeBtn) {
+            triggers.forEach((trigger) => {
+                trigger.addEventListener("click", () => {
+                    const src = trigger.getAttribute("data-src");
+                    if (src) {
+                        lbImg.src = src;
+                        lightbox.classList.remove("hidden");
+                        gsap.fromTo(
+                            lightbox,
+                            { opacity: 0 },
+                            { opacity: 1, duration: 0.3 },
+                        );
+                        gsap.fromTo(
+                            lbImg,
+                            { scale: 0.95 },
+                            { scale: 1, duration: 0.4, ease: "power2.out" },
+                        );
+                        document.body.style.overflow = "hidden";
+                    }
+                });
+            });
+
+            const closeLB = () => {
+                gsap.to(lightbox, {
+                    opacity: 0,
+                    duration: 0.3,
+                    onComplete: () => {
+                        lightbox.classList.add("hidden");
+                        lbImg.src = "";
+                        document.body.style.overflow = "";
+                    },
+                });
+            };
+
+            closeBtn.addEventListener("click", closeLB);
+            lightbox.addEventListener("click", (e) => {
+                if (
+                    e.target === lightbox ||
+                    e.target === lightbox.querySelector(".lightbox-content")
+                ) {
+                    closeLB();
+                }
+            });
+
+            // ESC key
+            document.addEventListener("keydown", (e) => {
+                if (
+                    e.key === "Escape" &&
+                    !lightbox.classList.contains("hidden")
+                ) {
+                    closeLB();
+                }
+            });
+        }
+    });
+</script>
+
+<style>
+    html:not(.no-js) .anim-reveal-slow,
+    html:not(.no-js) .intro-text-anim p {
+        opacity: 0;
+    }
+
+    .project-hero {
+        position: relative;
+        height: 90vh; /* slightly less than 100vh if header is visible or 100 on desktop */
+        min-height: 600px;
+        display: flex;
+        align-items: flex-end;
+    }
+
+    .hero-img-wrap {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+    }
+
+    .project-hero-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            180deg,
+            rgba(30, 23, 16, 0) 40%,
+            rgba(30, 23, 16, 0.85) 100%
+        );
+    }
+
+    .hero-content {
+        width: 100%;
+        padding-bottom: 4rem;
+    }
+
+    .project-title {
+        font-size: var(--text-hero);
+        line-height: 1;
+        margin-bottom: 2rem;
+        max-width: 900px;
+    }
+
+    /* Gallery Masonry */
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+        .gallery-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .gallery-item.span-2 {
+            grid-column: span 2;
+        }
+    }
+
+    .gallery-item {
+        overflow: hidden;
+    }
+
+    .gallery-trigger {
+        background: none;
+        border: none;
+        padding: 0;
+    }
+
+    .gallery-img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        display: block;
+        will-change: transform;
+    }
+
+    @media (pointer: fine) {
+        .gallery-trigger:hover .gallery-img {
+            transform: scale(1.02);
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+    }
+
+    /* Materials */
+    .materials-flex {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 3rem;
+    }
+
+    .material-chip {
+        text-align: center;
+    }
+
+    .color-swatch {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        margin-inline: auto;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Lightbox */
+    .hidden {
+        display: none !important;
+    }
+    .fixed {
+        position: fixed;
+    }
+    .inset-0 {
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+    .z-50 {
+        z-index: 50;
+    }
+    .absolute {
+        position: absolute;
+    }
+    .top-6 {
+        top: 1.5rem;
+    }
+    .right-6 {
+        right: 1.5rem;
+    }
+    .p-2 {
+        padding: 0.5rem;
+    }
+    .p-4 {
+        padding: 1rem;
+    }
+    @media (min-width: 768px) {
+        .md\:p-12 {
+            padding: 3rem;
+        }
+    }
+    .max-h-full {
+        max-height: 100%;
+    }
+    .max-w-full {
+        max-width: 100%;
+    }
+    .object-contain {
+        object-fit: contain;
+    }
+
+    /* Utils used */
+    .text-white {
+        color: var(--color-white);
+    }
+    .text-surface {
+        color: var(--color-surface);
+    }
+    .text-accent-light {
+        color: var(--color-accent-light);
+    }
+    .uppercase {
+        text-transform: uppercase;
+    }
+    .tracking-widest {
+        letter-spacing: 0.1em;
+    }
+    .text-xs {
+        font-size: var(--text-xs);
+    }
+    .flex {
+        display: flex;
+    }
+    .flex-wrap {
+        flex-wrap: wrap;
+    }
+    .gap-8 {
+        gap: 2rem;
+    }
+    .block {
+        display: block;
+    }
+    .mb-1 {
+        margin-bottom: 0.25rem;
+    }
+    .mb-12 {
+        margin-bottom: 3rem;
+    }
+    .py-24 {
+        padding-block: 6rem;
+    }
+    .py-20 {
+        padding-block: 5rem;
+    }
+    .max-w-2xl {
+        max-width: 42rem;
+    }
+    .max-w-5xl {
+        max-width: 64rem;
+    }
+    .mx-auto {
+        margin-inline: auto;
+    }
+    .space-y-6 > * + * {
+        margin-top: 1.5rem;
+    }
+    .bg-surface {
+        background-color: var(--color-surface);
+    }
+    .bg-dark-section {
+        background-color: var(--color-dark-section);
+    }
+    .cursor-none {
+        /* cursor: none; */
+    }
+    .text-center {
+        text-align: center;
+    }
+    .text-2xl {
+        font-size: var(--text-2xl);
+    }
+    .mt-4 {
+        margin-top: 1rem;
+    }
+    .items-center {
+        align-items: center;
+    }
+    .justify-center {
+        justify-content: center;
+    }
+    .w-full {
+        width: 100%;
+    }
+    .h-full {
+        height: 100%;
+    }
+    .transition-colors {
+        transition: color 0.3s ease;
+    }
+    .hover\:text-accent:hover {
+        color: var(--color-accent);
+    }
+</style>

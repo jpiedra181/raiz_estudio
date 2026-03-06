@@ -1,0 +1,21 @@
+{
+  "name": "raiz-studio",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.6",
+    "astro": "^5.17.1",
+    "gsap": "^3.14.2",
+    "leaflet": "^1.9.4",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.9.21"
+  }
+}

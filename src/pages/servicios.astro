@@ -1,0 +1,489 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/layout/Navbar.astro";
+import Footer from "../components/layout/Footer.astro";
+---
+
+<BaseLayout title="Servicios">
+    <Navbar />
+
+    <main class="page-top-padding">
+        <!-- Hero Servicios -->
+        <header class="container text-center py-20">
+            <h1 class="font-heading text-hero mb-6 text-smooth-in">
+                Nuestros Servicios
+            </h1>
+            <p
+                class="font-body font-light text-lg max-w-2xl mx-auto text-smooth-in"
+                style="animation-delay: 0.2s"
+            >
+                Acompañamos a nuestros clientes desde la primera idea hasta el
+                último detalle, ya sea transformando una vivienda completa o
+                resolviendo dudas a distancia.
+            </p>
+        </header>
+
+        <!-- Servicio 1 -->
+        <section class="service-section">
+            <div class="container grid-split" id="servicio-residencial">
+                <div class="split-image slide-left">
+                    <img
+                        src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&q=90&fit=crop"
+                        alt="Interiorismo Residencial"
+                        class="full-cover"
+                    />
+                </div>
+                <div class="split-content slide-right">
+                    <span class="label-accent text-accent mb-4 block"
+                        >Servicio Presencial</span
+                    >
+                    <h2 class="font-heading text-3xl mb-6">
+                        Interiorismo Residencial
+                    </h2>
+                    <div class="text-ink-muted mb-8 space-y-4 font-light">
+                        <p>
+                            Pensado para quienes buscan transformar su vivienda
+                            de manera integral. Nos ocupamos de cada fase del
+                            proyecto, desde la nueva distribución espacial hasta
+                            la selección del mobiliario y el estilismo final.
+                        </p>
+                    </div>
+
+                    <h3 class="font-heading text-xl mb-4">¿Qué incluye?</h3>
+                    <ul class="check-list mb-8 font-light">
+                        <li>Reunión inicial y análisis del espacio</li>
+                        <li>Planteamiento de nueva distribución</li>
+                        <li>Diseño de mobiliario a medida, cocinas y baños</li>
+                        <li>Selección de materiales, iluminación y textiles</li>
+                        <li>Acompañamiento y coordinación de gremios</li>
+                    </ul>
+
+                    <a href="/contacto" class="btn-outline"
+                        >Hablemos de tu casa</a
+                    >
+                </div>
+            </div>
+        </section>
+
+        <!-- Servicio 2 -->
+        <section class="service-section bg-surface">
+            <div class="container grid-split bg-reverse">
+                <div class="split-content slide-left text-right-desktop">
+                    <span class="label-accent text-accent mb-4 block"
+                        >Servicio a Distancia</span
+                    >
+                    <h2 class="font-heading text-3xl mb-6">
+                        Consultoría Online
+                    </h2>
+                    <div class="text-ink-muted mb-8 space-y-4 font-light">
+                        <p>
+                            Si no te encuentras cerca de Madrid o prefieres
+                            gestionar tú misma las compras y la ejecución, este
+                            servicio es para ti. Te damos la hoja de ruta clara
+                            para conseguir ese resultado que buscas.
+                        </p>
+                    </div>
+
+                    <h3 class="font-heading text-xl mb-4">Modalidades</h3>
+                    <div class="mb-8 font-light flex flex-col gap-2">
+                        <p>
+                            <strong>1 hr Sesión de Resolución:</strong> Para dudas
+                            concretas.
+                        </p>
+                        <p>
+                            <strong>Pack Esencial:</strong> 3 sesiones + moodboard.
+                        </p>
+                        <p>
+                            <strong>Proyecto Completo Online:</strong> Diseñamos toda
+                            la estancia a distancia.
+                        </p>
+                    </div>
+
+                    <a href="/consultoria-online" class="btn-primary"
+                        >Descubre la Consultoría &rarr;</a
+                    >
+                </div>
+                <div class="split-image slide-right">
+                    <img
+                        src="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=1400&q=90&fit=crop"
+                        alt="Consultoría Online"
+                        class="full-cover object-left"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="faq-section container">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="font-heading text-3xl mb-12 text-center">
+                    Preguntas Frecuentes
+                </h2>
+
+                <div class="faq-item">
+                    <details class="faq-details">
+                        <summary class="faq-summary font-heading text-xl"
+                            >¿Hacéis proyectos parciales (solo una habitación)?</summary
+                        >
+                        <div
+                            class="faq-content font-light text-ink-muted mt-4 pb-4"
+                        >
+                            Sí, tanto en formato presencial como online. Creemos
+                            que cambiar un solo espacio bien pensado puede
+                            transformar tu experiencia del hogar entero.
+                        </div>
+                    </details>
+                </div>
+
+                <div class="faq-item border-top">
+                    <details class="faq-details">
+                        <summary class="faq-summary font-heading text-xl"
+                            >¿Os encargáis de contratar a la constructora?</summary
+                        >
+                        <div
+                            class="faq-content font-light text-ink-muted mt-4 pb-4"
+                        >
+                            Nosotras creamos el proyecto detallado y
+                            supervisamos que se ejecute fielmente. Podemos
+                            recomendarte empresas de confianza, pero la
+                            contratación directa se realiza entre tú y la
+                            constructora, para garantizarte transparencia total
+                            en los costes.
+                        </div>
+                    </details>
+                </div>
+
+                <div class="faq-item border-top">
+                    <details class="faq-details">
+                        <summary class="faq-summary font-heading text-xl"
+                            >¿Cuánto dura un proyecto residencial completo?</summary
+                        >
+                        <div
+                            class="faq-content font-light text-ink-muted mt-4 pb-4"
+                        >
+                            La fase de diseño suele durar entre 6 y 8 semanas.
+                            La fase de ejecución varía según la magnitud de la
+                            reforma, pero un proyecto integral oscila entre los
+                            4 y 6 meses en obra.
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <Footer />
+</BaseLayout>
+
+<script>
+    import { gsap, ScrollTrigger } from "../scripts/gsap-init";
+    import { animateWithReducedMotion } from "../scripts/gsap-init";
+
+    document.addEventListener("astro:page-load", () => {
+        animateWithReducedMotion(() => {
+            // Hero text smooth in
+            gsap.fromTo(
+                ".text-smooth-in",
+                { opacity: 0, y: 30 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    stagger: 0.2,
+                    ease: "power3.out",
+                },
+            );
+
+            // Section split reveals
+            const splits = document.querySelectorAll(".grid-split");
+            splits.forEach((split) => {
+                const left = split.querySelector(".slide-left");
+                const right = split.querySelector(".slide-right");
+
+                gsap.fromTo(
+                    left,
+                    { opacity: 0, x: -70 },
+                    {
+                        opacity: 1,
+                        x: 0,
+                        duration: 1,
+                        ease: "power3.out",
+                        scrollTrigger: {
+                            trigger: split,
+                            start: "top 75%",
+                            once: true,
+                        },
+                    },
+                );
+
+                gsap.fromTo(
+                    right,
+                    { opacity: 0, x: 70 },
+                    {
+                        opacity: 1,
+                        x: 0,
+                        duration: 1,
+                        ease: "power3.out",
+                        delay: 0.2,
+                        scrollTrigger: {
+                            trigger: split,
+                            start: "top 75%",
+                            once: true,
+                        },
+                    },
+                );
+            });
+        });
+    });
+</script>
+
+<style>
+    .page-top-padding {
+        padding-top: 120px;
+    }
+
+    .text-smooth-in {
+        opacity: 0; /* JS will animate it */
+    }
+
+    .service-section {
+        padding-block: clamp(4rem, 8vw, 8rem);
+        overflow: hidden;
+    }
+
+    .grid-split {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+
+    @media (min-width: 1024px) {
+        .grid-split {
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 6rem;
+        }
+    }
+
+    @media (max-width: 1023px) {
+        .bg-reverse {
+            display: flex;
+            flex-direction: column-reverse;
+        }
+    }
+
+    .split-image {
+        aspect-ratio: 4 / 5;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    @media (min-width: 1024px) {
+        .split-image {
+            aspect-ratio: auto;
+            height: 85vh;
+            max-height: 800px;
+        }
+    }
+
+    .full-cover {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .object-left {
+        object-position: left center;
+    }
+
+    .check-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .check-list li {
+        position: relative;
+        padding-left: 2rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .check-list li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 4px;
+        width: 20px;
+        height: 20px;
+        background-image: url('data:image/svg+xml;utf8,<svg fill="none" stroke="%238B5E3C" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>');
+        background-repeat: no-repeat;
+    }
+
+    .btn-outline {
+        display: inline-block;
+        border: 1px solid var(--color-ink);
+        padding: 1rem 2rem;
+        font-family: var(--font-family-body);
+        font-size: var(--text-sm);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        transition: all 0.3s;
+        background: transparent;
+        color: var(--color-ink);
+    }
+
+    .btn-outline:hover {
+        background: var(--color-ink);
+        color: var(--color-white);
+    }
+
+    /* FAQ Styles */
+    .faq-section {
+        padding-block: var(--section-padding);
+    }
+
+    .faq-item {
+        border-bottom: 1px solid var(--color-surface-deep);
+    }
+
+    .faq-item.border-top {
+        border-top: 1px solid var(--color-surface-deep);
+        border-bottom: none;
+    }
+
+    .faq-item:last-child {
+        border-bottom: 1px solid var(--color-surface-deep);
+    }
+
+    .faq-details {
+        padding-block: 1.5rem;
+    }
+
+    /* Details Marker */
+    .faq-details > summary {
+        list-style: none; /* specifically for webkit mostly */
+    }
+
+    .faq-details > summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .faq-summary {
+        cursor: pointer;
+        position: relative;
+        padding-right: 2rem;
+        transition: color 0.3s;
+    }
+
+    .faq-summary:hover {
+        color: var(--color-accent);
+    }
+
+    .faq-summary::after {
+        content: "+";
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.5rem;
+        font-weight: 300;
+        transition: transform 0.3s ease;
+    }
+
+    .faq-details[open] .faq-summary::after {
+        transform: translateY(-50%) rotate(45deg); /* Turns into an X */
+    }
+
+    .faq-content {
+        /* Basic animation using details HTML5 is tricky, CSS max-height helps usually, but simple block is ok for Astro without heavy JS */
+        animation: fadeInDown 0.4s ease forwards;
+    }
+
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Utils */
+    .py-20 {
+        padding-block: 5rem;
+    }
+    .mb-6 {
+        margin-bottom: 1.5rem;
+    }
+    .max-w-2xl {
+        max-width: 42rem;
+    }
+    .max-w-3xl {
+        max-width: 48rem;
+    }
+    .mx-auto {
+        margin-inline: auto;
+    }
+    .space-y-4 > * + * {
+        margin-top: 1rem;
+    }
+    .mb-4 {
+        margin-bottom: 1rem;
+    }
+    .mb-8 {
+        margin-bottom: 2rem;
+    }
+    .mb-12 {
+        margin-bottom: 3rem;
+    }
+    .text-3xl {
+        font-size: var(--text-3xl);
+    }
+    .text-xl {
+        font-size: var(--text-xl);
+    }
+    .text-accent {
+        color: var(--color-accent);
+    }
+    .bg-surface {
+        background-color: var(--color-surface);
+    }
+    .text-center {
+        text-align: center;
+    }
+    .block {
+        display: block;
+    }
+    .pb-4 {
+        padding-bottom: 1rem;
+    }
+    .mt-4 {
+        margin-top: 1rem;
+    }
+
+    .btn-primary {
+        display: inline-block;
+        background-color: var(--color-accent);
+        color: var(--color-white);
+        padding: 1rem 2rem;
+        font-family: var(--font-family-body);
+        font-size: var(--text-sm);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        transition: background-color 0.3s;
+    }
+    .btn-primary:hover {
+        background-color: var(--color-accent-light);
+    }
+
+    .flex {
+        display: flex;
+    }
+    .flex-col {
+        flex-direction: column;
+    }
+    .gap-2 {
+        gap: 0.5rem;
+    }
+</style>
