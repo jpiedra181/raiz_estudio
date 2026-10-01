@@ -1,0 +1,130 @@
+---
+import Media from "../ui/Media.astro";
+import Button from "../ui/Button.astro";
+import { images } from "../../data/studio";
+import { introLines } from "../../lib/intro";
+---
+
+<section class="hero theme-dark" aria-labelledby="hero-title">
+    <div class="hero__media-wrap" data-hero-bg>
+        <Media
+            src={images.homeHero}
+            alt="Salón a doble altura al atardecer, con sofá de lino y lámpara cálida junto a grandes ventanales"
+            preset="full"
+            sizes="100vw"
+            priority
+            position="50% 58%"
+            class="hero__media"
+            data-intro-zoom
+        />
+    </div>
+    <div class="hero__shade" aria-hidden="true"></div>
+
+    <div class="hero__content wrap" data-hero-content>
+        <p class="eyebrow hero__eyebrow" data-intro style="--i: 2">
+            Interiorismo residencial <span aria-hidden="true">·</span> Madrid y online
+        </p>
+
+        <h1
+            id="hero-title"
+            class="t-display hero__title"
+            set:html={introLines("Tu casa debería|<em>sentirse como tú.</em>")}
+        />
+
+        <div class="hero__aside">
+            <p class="t-lg hero__text" data-intro style="--i: 3">
+                Diseñamos hogares que nacen de quién eres, no de las tendencias del momento.
+            </p>
+            <div class="hero__actions" data-intro style="--i: 4">
+                <Button href="/proyectos" variant="solid">Ver proyectos</Button>
+                <a href="/contacto" class="link">Empieza tu proyecto</a>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+<style>
+    .hero {
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+        height: 100vh;
+        height: 100svh;
+        min-height: 36rem;
+        overflow: hidden;
+        isolation: isolate;
+    }
+
+    .hero__media-wrap {
+        position: absolute;
+        inset: 0;
+        z-index: -2;
+        will-change: transform;
+    }
+
+    .hero__media-wrap :global(.hero__media) {
+        width: 100%;
+        height: 100%;
+    }
+
+    .hero__shade {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background:
+            linear-gradient(180deg, rgb(21 18 16 / 0.55) 0%, rgb(21 18 16 / 0) 24%),
+            linear-gradient(0deg, rgb(21 18 16 / 0.82) 0%, rgb(21 18 16 / 0.35) 38%, rgb(21 18 16 / 0) 62%);
+    }
+
+    .hero__content {
+        display: grid;
+        gap: 2.25rem;
+        padding-bottom: clamp(5.5rem, 10vh, 8rem);
+    }
+
+    .hero__eyebrow {
+        color: var(--c-sand);
+    }
+
+    .hero__title {
+        text-wrap: initial;
+    }
+
+    .hero__aside {
+        display: grid;
+        gap: 2rem;
+        max-width: 30rem;
+    }
+
+    .hero__text {
+        color: rgb(246 241 234 / 0.88);
+    }
+
+    .hero__actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1.25rem 2rem;
+    }
+
+    @media (width >= 1024px) {
+        .hero__content {
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: end;
+            column-gap: var(--gap);
+        }
+
+        .hero__eyebrow {
+            grid-column: 1 / -1;
+        }
+
+        .hero__aside {
+            width: min(26rem, 30vw);
+            padding-bottom: 1.25rem;
+        }
+    }
+
+
+</style>

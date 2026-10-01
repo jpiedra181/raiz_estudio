@@ -1,0 +1,176 @@
+---
+import Chapter from "../ui/Chapter.astro";
+import Media from "../ui/Media.astro";
+import Arrow from "../ui/Arrow.astro";
+import { services } from "../../data/studio";
+---
+
+<section class="home-services section theme-dark" aria-labelledby="services-title" data-services>
+    <div class="wrap">
+        <header class="home-services__head">
+            <Chapter num="03" label="Servicios" />
+            <h2 id="services-title" class="t-h1" data-split>Dos maneras de <em>acompañarte</em></h2>
+        </header>
+
+        <ul class="home-services__list">
+            {
+                services.map((service, i) => (
+                    <li class="srow" data-service-row>
+                        <span class="srow__num" aria-hidden="true">
+                            {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <div class="srow__main">
+                            <p class="eyebrow t-accent srow__kicker">{service.kicker}</p>
+                            <h3 class="srow__title">
+                                <a href={service.href} class="srow__link">
+                                    {service.title}
+                                </a>
+                            </h3>
+                        </div>
+                        <p class="srow__summary t-soft">{service.summary}</p>
+                        <span class="srow__cta" aria-hidden="true">
+                            <Arrow />
+                        </span>
+                        <Media
+                            src={service.image}
+                            alt=""
+                            ratio="4 / 5"
+                            preset="small"
+                            sizes="(min-width: 1024px) 22rem, 100vw"
+                            class="srow__preview"
+                            data-service-preview
+                        />
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+</section>
+
+
+<style>
+    .home-services__head {
+        display: grid;
+        gap: 2rem;
+        margin-bottom: clamp(3rem, 7vw, 7rem);
+    }
+
+    .home-services__list {
+        border-top: 1px solid var(--line);
+    }
+
+    .srow {
+        position: relative;
+        display: grid;
+        gap: 1.25rem;
+        padding-block: clamp(2.5rem, 5vw, 4.5rem);
+        border-bottom: 1px solid var(--line);
+    }
+
+    .srow__num {
+        font-size: var(--fs-xs);
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        color: var(--fg-soft);
+    }
+
+    .srow__kicker {
+        margin-bottom: 0.9rem;
+    }
+
+    .srow__title {
+        font-size: var(--fs-h2);
+        font-weight: 300;
+        line-height: 1;
+        letter-spacing: -0.025em;
+    }
+
+    /* Stretched link: the whole row is the click target */
+    .srow__link::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+    }
+
+    .srow__link:focus-visible {
+        outline: none;
+    }
+
+    .srow:has(.srow__link:focus-visible) {
+        outline: 2px solid var(--fg);
+        outline-offset: 4px;
+    }
+
+    .srow__summary {
+        max-width: 34rem;
+    }
+
+    .srow__cta {
+        display: inline-grid;
+        place-items: center;
+        width: 3.5rem;
+        height: 3.5rem;
+        border: 1px solid var(--line-strong);
+        border-radius: 50%;
+        transition:
+            background-color 0.5s var(--ease-out),
+            color 0.5s var(--ease-out),
+            border-color 0.5s var(--ease-out);
+    }
+
+    .srow__cta :global(svg) {
+        width: 1rem;
+        height: 1rem;
+        transition: transform 0.6s var(--ease-out);
+    }
+
+    .srow :global(.srow__preview) {
+        margin-top: 0.5rem;
+    }
+
+    @media (width >= 1024px) {
+        .srow {
+            grid-template-columns: 4rem minmax(0, 1.25fr) minmax(0, 1fr) auto;
+            align-items: center;
+            column-gap: var(--gap);
+        }
+
+        .srow__summary {
+            align-self: center;
+        }
+
+        .srow :global(.srow__preview) {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            width: 20rem;
+            margin: 0;
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.85);
+        }
+
+        .srow__title {
+            transition: transform 0.8s var(--ease-out);
+        }
+    }
+
+    @media (hover: hover) {
+        .srow:hover .srow__title {
+            transform: translate3d(1rem, 0, 0);
+        }
+
+        .srow:hover .srow__cta {
+            background-color: var(--c-paper);
+            border-color: var(--c-paper);
+            color: var(--c-night);
+        }
+
+        .srow:hover .srow__cta :global(svg) {
+            transform: rotate(-45deg);
+        }
+    }
+</style>

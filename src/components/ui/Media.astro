@@ -1,0 +1,93 @@
+---
+import type { ImageMetadata } from "astro";
+import type { HTMLAttributes } from "astro/types";
+import { Picture } from "astro:assets";
+import { resolveImage } from "../../lib/images";
+
+type Preset = "full" | "large" | "medium" | "small";
+
+interface Props extends HTMLAttributes<"div"> {
+    src: string;
+    alt: string;
+    /** Rendered width hint for the browser, e.g. "(min-width: 900px) 50vw, 100vw" */
+    sizes?: string;
+    preset?: Preset;
+    /** Above-the-fold image: eager + high fetch priority */
+    priority?: boolean;
+    /** Near-the-fold image: load eagerly without raising its priority */
+    eager?: boolean;
+    /** CSS aspect-ratio for the frame. Omit to let the parent size it. */
+    ratio?: string;
+    /** Object position of the image inside its frame */
+    position?: string;
+    /** Clip-path reveal when scrolled into view */
+    reveal?: boolean;
+    /** Inner parallax strength (0.05 – 0.25 feels natural) */
+    parallax?: number;
+    /** Shared element name for page transitions */
+    transitionName?: string;
+}
+
+const {
+    src,
+    alt,
+    sizes = "100vw",
+    preset = "large",
+    priority = false,
+    eager = false,
+    ratio,
+    position,
+    reveal = false,
+    parallax,
+    transitionName,
+    class: className,
+    style,
+    ...rest
+} = Astro.props;
+
+const widthsByPreset: Record<Preset, number[]> = {
+    full: [640, 960, 1280, 1600, 2000, 2400],
+    large: [480, 800, 1200, 1600, 2000],
+    medium: [400, 640, 960, 1280],
+    small: [320, 480, 720, 960],
+};
+
+const image = resolveImage(src);
+const isRemote = typeof image === "string";
+
+const pictureProps = {
+    alt,
+    formats: ["avif", "webp"] as ("avif" | "webp")[],
+    fallbackFormat: "webp" as const,
+    widths: widthsByPreset[preset],
+    sizes,
+    loading: priority || eager ? ("eager" as const) : ("lazy" as const),
+    fetchpriority: priority ? ("high" as const) : ("auto" as const),
+    decoding: priority ? ("sync" as const) : ("async" as const),
+    style: position ? `object-position: ${position}` : undefined,
+};
+
+const frameStyle = [
+    ratio && `aspect-ratio: ${ratio}`,
+    transitionName && `view-transition-name: ${transitionName}`,
+    typeof style === "string" ? style : undefined,
+]
+    .filter(Boolean)
+    .join("; ");
+---
+
+<div
+    class:list={["media", parallax && "media--parallax", className]}
+    style={frameStyle || undefined}
+    data-media-reveal={reveal ? "" : undefined}
+    data-parallax={parallax}
+    {...rest}
+>
+    {
+        isRemote ? (
+            <Picture src={image as string} inferSize {...pictureProps} />
+        ) : (
+            <Picture src={image as ImageMetadata} {...pictureProps} />
+        )
+    }
+</div>

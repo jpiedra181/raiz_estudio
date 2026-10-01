@@ -1,46 +1,62 @@
-# Astro Starter Kit: Basics
+# Raíz Estudio
 
-```sh
-npm create astro@latest -- --template basics
-```
+Web de Raíz Estudio, estudio de interiorismo residencial. Sitio estático con [Astro](https://astro.build), navegación con transiciones de página (View Transitions), scroll suave con [Lenis](https://lenis.darkroom.engineering) y animaciones con [GSAP](https://gsap.com).
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Comandos
 
-## 🚀 Project Structure
+| Comando           | Acción                                              |
+| :---------------- | :-------------------------------------------------- |
+| `npm install`     | Instala las dependencias                            |
+| `npm run dev`     | Servidor de desarrollo en `localhost:4321`          |
+| `npm run build`   | Genera el sitio de producción en `./dist/`          |
+| `npm run preview` | Sirve el build de producción en local               |
+| `npx astro check` | Comprobación de tipos                               |
 
-Inside of your Astro project, you'll see the following folders and files:
+El primer `build` optimiza todas las imágenes (AVIF + WebP en varios tamaños) y tarda unos minutos; los siguientes reutilizan la caché.
+
+## Estructura
 
 ```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+src/
+├── assets/
+│   ├── fonts/        Newsreader (display) y DM Sans, subconjunto español, autoalojadas
+│   └── images/       Fotos locales de proyectos y proceso (se optimizan en el build)
+├── components/
+│   ├── home/         Secciones de la portada
+│   ├── layout/       Cabecera + menú, pie, cursor, fuentes, logo
+│   ├── projects/     Tarjeta de proyecto y visor de galería
+│   └── ui/           Piezas reutilizables: Media, Button, PageHero, Faq, Marquee…
+├── data/             Contenido: proyectos, servicios, equipo, testimonios, datos de contacto
+├── layouts/          BaseLayout (SEO, Open Graph, transiciones, preferencia de movimiento)
+├── lib/              Utilidades (resolución de imágenes, títulos de entrada)
+├── pages/            Rutas del sitio
+├── scripts/          Comportamiento en cliente (un único bundle, ver abajo)
+└── styles/global.css Sistema de diseño: tokens, tipografía, botones, estados de animación
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Contenido
 
-## 🧞 Commands
+- **Proyectos**: `src/data/projects.ts`. La primera imagen de cada proyecto es la portada. Las imágenes pueden ser URLs remotas o rutas locales relativas a `src/assets/images` (p. ej. `/projects/project_2/project2_1.webp`). Marca `featured: true` para que aparezca en la portada.
+- **Textos del estudio** (servicios, proceso, equipo, valores, testimonios, marcas): `src/data/studio.ts`.
+- **Contacto, navegación y redes**: `src/data/site.ts`.
 
-All commands are run from the root of the project, from a terminal:
+Las imágenes nuevas van en `src/assets/images/` (no en `public/`) para que Astro genere sus versiones optimizadas.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Formulario de contacto
 
-## 👀 Want to learn more?
+Define la variable de entorno `PUBLIC_FORM_ENDPOINT` con la URL de un servicio de formularios (por ejemplo Formspree) para recibir los envíos. Sin ella:
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- con JavaScript, el formulario muestra una confirmación **simulada**;
+- sin JavaScript, abre el cliente de correo del visitante.
+
+## Mapa
+
+El mapa de `/contacto` usa Leaflet con teselas de OpenStreetMap y solo se descarga cuando entra en pantalla. Para tráfico alto, conviene pasar a un proveedor con clave (MapTiler, Stadia, CARTO) cambiando la URL en `src/scripts/contact.ts`.
+
+## Animación y accesibilidad
+
+- Los elementos se animan mediante atributos (`data-reveal`, `data-split`, `data-words`, `data-media-reveal`, `data-parallax`, `data-draw`); ver `src/scripts/animations.ts`.
+- Las entradas de cabecera (`data-intro`, títulos con `introLines`) son CSS puro: empiezan en el primer pintado y no retrasan el LCP.
+- Se respeta `prefers-reduced-motion` y el pie incluye un interruptor «Animaciones» que se recuerda entre visitas.
+- Sin JavaScript todo el contenido es visible.
+- `src/scripts/lifecycle.ts` monta cada módulo al cargar el DOM y lo desmonta antes de cada navegación, de modo que no quedan listeners ni ScrollTriggers huérfanos.

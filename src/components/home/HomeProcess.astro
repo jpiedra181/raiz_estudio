@@ -1,0 +1,123 @@
+---
+import Chapter from "../ui/Chapter.astro";
+import Button from "../ui/Button.astro";
+
+const steps = [
+    {
+        title: "Nos conocemos",
+        text: "Una llamada o videollamada sin compromiso para entender qué buscas, cómo vives y qué te gustaría sentir en tu casa.",
+    },
+    {
+        title: "Diseñamos juntos",
+        text: "Una propuesta hecha a tu medida, con moodboard, planos, materiales y texturas que podrás tocar antes de decidir.",
+    },
+    {
+        title: "Tu hogar, listo",
+        text: "Te acompañamos hasta el final, coordinando cada detalle para que solo tengas que abrir la puerta y quedarte.",
+    },
+];
+---
+
+<section class="home-process section" aria-labelledby="process-title">
+    <div class="wrap">
+        <header class="home-process__head">
+            <Chapter num="04" label="Proceso" />
+            <h2 id="process-title" class="t-h1" data-split>De principio a fin, <em>un camino sereno</em></h2>
+            <div data-reveal class="home-process__cta">
+                <Button href="/proceso">Ver el proceso completo</Button>
+            </div>
+        </header>
+
+        <ol class="home-process__steps">
+            {
+                steps.map((step, i) => (
+                    <li class="pstep">
+                        <span class="pstep__rule" data-draw aria-hidden="true" />
+                        <span class="pstep__num" aria-hidden="true" data-reveal>
+                            {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <h3 class="t-h3 pstep__title" data-reveal>
+                            {step.title}
+                        </h3>
+                        <p class="t-soft pstep__text" data-reveal>
+                            {step.text}
+                        </p>
+                    </li>
+                ))
+            }
+        </ol>
+    </div>
+</section>
+
+<style>
+    .home-process__head {
+        display: grid;
+        gap: 2rem;
+        margin-bottom: clamp(3.5rem, 8vw, 7rem);
+    }
+
+    @media (width >= 900px) {
+        .home-process__head {
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            column-gap: var(--gap);
+            align-items: end;
+        }
+
+        .home-process__head :global(.chapter) {
+            grid-column: 1 / -1;
+        }
+
+        .home-process__head h2 {
+            grid-column: 1 / 9;
+        }
+
+        .home-process__cta {
+            grid-column: 10 / 13;
+            justify-self: end;
+            padding-bottom: 0.75rem;
+        }
+    }
+
+    .home-process__steps {
+        display: grid;
+        gap: 3.5rem var(--gap);
+    }
+
+    @media (width >= 768px) {
+        .home-process__steps {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+
+    .pstep {
+        position: relative;
+        display: grid;
+        align-content: start;
+        gap: 1rem;
+        padding-top: 1.75rem;
+    }
+
+    .pstep__rule {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background-color: var(--fg);
+        opacity: 0.35;
+    }
+
+    .pstep__num {
+        font-family: var(--ff-serif);
+        font-size: clamp(4rem, 2.5rem + 5vw, 8rem);
+        font-style: italic;
+        font-weight: 300;
+        line-height: 0.85;
+        color: var(--accent);
+        margin-bottom: clamp(1rem, 3vw, 3rem);
+    }
+
+    .pstep__text {
+        max-width: 24rem;
+    }
+</style>

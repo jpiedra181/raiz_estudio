@@ -1,456 +1,250 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Navbar from "../components/layout/Navbar.astro";
-import Footer from "../components/layout/Footer.astro";
+import PageHero from "../components/ui/PageHero.astro";
+import Chapter from "../components/ui/Chapter.astro";
+import Button from "../components/ui/Button.astro";
+import { images } from "../data/studio";
+
+const plans = [
+    {
+        name: "Primera consulta",
+        format: "1 h de videollamada",
+        description:
+            "Diagnóstico y orientación. Ideal si tienes dudas concretas sobre distribución, color o qué piezas comprar.",
+        price: "95 €",
+        unit: "sesión",
+        cta: "Reservar sesión",
+    },
+    {
+        name: "Pack esencial",
+        format: "3 sesiones + moodboard",
+        description:
+            "El impulso perfecto para transformar una estancia. Definimos estilo y colores y te entregamos un mapa visual para guiar tus compras.",
+        price: "250 €",
+        unit: "pack",
+        cta: "Elegir el pack",
+        featured: true,
+    },
+    {
+        name: "Proyecto completo",
+        format: "Seguimiento integral",
+        description:
+            "Diseñamos toda tu vivienda a distancia: planos, infografías y un listado exacto de compras listo para ejecutar.",
+        price: "A medida",
+        unit: "presupuesto personalizado",
+        cta: "Solicitar información",
+    },
+];
+
+const steps = [
+    { title: "Cuestionario previo", text: "Nos cuentas qué necesitas y nos envías fotos y medidas básicas del espacio." },
+    { title: "Análisis", text: "Estudiamos tus necesidades y preparamos las primeras ideas antes de vernos." },
+    { title: "Sesión online", text: "Compartimos pantalla, ideas y referencias, y resolvemos tus dudas en directo." },
+    { title: "Entrega del dosier", text: "Recibes el resumen o el proyecto completo, listo para ejecutar a tu ritmo." },
+];
 ---
 
-<BaseLayout title="Consultoría Online">
-    <Navbar />
+<BaseLayout
+    title="Consultoría online"
+    description="Consultoría de interiorismo online: sesiones por videollamada, moodboards y proyectos completos a distancia en toda España."
+    image={images.consultingHero}
+    headerTheme="light"
+>
+    <PageHero
+        variant="image"
+        eyebrow="Consultoría online · Toda España"
+        title="Diseño profesional,|<em>desde donde estés</em>"
+        intro="La distancia no es un obstáculo para vivir en un espacio pensado para ti. Elige la modalidad que mejor se adapta a tu momento."
+        image={images.consultingHero}
+        imageAlt="Salón luminoso en tonos crema con espejos de fibra natural"
+        position="50% 55%"
+    />
 
-    <main>
-        <!-- Image Hero -->
-        <section class="hero-video relative">
-            <div class="hero-bg">
-                <img
-                    src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=1800&q=90&fit=crop"
-                    alt="Interiorismo cálido con lino y madera"
-                    decoding="async"
-                    fetchpriority="high"
-                    class="bg-img"
-                    sizes="100vw"
-                />
-                <div class="hero-overlay"></div>
-            </div>
+    <section class="plans section" aria-labelledby="plans-title">
+        <div class="wrap">
+            <header class="plans__head">
+                <Chapter num="01" label="Modalidades" />
+                <h2 id="plans-title" class="t-h1" data-split>Elige cómo <em>empezar</em></h2>
+            </header>
 
-            <div class="container relative z-10 hero-video-content anim-up">
-                <h1 class="font-heading text-hero text-white mb-6">
-                    Diseño profesional para tu hogar,<br
-                        class="hidden-md-down"
-                    /> desde donde estés.
-                </h1>
-                <p class="font-body text-xl text-surface max-w-2xl font-light">
-                    La distancia no es un obstáculo para vivir en un espacio
-                    diseñado especialmente para ti. Descubre nuestras
-                    modalidades de consultoría a medida.
-                </p>
-            </div>
-        </section>
+            <ul class="plans__grid">
+                {
+                    plans.map((plan) => (
+                        <li class:list={["plan", plan.featured && "plan--featured theme-dark"]} data-reveal>
+                            {plan.featured && <p class="plan__badge eyebrow">Más solicitado</p>}
+                            <h3 class="t-h3 plan__name">{plan.name}</h3>
+                            <p class="eyebrow t-accent">{plan.format}</p>
+                            <p class="t-soft plan__text">{plan.description}</p>
+                            <p class="plan__price">
+                                <span class="plan__amount">{plan.price}</span>
+                                <span class="plan__unit t-soft">/ {plan.unit}</span>
+                            </p>
+                            <Button
+                                href="/contacto?servicio=consultoria-online"
+                                variant={plan.featured ? "solid" : "outline"}
+                                class="plan__cta"
+                            >
+                                {plan.cta}
+                            </Button>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+    </section>
 
-        <!-- Pricing Cards -->
-        <section class="pricing-section bg-surface py-24">
-            <div class="container max-w-5xl mx-auto">
-                <div class="grid grid-cols gap-8">
-                    <!-- Card 1 -->
-                    <div class="pricing-card bg-bg border-card">
-                        <h3 class="font-heading text-2xl mb-2">
-                            Primera Consulta
-                        </h3>
-                        <p class="font-accent label-accent text-accent mb-6">
-                            1h videollamada
-                        </p>
-                        <p class="font-light text-ink-muted mb-8 min-h-[4rem]">
-                            Diagnóstico rápido y orientación. Ideal si tienes
-                            dudas específicas sobre distribución, color o qué
-                            piezas comprar.
-                        </p>
-                        <div class="price font-heading text-3xl mb-8">
-                            95€ / sesión
-                        </div>
-                        <a
-                            href="/contacto?servicio=consultoria-online"
-                            class="btn-outline w-full text-center"
-                            >Reservar sesión</a
-                        >
-                    </div>
-
-                    <!-- Card 2 -->
-                    <div class="pricing-card bg-bg border-card scale-up">
-                        <div
-                            class="popular-tag bg-accent text-white font-accent text-xs tracking-widest uppercase py-1 px-4 text-center absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full shadow-lg"
-                        >
-                            Más solicitado
-                        </div>
-                        <h3 class="font-heading text-2xl mb-2">
-                            Pack Esencial
-                        </h3>
-                        <p class="font-accent label-accent text-accent mb-6">
-                            3 sesiones + Moodboard
-                        </p>
-                        <p class="font-light text-ink-muted mb-8 min-h-[4rem]">
-                            El empujón perfecto para transformar una estancia.
-                            Definimos estilo, colores y te entregamos un mapa
-                            visual para guiar tus compras.
-                        </p>
-                        <div class="price font-heading text-3xl mb-8">
-                            250€ / pack
-                        </div>
-                        <a
-                            href="/contacto?servicio=consultoria-online"
-                            class="btn-primary w-full text-center"
-                            >Elegir Pack</a
-                        >
-                    </div>
-
-                    <!-- Card 3 -->
-                    <div class="pricing-card bg-bg border-card">
-                        <h3 class="font-heading text-2xl mb-2">
-                            Proyecto Completo
-                        </h3>
-                        <p class="font-accent label-accent text-accent mb-6">
-                            Seguimiento integral
-                        </p>
-                        <p class="font-light text-ink-muted mb-8 min-h-[4rem]">
-                            Diseñamos toda tu vivienda a distancia. Te
-                            entregamos planos, infografías y listado exacto de
-                            compras.
-                        </p>
-                        <div class="price font-heading text-3xl mb-8">
-                            Presupuesto personalizado
-                        </div>
-                        <a
-                            href="/contacto?servicio=consultoria-online"
-                            class="btn-outline w-full text-center"
-                            >Solicitar info</a
-                        >
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Timeline / Steps -->
-        <section class="timeline-section py-24">
-            <div class="container">
-                <h2 class="font-heading text-3xl text-center mb-16">
-                    Cómo funciona
-                </h2>
-
-                <div class="steps-horizontal">
-                    <div class="step-h">
-                        <span
-                            class="step-num font-heading text-4xl text-surface-deep mb-4 block"
-                            >01</span
-                        >
-                        <h4 class="font-heading text-xl mb-2">
-                            Cuestionario previo
-                        </h4>
-                        <p class="font-light text-ink-muted text-sm">
-                            Nos cuentas qué necesitas, envías fotos y medidas
-                            básicas del espacio.
-                        </p>
-                    </div>
-                    <div class="step-h">
-                        <span
-                            class="step-num font-heading text-4xl text-surface-deep mb-4 block"
-                            >02</span
-                        >
-                        <h4 class="font-heading text-xl mb-2">Análisis</h4>
-                        <p class="font-light text-ink-muted text-sm">
-                            Estudiamos tus necesidades y preparamos las primeras
-                            ideas.
-                        </p>
-                    </div>
-                    <div class="step-h">
-                        <span
-                            class="step-num font-heading text-4xl text-surface-deep mb-4 block"
-                            >03</span
-                        >
-                        <h4 class="font-heading text-xl mb-2">Sesión Online</h4>
-                        <p class="font-light text-ink-muted text-sm">
-                            Nos conectamos por videollamada para compartir
-                            pantalla, ideas y resolver dudas en directo.
-                        </p>
-                    </div>
-                    <div class="step-h">
-                        <span
-                            class="step-num font-heading text-4xl text-surface-deep mb-4 block"
-                            >04</span
-                        >
-                        <h4 class="font-heading text-xl mb-2">
-                            Entrega de dosier
-                        </h4>
-                        <p class="font-light text-ink-muted text-sm">
-                            Te enviamos el resumen de la sesión o el proyecto
-                            completo, listo para que lo ejecutes a tu ritmo.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <Footer />
+    <section class="how section theme-linen" aria-labelledby="how-title">
+        <div class="wrap">
+            <header class="how__head">
+                <Chapter num="02" label="Cómo funciona" />
+                <h2 id="how-title" class="t-h1" data-split>Cuatro pasos, <em>sin moverte de casa</em></h2>
+            </header>
+            <ol class="how__steps">
+                {
+                    steps.map((step, i) => (
+                        <li class="how__step">
+                            <span class="how__rule" data-draw aria-hidden="true" />
+                            <span class="how__num" aria-hidden="true" data-reveal>
+                                {String(i + 1).padStart(2, "0")}
+                            </span>
+                            <h3 class="t-h4" data-reveal>
+                                {step.title}
+                            </h3>
+                            <p class="t-soft" data-reveal>
+                                {step.text}
+                            </p>
+                        </li>
+                    ))
+                }
+            </ol>
+        </div>
+    </section>
 </BaseLayout>
 
-<script>
-    import { gsap } from "../scripts/gsap-init";
-
-    document.addEventListener("astro:page-load", () => {
-        // Basic init animation
-        const isReduced = window.matchMedia(
-            "(prefers-reduced-motion: reduce)",
-        ).matches;
-        if (!isReduced) {
-            gsap.fromTo(
-                ".anim-up",
-                { opacity: 0, y: 50 },
-                { opacity: 1, y: 0, duration: 1.2, ease: "power3.out" },
-            );
-        } else {
-            gsap.set(".anim-up", { opacity: 1, y: 0 });
-        }
-    });
-</script>
-
 <style>
-    html:not(.no-js) .anim-up {
-        opacity: 0;
+    .plans__head,
+    .how__head {
+        display: grid;
+        gap: 2rem;
+        margin-bottom: clamp(3rem, 7vw, 6rem);
     }
 
-    .hero-video {
-        height: 100vh;
-        height: 100svh;
-        display: flex;
-        align-items: center;
-        overflow: hidden;
+    .plans__grid {
+        display: grid;
+        gap: var(--gap);
     }
 
-    .bg-video,
-    .bg-img {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: 0;
-    }
-
-    .hero-overlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-            180deg,
-            rgba(255, 255, 255, 0.85) 0%,
-            rgba(30, 23, 16, 0.2) 15%,
-            rgba(30, 23, 16, 0.9) 100%
-        );
-    }
-
-    .hero-video-content {
-        margin-top: 15vh; /* Push down a bit for header */
-    }
-
-    /* Pricing */
-    .grid-cols {
-        display: grid !important;
-        grid-template-columns: repeat(1, minmax(0, 1fr));
-    }
-    @media (min-width: 1024px) {
-        .grid-cols {
+    @media (width >= 1024px) {
+        .plans__grid {
             grid-template-columns: repeat(3, minmax(0, 1fr));
+            align-items: stretch;
         }
     }
 
-    .gap-8 {
-        gap: 2rem;
-    }
-    .py-24 {
-        padding-block: 6rem;
-    }
-    .max-w-5xl {
-        /* max-width: 64rem; */
-    }
-    .mx-auto {
-        /* margin-inline: auto; */
-    }
-    .bg-surface {
-        background-color: var(--color-surface);
-    }
-    .bg-bg {
-        background-color: var(--color-bg);
-    }
-    .text-white {
-        color: var(--color-white);
-    }
-    .text-surface {
-        color: var(--color-surface);
-    }
-    .text-accent {
-        color: var(--color-accent);
-    }
-    .text-surface-deep {
-        color: var(--color-surface-deep);
-    }
-    .popular-tag {
-        background-color: var(--color-accent);
-    }
-
-    .pricing-card {
+    .plan {
         position: relative;
-        padding: 3rem 2rem;
-        border: 1px solid var(--color-surface-deep);
         display: flex;
         flex-direction: column;
-        transition:
-            transform 0.3s,
-            border-color 0.3s,
-            box-shadow 0.3s;
+        gap: 1rem;
+        padding: clamp(2rem, 3.5vw, 3rem);
+        border: 1px solid var(--line-strong);
     }
 
-    .price {
-        font-size: var(--text-2xl);
-        font-weight: 500;
+    .plan--featured {
+        border-color: var(--c-night);
     }
 
-    @media (pointer: fine) {
-        .pricing-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(30, 23, 16, 0.05);
-            border-color: var(--color-accent-light);
+    @media (width >= 1024px) {
+        .plan--featured {
+            margin-block: -1.5rem;
+            padding-block: calc(clamp(2rem, 3.5vw, 3rem) + 1.5rem);
         }
     }
 
-    .scale-up {
-        transform: scale(1);
-        box-shadow: 0 10px 30px rgba(30, 23, 16, 0.05);
-        border-color: var(--color-accent-light);
+    .plan__badge {
+        position: absolute;
+        top: 0;
+        right: clamp(2rem, 3.5vw, 3rem);
+        translate: 0 -50%;
+        padding: 0.5rem 1rem;
+        border-radius: 999px;
+        background-color: var(--c-sand);
+        color: var(--c-night);
     }
 
-    @media (min-width: 768px) {
-        .scale-up {
-            transform: scale(1.05);
-            z-index: 10;
-        }
-        .scale-up:hover {
-            transform: scale(1.05) translateY(-8px);
-        }
+    .plan__text {
+        flex: 1;
     }
 
-    /* Utils */
-    .text-center {
-        text-align: center;
+    .plan__price {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.5rem;
+        padding-top: 1.5rem;
+        margin-top: 0.5rem;
+        border-top: 1px solid var(--line);
     }
-    .w-full {
+
+    .plan__amount {
+        font-family: var(--ff-serif);
+        font-size: clamp(2.5rem, 1.8rem + 2.4vw, 3.75rem);
+        font-weight: 300;
+        line-height: 1;
+        letter-spacing: -0.02em;
+    }
+
+    .plan__unit {
+        font-size: var(--fs-sm);
+    }
+
+    .plan :global(.plan__cta) {
+        margin-top: 1rem;
         width: 100%;
     }
-    .mb-2 {
-        margin-bottom: 0.5rem;
-    }
-    .mb-4 {
-        margin-bottom: 1rem;
-    }
-    .mb-6 {
-        margin-bottom: 1.5rem;
-    }
-    .mb-8 {
-        margin-bottom: 2rem;
-    }
-    .mb-16 {
-        margin-bottom: 4rem;
-    }
-    .min-h-\[4rem\] {
-        min-height: 4rem;
-    }
 
-    .btn-outline,
-    .btn-primary {
-        display: inline-block;
-        padding: 1rem 1.5rem;
-        font-family: var(--font-family-body);
-        font-size: var(--text-sm);
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        transition: all 0.3s;
-        text-decoration: none;
-        margin-top: auto; /* Push to bottom */
-    }
-
-    .btn-outline {
-        border: 1px solid var(--color-ink);
-        background: transparent;
-        color: var(--color-ink);
-    }
-
-    .btn-outline:hover {
-        background: var(--color-ink);
-        color: var(--color-white);
-    }
-
-    .btn-primary {
-        background-color: var(--color-accent);
-        color: var(--color-white);
-    }
-
-    .btn-primary:hover {
-        background-color: var(--color-accent-light);
-    }
-
-    .absolute {
-        position: absolute;
-    }
-    .top-0 {
-        top: 0;
-    }
-    .left-1\/2 {
-        left: 50%;
-    }
-    .-translate-x-1\/2 {
-        transform: translateX(-50%);
-    }
-    .-translate-y-1\/2 {
-        transform: translateY(-50%);
-    }
-    .rounded-full {
-        border-radius: 9999px;
-    }
-    .shadow-lg {
-        box-shadow:
-            0 10px 15px -3px rgba(0, 0, 0, 0.1),
-            0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    }
-    .py-1 {
-        padding-block: 0.25rem;
-    }
-    .px-4 {
-        padding-inline: 1rem;
-    }
-    .text-xs {
-        font-size: var(--text-xs);
-    }
-    .tracking-widest {
-        letter-spacing: 0.1em;
-    }
-
-    /* Timeline Horizontal */
-    .steps-horizontal {
+    .how__steps {
         display: grid;
-        grid-template-columns: 1fr;
-        gap: 3rem;
-        position: relative;
+        gap: 3rem var(--gap);
     }
 
-    @media (min-width: 768px) {
-        .steps-horizontal {
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-        }
-
-        .steps-horizontal::after {
-            content: "";
-            position: absolute;
-            top: 2rem; /* roughly center of numbers */
-            left: 10%;
-            right: 10%;
-            height: 1px;
-            background-color: var(--color-surface-deep);
-            z-index: 0;
+    @media (width >= 640px) {
+        .how__steps {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
         }
     }
 
-    .step-h {
+    @media (width >= 1024px) {
+        .how__steps {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+    }
+
+    .how__step {
         position: relative;
-        z-index: 1;
-        background-color: var(--color-bg); /* to cover line */
-        padding-inline: 1rem;
-        text-align: center;
+        display: grid;
+        align-content: start;
+        gap: 0.9rem;
+        padding-top: 1.5rem;
+    }
+
+    .how__rule {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background-color: var(--fg);
+        opacity: 0.35;
+    }
+
+    .how__num {
+        font-family: var(--ff-serif);
+        font-size: clamp(3.5rem, 2.5rem + 3vw, 5.5rem);
+        font-style: italic;
+        font-weight: 300;
+        line-height: 0.9;
+        color: var(--accent);
+        margin-bottom: 1rem;
     }
 </style>

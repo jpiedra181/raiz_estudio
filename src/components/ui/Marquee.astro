@@ -1,0 +1,98 @@
+---
+interface Props {
+    items: string[];
+    /** Accessible name. Without it the marquee is treated as decorative. */
+    label?: string;
+    /** Seconds per loop */
+    speed?: number;
+    italic?: boolean;
+    class?: string;
+}
+
+const { items, label, speed = 40, italic = false, class: className } = Astro.props;
+---
+
+<div class:list={["marquee", italic && "marquee--italic", className]} style={`--marquee-speed: ${speed}s`}>
+    {
+        label && (
+            <ul class="visually-hidden" aria-label={label}>
+                {items.map((item) => (
+                    <li>{item}</li>
+                ))}
+            </ul>
+        )
+    }
+    <div class="marquee__track" aria-hidden="true">
+        {
+            [0, 1].map(() => (
+                <div class="marquee__group">
+                    {items.map((item) => (
+                        <>
+                            <span class="marquee__item">{item}</span>
+                            <span class="marquee__sep">✦</span>
+                        </>
+                    ))}
+                </div>
+            ))
+        }
+    </div>
+</div>
+
+<style>
+    .marquee {
+        overflow: hidden;
+        white-space: nowrap;
+        user-select: none;
+    }
+
+    .marquee__track {
+        display: flex;
+        width: max-content;
+        animation: marquee var(--marquee-speed) linear infinite;
+    }
+
+    .marquee:hover .marquee__track {
+        animation-play-state: paused;
+    }
+
+    .marquee__group {
+        display: flex;
+        align-items: center;
+        flex: none;
+    }
+
+    .marquee__item {
+        padding-inline: clamp(1.25rem, 3vw, 3rem);
+        font-family: var(--ff-serif);
+        font-size: clamp(3rem, 1.5rem + 6vw, 8.5rem);
+        font-weight: 300;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+    }
+
+    .marquee--italic .marquee__item:nth-child(4n + 1) {
+        font-style: italic;
+        color: var(--accent);
+    }
+
+    .marquee__sep {
+        font-size: clamp(0.9rem, 0.7rem + 0.6vw, 1.4rem);
+        color: var(--accent);
+    }
+
+    @keyframes marquee {
+        to {
+            transform: translate3d(-50%, 0, 0);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .marquee__track {
+            animation: none;
+        }
+    }
+
+    :global(html[data-motion="off"]) .marquee__track {
+        animation: none;
+    }
+</style>

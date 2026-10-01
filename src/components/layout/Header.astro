@@ -1,0 +1,441 @@
+---
+import { nav, site } from "../../data/site";
+import Logo from "./Logo.astro";
+import Button from "../ui/Button.astro";
+
+interface Props {
+    /** "light" when the page opens on a dark hero (light text over the image) */
+    theme?: "light" | "dark";
+}
+
+const { theme = "dark" } = Astro.props;
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+
+const current = (href: string) => {
+    if (path === href) return "page";
+    if (path.startsWith(`${href}/`)) return "true";
+    return undefined;
+};
+
+const desktopLinks = nav.filter((link) => link.href !== "/contacto");
+---
+
+<header class="site-header" data-header data-theme={theme}>
+    <div class="site-header__inner wrap">
+        <Logo />
+
+        <nav class="site-nav" aria-label="Principal">
+            <ul class="site-nav__list">
+                {
+                    desktopLinks.map((link) => (
+                        <li>
+                            <a href={link.href} class="site-nav__link" aria-current={current(link.href)}>
+                                {link.label}
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </nav>
+
+        <div class="site-header__actions">
+            <Button href="/contacto" class="site-header__cta" aria-current={current("/contacto")}>Hablemos</Button>
+            <button
+                type="button"
+                class="menu-toggle"
+                aria-haspopup="dialog"
+                aria-controls="site-menu"
+                aria-expanded="false"
+                data-menu-open
+            >
+                <span class="menu-toggle__label">Menú</span>
+                <span class="menu-toggle__icon" aria-hidden="true"><i></i><i></i></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<dialog id="site-menu" class="menu theme-dark" aria-label="Menú" data-menu data-lenis-prevent>
+    <div class="menu__inner wrap">
+        <div class="menu__top">
+            <Logo />
+            <button type="button" class="menu-close" data-menu-close>
+                <span>Cerrar</span>
+                <span class="menu-close__icon" aria-hidden="true"><i></i><i></i></span>
+            </button>
+        </div>
+
+        <nav class="menu__nav" aria-label="Menú principal">
+            <ol class="menu__list">
+                {
+                    nav.map((link, i) => (
+                        <li class="menu__item">
+                            <a href={link.href} class="menu__link" aria-current={current(link.href)} data-menu-link>
+                                <span class="menu__num" aria-hidden="true">
+                                    {String(i + 1).padStart(2, "0")}
+                                </span>
+                                <span class="menu__label">{link.label}</span>
+                            </a>
+                        </li>
+                    ))
+                }
+            </ol>
+        </nav>
+
+        <div class="menu__footer" data-menu-footer>
+            <div>
+                <p class="eyebrow t-soft">Escríbenos</p>
+                <a href={`mailto:${site.email}`} class="menu__contact">{site.email}</a>
+            </div>
+            <div>
+                <p class="eyebrow t-soft">Llámanos</p>
+                <a href={site.phoneHref} class="menu__contact">{site.phone}</a>
+            </div>
+            <ul class="menu__social" aria-label="Redes sociales">
+                {
+                    site.social.map((s) => (
+                        <li>
+                            <a href={s.href} target="_blank" rel="noopener noreferrer" class="link">
+                                {s.label}
+                                <span class="visually-hidden">(se abre en una pestaña nueva)</span>
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+    </div>
+</dialog>
+
+
+<style>
+    .site-header {
+        position: fixed;
+        inset: 0 0 auto;
+        z-index: 100;
+        height: var(--header-h);
+        --header-fg: var(--c-ink);
+        --header-bg: var(--c-bone);
+        color: var(--header-fg);
+        view-transition-name: site-header;
+        transition:
+            transform 0.9s var(--ease-out),
+            color 0.5s ease;
+    }
+
+    .site-header[data-theme="light"]:not(.is-scrolled) {
+        --header-fg: var(--c-paper);
+        --header-bg: var(--c-ink);
+    }
+
+    .site-header::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: rgb(243 238 230 / 0.9);
+        border-bottom: 1px solid rgb(29 25 21 / 0.08);
+        -webkit-backdrop-filter: blur(14px) saturate(1.2);
+        backdrop-filter: blur(14px) saturate(1.2);
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+
+    .site-header.is-scrolled::before {
+        opacity: 1;
+    }
+
+    .site-header.is-hidden {
+        transform: translate3d(0, -100%, 0);
+    }
+
+    .site-header:focus-within {
+        transform: none;
+    }
+
+    .site-header__inner {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+        height: 100%;
+    }
+
+    /* Desktop navigation */
+    .site-nav {
+        display: none;
+    }
+
+    @media (width >= 1200px) {
+        .site-nav {
+            display: block;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+
+    .site-nav__list {
+        display: flex;
+        gap: clamp(1.5rem, 2.4vw, 2.75rem);
+    }
+
+    .site-nav__link {
+        position: relative;
+        display: inline-block;
+        padding-block: 0.75rem;
+        font-size: var(--fs-xs);
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+    }
+
+    .site-nav__link::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0.45rem;
+        height: 1px;
+        background-color: currentColor;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.7s var(--ease-out);
+    }
+
+    .site-nav__link:hover::after,
+    .site-nav__link[aria-current]::after {
+        transform: scaleX(1);
+        transform-origin: left;
+    }
+
+    .site-header__actions {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+    }
+
+    /* The header pill follows the header colours on both themes */
+    .site-header :global(.site-header__cta) {
+        --fg: var(--header-fg);
+        --bg: var(--header-bg);
+        --btn-border: var(--header-fg);
+        min-height: 2.75rem;
+        padding-inline: 1.4rem;
+    }
+
+    @media (width < 640px) {
+        .site-header :global(.site-header__cta) {
+            display: none;
+        }
+    }
+
+    .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.85rem;
+        min-height: 2.75rem;
+        padding-inline: 0.25rem;
+        font-size: var(--fs-xs);
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+    }
+
+    @media (width >= 1200px) {
+        .menu-toggle {
+            display: none;
+        }
+    }
+
+    .menu-toggle__icon,
+    .menu-close__icon {
+        position: relative;
+        display: inline-block;
+        width: 1.75rem;
+        height: 0.6rem;
+    }
+
+    .menu-toggle__icon i,
+    .menu-close__icon i {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background-color: currentColor;
+        transition: transform 0.6s var(--ease-out);
+    }
+
+    .menu-toggle__icon i:first-child {
+        top: 0;
+    }
+
+    .menu-toggle__icon i:last-child {
+        bottom: 0;
+        transform-origin: right;
+        transform: scaleX(0.6);
+    }
+
+    .menu-toggle:hover .menu-toggle__icon i:last-child {
+        transform: scaleX(1);
+    }
+
+    /* Full-screen menu */
+    .menu {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        height: 100dvh;
+        margin: 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        background-color: var(--c-night);
+        color: var(--c-paper);
+    }
+
+    .menu::backdrop {
+        background: transparent;
+    }
+
+    .menu__inner {
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+        padding-bottom: clamp(1.5rem, 4vw, 3rem);
+    }
+
+    .menu__top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: var(--header-h);
+        flex: none;
+    }
+
+    .menu-close {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.85rem;
+        min-height: 2.75rem;
+        font-size: var(--fs-xs);
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+    }
+
+    .menu-close__icon {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+
+    .menu-close__icon i {
+        top: 50%;
+    }
+
+    .menu-close__icon i:first-child {
+        transform: rotate(45deg);
+    }
+
+    .menu-close__icon i:last-child {
+        transform: rotate(-45deg);
+    }
+
+    .menu__nav {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        padding-block: clamp(1.5rem, 6vh, 4rem);
+    }
+
+    .menu__list {
+        width: 100%;
+    }
+
+    .menu__item {
+        overflow: hidden;
+        border-top: 1px solid var(--line);
+    }
+
+    .menu__item:last-child {
+        border-bottom: 1px solid var(--line);
+    }
+
+    .menu__link {
+        display: flex;
+        align-items: baseline;
+        gap: clamp(1rem, 3vw, 2.5rem);
+        padding-block: clamp(0.45rem, 1.4vh, 0.9rem);
+        transition: color 0.4s ease;
+    }
+
+    .menu__num {
+        flex: none;
+        width: 2ch;
+        font-size: var(--fs-xs);
+        letter-spacing: 0.12em;
+        color: var(--c-sand);
+        font-variant-numeric: tabular-nums;
+    }
+
+    .menu__label {
+        font-family: var(--ff-serif);
+        font-size: clamp(2.1rem, 1rem + 5.6vw, 4.5rem);
+        font-weight: 300;
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        transition: transform 0.7s var(--ease-out);
+    }
+
+    .menu__link[aria-current] .menu__label {
+        font-style: italic;
+        color: var(--c-sand);
+    }
+
+    @media (hover: hover) {
+        .menu__list:hover .menu__link {
+            color: var(--c-paper-soft);
+        }
+
+        .menu__list .menu__link:hover {
+            color: var(--c-paper);
+        }
+
+        .menu__link:hover .menu__label {
+            transform: translate3d(1rem, 0, 0);
+        }
+    }
+
+    .menu__footer {
+        display: grid;
+        gap: 1.5rem;
+        flex: none;
+    }
+
+    @media (width >= 768px) {
+        .menu__footer {
+            grid-template-columns: auto auto 1fr;
+            align-items: end;
+            column-gap: clamp(2rem, 6vw, 6rem);
+        }
+    }
+
+    .menu__contact {
+        display: inline-block;
+        margin-top: 0.35rem;
+        font-family: var(--ff-serif);
+        font-size: 1.5rem;
+    }
+
+    .menu__social {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    @media (width >= 768px) {
+        .menu__social {
+            justify-content: flex-end;
+        }
+    }
+</style>

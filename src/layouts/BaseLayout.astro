@@ -1,62 +1,120 @@
 ---
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
+import { getImage } from "astro:assets";
 import "../styles/global.css";
-import "../styles/typography.css";
-import "../styles/animations.css";
+import Fonts from "../components/layout/Fonts.astro";
+import Header from "../components/layout/Header.astro";
+import Footer from "../components/layout/Footer.astro";
+import Cursor from "../components/layout/Cursor.astro";
+import { site } from "../data/site";
+import { resolveImage } from "../lib/images";
 
 interface Props {
     title: string;
     description?: string;
+    /** Image used for social previews (local path or remote URL) */
+    image?: string;
+    /** "light" when the page opens on a dark hero image */
+    headerTheme?: "light" | "dark";
 }
 
-const {
-    title,
-    description = "Raíz Estudio - Interiorismo residencial y consultoría de diseño online en España. Hogares con calidez orgánica, materiales honestos y conexión natural.",
-} = Astro.props;
+const { title, description = site.description, image, headerTheme = "dark" } = Astro.props;
+
+const fullTitle = title === site.name ? `${site.name} — Interiorismo residencial` : `${title} — ${site.name}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+
+let ogImage: string | undefined;
+if (image) {
+    const resolved = resolveImage(image);
+    const og = await getImage({
+        src: resolved,
+        inferSize: typeof resolved === "string",
+        width: 1200,
+        height: 630,
+        fit: "cover",
+        format: "jpg",
+        quality: 80,
+    });
+    ogImage = new URL(og.src, Astro.site).href;
+}
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es" id="top">
     <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width" />
-        <link rel="icon" type="image/png" href="/favicon.png" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{fullTitle}</title>
         <meta name="description" content={description} />
-        <title>{title} | Raíz Estudio</title>
+        <link rel="canonical" href={canonical} />
+        <meta name="theme-color" content="#f3eee6" />
 
-        <!-- Preconnect Google Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500&display=swap"
-            rel="stylesheet"
-        />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/favicon.png" type="image/png" sizes="64x64" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="sitemap" href="/sitemap-index.xml" />
 
-        <ViewTransitions />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="es_ES" />
+        <meta property="og:site_name" content={site.name} />
+        <meta property="og:title" content={fullTitle} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={canonical} />
+        {ogImage && <meta property="og:image" content={ogImage} />}
+        {ogImage && <meta property="og:image:width" content="1200" />}
+        {ogImage && <meta property="og:image:height" content="630" />}
+        <meta name="twitter:card" content="summary_large_image" />
+
+        <Fonts />
+
+        <script is:inline>
+            // Applied before first paint (and after every client-side swap) so that
+            // reveal states never flash and the motion preference is honoured.
+            (function () {
+                var root = document.documentElement;
+                function apply() {
+                    var off = false;
+                    try {
+                        off = localStorage.getItem("raiz-motion") === "off";
+                    } catch (e) {}
+                    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+                    root.classList.add("js");
+                    if (off) root.setAttribute("data-motion", "off");
+                    root.classList.toggle("motion", !off && !reduced);
+                }
+                apply();
+                document.addEventListener("astro:after-swap", apply);
+                // Safety net: if the app bundle never boots, show everything.
+                setTimeout(function () {
+                    if (!window.__raizReady) root.classList.remove("motion");
+                }, 4000);
+            })();
+        </script>
+
+        <ClientRouter />
+        <slot name="head" />
     </head>
     <body>
-        <slot />
+        <a href="#main" class="skip-link">Saltar al contenido</a>
 
-        <!-- Custom Cursor -->
-        <div
-            id="custom-cursor"
-            class="fixed pointer-events-none z-[9999] top-0 left-0 flex items-center justify-center rounded-full"
-            style="width: 8px; height: 8px; border: 1px solid var(--color-accent); mix-blend-mode: difference; transition: width 0.3s, height 0.3s, background-color 0.3s;"
-        >
-            <span
-                class="cursor-text opacity-0 font-accent text-[10px] uppercase tracking-widest text-white transition-opacity duration-300"
-            ></span>
-        </div>
+        <Header theme={headerTheme} />
+
+        <main id="main" tabindex="-1">
+            <slot />
+        </main>
+
+        <Footer />
+        <Cursor />
+        <div class="grain" aria-hidden="true"></div>
 
         <script>
-            //import { initCursor } from "../scripts/cursor";
-
-            // Run cursor init exactly once on initial load, it handles page-load event itself
-            //initCursor();
+            import "../scripts/app";
         </script>
     </body>
 </html>
 
 <style>
-    /* Utility class for cursor styling if needed, otherwise handled inline / JS */
+    main:focus {
+        outline: none;
+    }
 </style>

@@ -1,0 +1,168 @@
+---
+import Media from "./Media.astro";
+import { introLines } from "../../lib/intro";
+
+interface Props {
+    eyebrow: string;
+    /** Title HTML: wrap accent words in <em>, separate lines with "|" */
+    title: string;
+    intro?: string;
+    image?: string;
+    imageAlt?: string;
+    /** "text": title on paper with a wide image below · "image": full-bleed photo */
+    variant?: "text" | "image";
+    position?: string;
+}
+
+const { eyebrow, title, intro, image, imageAlt = "", variant = "text", position } = Astro.props;
+const titleHtml = introLines(title, 1);
+---
+
+{
+    variant === "image" && image ? (
+        <section class="phero phero--image theme-dark" aria-labelledby="page-title">
+            <Media
+                src={image}
+                alt={imageAlt}
+                preset="full"
+                sizes="100vw"
+                priority
+                position={position}
+                class="phero__bg"
+                data-hero-bg
+                data-intro-zoom
+            />
+            <div class="phero__shade" aria-hidden="true" />
+            <div class="wrap phero__content">
+                <p class="eyebrow phero__eyebrow" data-intro style="--i: 0">
+                    {eyebrow}
+                </p>
+                <h1 id="page-title" class="t-h1 phero__title" set:html={titleHtml} />
+                {intro && (
+                    <p class="t-lg phero__intro" data-intro style="--i: 3">
+                        {intro}
+                    </p>
+                )}
+            </div>
+        </section>
+    ) : (
+        <section class="phero phero--text" aria-labelledby="page-title">
+            <div class="wrap">
+                <div class="phero__content">
+                    <p class="eyebrow t-accent phero__eyebrow" data-intro style="--i: 0">
+                        {eyebrow}
+                    </p>
+                    <h1 id="page-title" class="t-h1 phero__title" set:html={titleHtml} />
+                    {intro && (
+                        <p class="t-lg t-soft phero__intro" data-intro style="--i: 3">
+                            {intro}
+                        </p>
+                    )}
+                </div>
+                {image && (
+                    <Media
+                        src={image}
+                        alt={imageAlt}
+                        preset="full"
+                        sizes="(min-width: 1680px) 1540px, 92vw"
+                        ratio="16 / 9"
+                        priority
+                        parallax={0.12}
+                        position={position}
+                        class="phero__media"
+                        data-intro-zoom
+                    />
+                )}
+            </div>
+        </section>
+    )
+}
+
+
+<style>
+    .phero--text {
+        padding-top: calc(var(--header-h) + clamp(3rem, 9vw, 9rem));
+        padding-bottom: clamp(3rem, 6vw, 6rem);
+    }
+
+    .phero__content {
+        display: grid;
+        gap: 2rem;
+    }
+
+    .phero__title {
+        max-width: 16ch;
+        font-family: var(--ff-serif);
+    }
+
+    .phero__intro {
+        max-width: 38rem;
+    }
+
+    @media (width >= 1024px) {
+        .phero--text .phero__content {
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            column-gap: var(--gap);
+            align-items: end;
+        }
+
+        .phero--text .phero__eyebrow {
+            grid-column: 1 / -1;
+        }
+
+        .phero--text .phero__title {
+            grid-column: 1 / 9;
+        }
+
+        .phero--text .phero__intro {
+            grid-column: 9 / 13;
+            padding-bottom: 0.6rem;
+        }
+    }
+
+    .phero--text :global(.phero__media) {
+        margin-top: clamp(3rem, 7vw, 7rem);
+    }
+
+    @media (width < 768px) {
+        .phero--text :global(.phero__media) {
+            aspect-ratio: 4 / 5 !important;
+        }
+    }
+
+    /* Full-bleed photographic variant */
+    .phero--image {
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+        min-height: 88vh;
+        min-height: 88svh;
+        padding-top: calc(var(--header-h) + 4rem);
+        padding-bottom: clamp(3.5rem, 8vh, 6.5rem);
+        overflow: hidden;
+        isolation: isolate;
+    }
+
+    .phero--image :global(.phero__bg) {
+        position: absolute;
+        inset: 0;
+        z-index: -2;
+    }
+
+    .phero__shade {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background:
+            linear-gradient(180deg, rgb(21 18 16 / 0.55) 0%, rgb(21 18 16 / 0) 26%),
+            linear-gradient(0deg, rgb(21 18 16 / 0.85) 0%, rgb(21 18 16 / 0.3) 45%, rgb(21 18 16 / 0.1) 70%);
+    }
+
+    .phero--image .phero__eyebrow {
+        color: var(--c-sand);
+    }
+
+    .phero--image .phero__intro {
+        color: rgb(246 241 234 / 0.88);
+    }
+</style>

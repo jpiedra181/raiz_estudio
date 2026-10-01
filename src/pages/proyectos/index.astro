@@ -1,230 +1,133 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import Navbar from "../../components/layout/Navbar.astro";
-import Footer from "../../components/layout/Footer.astro";
-import ProjectCard from "../../components/shared/ProjectCard.astro";
+import PageHero from "../../components/ui/PageHero.astro";
+import ProjectCard from "../../components/projects/ProjectCard.astro";
 import { projects } from "../../data/projects";
 
-// Extract unique styles for filters
 const styles = [...new Set(projects.map((p) => p.style))];
+const countFor = (style: string) => projects.filter((p) => p.style === style).length;
+const ratios = ["4 / 5", "5 / 4", "5 / 4", "4 / 5"];
 ---
 
-<BaseLayout title="Portfolio">
-    <Navbar />
+<BaseLayout
+    title="Proyectos"
+    description="Proyectos de interiorismo residencial de Raíz Estudio en Madrid, Barcelona, Valencia, Girona, Sevilla y Navarra."
+    image={projects[0].images[0]}
+>
+    <PageHero
+        eyebrow={`Proyectos · ${String(projects.length).padStart(2, "0")}`}
+        title="Hogares que|hemos <em>creado</em>"
+        intro="Viviendas pensadas desde dentro: para la familia que las habita, la luz que reciben y el paisaje que las rodea."
+    />
 
-    <main class="page-top-padding">
-        <header class="container pt-12 pb-16">
-            <h1 class="font-heading text-hero mb-12">
-                Hogares que<br class="hidden-md-down" /> hemos creado
-            </h1>
-
-            <!-- Filters -->
-            <div class="filters-container flex flex-wrap gap-4">
-                <button
-                    class="filter-btn active font-accent text-xs tracking-widest uppercase"
-                    data-filter="all"
-                >
-                    Todos
+    <section class="portfolio" aria-label="Listado de proyectos" data-portfolio>
+        <div class="wrap">
+            <div class="portfolio__filters" role="group" aria-label="Filtrar por estilo" data-reveal>
+                <button type="button" class="filter" aria-pressed="true" data-filter="all">
+                    Todos <span class="filter__count">{projects.length}</span>
                 </button>
                 {
                     styles.map((style) => (
-                        <button
-                            class="filter-btn font-accent text-xs tracking-widest uppercase"
-                            data-filter={style}
-                        >
-                            {style}
+                        <button type="button" class="filter" aria-pressed="false" data-filter={style}>
+                            {style} <span class="filter__count">{countFor(style)}</span>
                         </button>
                     ))
                 }
             </div>
-        </header>
+            <p class="visually-hidden" aria-live="polite" data-portfolio-status></p>
 
-        <section class="portfolio-grid container pb-24">
-            {
-                projects.map((project, index) => (
-                    <div
-                        class="portfolio-item anim-reveal"
-                        data-category={project.style}
-                        style={
-                            index % 3 === 0
-                                ? "grid-row: span 2; min-height: 600px;"
-                                : "grid-row: span 1; min-height: 400px;"
-                        }
-                    >
-                        <ProjectCard project={project} class="w-full h-full" />
-                    </div>
-                ))
-            }
-        </section>
-    </main>
-
-    <Footer />
+            <ul class="portfolio__grid">
+                {
+                    projects.map((project, i) => (
+                        <li class:list={["portfolio__item", i % 2 === 1 && "is-shifted"]} data-style={project.style}>
+                            <ProjectCard
+                                project={project}
+                                index={i}
+                                ratio={ratios[i % ratios.length]}
+                                sizes="(min-width: 768px) 46vw, 100vw"
+                                headingLevel="h2"
+                                eager={i === 0}
+                            />
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+    </section>
 </BaseLayout>
 
-<script>
-    import { gsap, ScrollTrigger } from "../../scripts/gsap-init";
-    import { animateWithReducedMotion } from "../../scripts/gsap-init";
-
-    document.addEventListener("astro:page-load", () => {
-        // 1. Initial reveal animation
-        animateWithReducedMotion(() => {
-            const items = document.querySelectorAll(".anim-reveal");
-
-            gsap.fromTo(
-                items,
-                { opacity: 0, y: 50 },
-                {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.8,
-                    stagger: 0.1,
-                    ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: ".portfolio-grid",
-                        start: "top 85%",
-                        once: true,
-                    },
-                },
-            );
-        });
-
-        // 2. Filter logic
-        const filterBtns = document.querySelectorAll(".filter-btn");
-        const projectItems = document.querySelectorAll(
-            ".portfolio-item",
-        ) as NodeListOf<HTMLElement>;
-
-        filterBtns.forEach((btn) => {
-            btn.addEventListener("click", () => {
-                // Update active class
-                filterBtns.forEach((b) => b.classList.remove("active"));
-                btn.classList.add("active");
-
-                const filterValue = btn.getAttribute("data-filter");
-
-                // Simple opacity toggle (GSAP Flip is better but overkill for simple fade)
-                projectItems.forEach((item) => {
-                    const category = item.getAttribute("data-category");
-
-                    if (filterValue === "all" || category === filterValue) {
-                        // Show
-                        gsap.to(item, {
-                            opacity: 1,
-                            scale: 1,
-                            duration: 0.4,
-                            display: "block",
-                            ease: "power2.out",
-                        });
-                    } else {
-                        // Hide
-                        gsap.to(item, {
-                            opacity: 0,
-                            scale: 0.95,
-                            duration: 0.4,
-                            display: "none",
-                            ease: "power2.inOut",
-                        });
-                    }
-                });
-
-                // Refresh ScrollTrigger after layout shift
-                setTimeout(() => ScrollTrigger.refresh(), 500);
-            });
-        });
-    });
-</script>
 
 <style>
-    html:not(.no-js) .anim-reveal {
-        opacity: 0;
+    .portfolio {
+        padding-bottom: var(--section);
     }
 
-    .page-top-padding {
-        padding-top: 100px; /* Account for navbar */
-    }
-
-    .filter-btn {
-        padding: 0.5rem 1.25rem;
-        border: 1px solid var(--color-surface-deep);
-        border-radius: 4px;
-        background: transparent;
-        color: var(--color-ink-muted);
-        transition: all 0.3s ease;
-    }
-
-    .filter-btn:hover {
-        color: var(--color-ink);
-        border-color: var(--color-ink);
-    }
-
-    .filter-btn.active {
-        background-color: var(--color-ink);
-        color: var(--color-white);
-        border-color: var(--color-ink);
-    }
-
-    .portfolio-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 2rem;
-        /* CSS Columns alternative if items are purely masonry */
-        /* column-count: 2; column-gap: 2rem; */
-    }
-
-    @media (min-width: 768px) {
-        .portfolio-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
-    @media (min-width: 1024px) {
-        .portfolio-grid {
-            align-items: stretch;
-            /* Using masonry-like spans */
-            gap: 3rem;
-        }
-    }
-
-    .portfolio-item {
-        width: 100%;
-        break-inside: avoid; /* if using columns */
-    }
-
-    /* Utils */
-    .pt-12 {
-        padding-top: 3rem;
-    }
-    .pb-16 {
-        padding-bottom: 4rem;
-    }
-    .pb-24 {
-        padding-bottom: 6rem;
-    }
-    .mb-12 {
-        margin-bottom: 3rem;
-    }
-    .flex {
+    .portfolio__filters {
         display: flex;
-    }
-    .flex-wrap {
         flex-wrap: wrap;
+        gap: 0.6rem;
+        padding-bottom: clamp(2.5rem, 5vw, 4rem);
+        margin-bottom: clamp(2.5rem, 5vw, 4rem);
+        border-bottom: 1px solid var(--line);
     }
-    .gap-4 {
-        gap: 1rem;
-    }
-    .w-full {
-        width: 100%;
-    }
-    .h-full {
-        height: 100%;
-    }
-    .text-xs {
-        font-size: var(--text-xs);
-    }
-    .tracking-widest {
-        letter-spacing: 0.1em;
-    }
-    .uppercase {
+
+    .filter {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        min-height: 2.75rem;
+        padding: 0.5rem 1.25rem;
+        border: 1px solid var(--line-strong);
+        border-radius: 999px;
+        font-size: var(--fs-xs);
+        font-weight: 500;
+        letter-spacing: 0.14em;
         text-transform: uppercase;
+        transition:
+            background-color 0.4s ease,
+            color 0.4s ease,
+            border-color 0.4s ease;
+    }
+
+    .filter__count {
+        font-size: 0.6875rem;
+        color: var(--fg-soft);
+        transition: color 0.4s ease;
+    }
+
+    .filter:hover {
+        border-color: var(--fg);
+    }
+
+    .filter[aria-pressed="true"] {
+        background-color: var(--c-ink);
+        border-color: var(--c-ink);
+        color: var(--c-paper);
+    }
+
+    .filter[aria-pressed="true"] .filter__count {
+        color: var(--c-sand);
+    }
+
+    .portfolio__grid {
+        display: grid;
+        gap: clamp(3rem, 7vw, 5rem);
+    }
+
+    @media (width >= 768px) {
+        .portfolio__grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            column-gap: clamp(1.5rem, 5vw, 6rem);
+            align-items: start;
+        }
+
+        /* Staggered second column (translate keeps the grid rows compact) */
+        .portfolio__grid {
+            padding-bottom: clamp(5rem, 12vw, 12rem);
+        }
+
+        .portfolio__item.is-shifted {
+            translate: 0 clamp(5rem, 12vw, 12rem);
+        }
     }
 </style>

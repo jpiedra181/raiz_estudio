@@ -1,0 +1,29 @@
+---
+// Self-hosted fonts, subset to the Spanish character set (Basic Latin, Latin-1
+// and typographic punctuation). URLs are resolved by Vite so the preload hints
+// and the @font-face rules always point to the same hashed file.
+//
+// - Newsreader, instanced at its display optical size (opsz 72), weights 300–500
+// - Newsreader Italic, static Light (300): the only italic weight in use
+// - DM Sans, weights 400–600
+import serifNormal from "../../assets/fonts/newsreader-display-normal.woff2?url";
+import serifItalic from "../../assets/fonts/newsreader-display-italic.woff2?url";
+import sans from "../../assets/fonts/dm-sans.woff2?url";
+
+const face = (family: string, style: string, weight: string, url: string) =>
+    `@font-face{font-family:'${family}';font-style:${style};font-weight:${weight};font-display:swap;src:url(${url}) format('woff2')}`;
+
+const css = [
+    face("Newsreader Display", "normal", "300 500", serifNormal),
+    face("Newsreader Display", "italic", "300", serifItalic),
+    face("DM Sans", "normal", "400 600", sans),
+    // Metric-matched fallbacks keep the layout stable while web fonts load
+    "@font-face{font-family:'Newsreader Fallback';src:local('Times New Roman'),local('Times'),local('Liberation Serif');size-adjust:112.78%;ascent-override:65.17%;descent-override:23.5%;line-gap-override:0%}",
+    "@font-face{font-family:'DM Sans Fallback';src:local('Arial'),local('Helvetica'),local('Liberation Sans');size-adjust:105.57%;ascent-override:93.96%;descent-override:29.36%;line-gap-override:0%}",
+].join("");
+---
+
+<link rel="preload" href={serifNormal} as="font" type="font/woff2" crossorigin />
+<link rel="preload" href={serifItalic} as="font" type="font/woff2" crossorigin />
+<link rel="preload" href={sans} as="font" type="font/woff2" crossorigin />
+<style is:inline set:html={css}></style>

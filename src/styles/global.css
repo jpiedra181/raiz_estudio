@@ -1,33 +1,85 @@
-:root {
-    /* Colors */
-    --color-bg: #F5F0E8;
-    /* Arena cálida — fondo base */
-    --color-surface: #EDE4D3;
-    /* Lino — secciones alternas, tarjetas */
-    --color-surface-deep: #D9CBAF;
-    /* Arcilla clara — bordes, separadores */
-    --color-ink: #2C2416;
-    /* Tierra oscura — textos principales */
-    --color-ink-muted: #7A6A52;
-    /* Barro medio — subtítulos, metadata */
-    --color-accent: #8B5E3C;
-    /* Terracota — CTAs, highlights */
-    --color-accent-light: #C4845A;
-    /* Cobre — hover states, iconos */
-    --color-white: #FDFAF4;
-    /* Blanco hueso — texto sobre fondos oscuros */
-    --color-dark-section: #1E1710;
-    /* Tierra muy oscura — secciones de contraste */
-    --color-wood: #A0784A;
-    /* Madera media — detalles decorativos */
+/* ==========================================================================
+   Raíz Estudio — Design system
+   ========================================================================== */
 
-    /* Global Layout */
-    --container-width: 1280px;
-    --container-padding: clamp(1.25rem, 5vw, 3rem);
-    --section-padding: clamp(4rem, 8vw, 8rem);
+:root {
+    /* Palette — every text pairing below passes WCAG AA */
+    --c-bone: #f3eee6;        /* base paper */
+    --c-linen: #eae2d5;       /* alternate surface */
+    --c-sand-100: #ddd3c3;    /* decorative hairlines on light */
+    --c-ink: #1d1915;         /* primary text · 15.1:1 on bone */
+    --c-ink-soft: #5c5349;    /* secondary text · 6.5:1 on bone */
+    --c-bronze: #88583a;      /* accent text · 5.2:1 on bone */
+    --c-ui-line: #8e8273;     /* form borders · 3.2:1 on bone */
+    --c-night: #151210;       /* dark sections */
+    --c-night-2: #201b16;
+    --c-sand: #cfaf89;        /* accent on dark · 9:1 on night */
+    --c-paper: #f6f1ea;       /* text on dark · 16.6:1 */
+    --c-paper-soft: #ada294;  /* secondary text on dark · 7.4:1 */
+    --c-error: #a3341f;
+
+    /* Typography */
+    --ff-serif: "Newsreader Display", "Newsreader Fallback", "Times New Roman", serif;
+    --ff-sans: "DM Sans", "DM Sans Fallback", Arial, sans-serif;
+
+    --fs-display: clamp(3rem, 1.3rem + 7vw, 10rem);
+    --fs-h1: clamp(2.6rem, 1.4rem + 5vw, 7.25rem);
+    --fs-h2: clamp(2.2rem, 1.35rem + 3.4vw, 5.25rem);
+    --fs-h3: clamp(1.6rem, 1.2rem + 1.4vw, 2.5rem);
+    --fs-h4: clamp(1.3rem, 1.15rem + 0.6vw, 1.75rem);
+    --fs-lead: clamp(1.5rem, 1rem + 1.75vw, 2.9rem);
+    --fs-lg: clamp(1.0625rem, 1rem + 0.35vw, 1.3125rem);
+    --fs-base: clamp(1rem, 0.97rem + 0.15vw, 1.0938rem);
+    --fs-sm: 0.9375rem;
+    --fs-xs: 0.75rem;
+
+    /* Layout */
+    --max: 105rem;
+    --gutter: clamp(1.25rem, 0.5rem + 3.4vw, 4.5rem);
+    --gap: clamp(1rem, 0.6rem + 1.4vw, 2.25rem);
+    --section: clamp(5rem, 2.5rem + 7vw, 10.5rem);
+    --header-h: clamp(4.5rem, 4rem + 1.6vw, 6.25rem);
+
+    /* Motion */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+    --ease-soft: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    /* Theme (light by default) */
+    --bg: var(--c-bone);
+    --fg: var(--c-ink);
+    --fg-soft: var(--c-ink-soft);
+    --accent: var(--c-bronze);
+    --line: rgb(29 25 21 / 0.14);
+    --line-strong: var(--c-ui-line);
+
+    color-scheme: light;
 }
 
-/* Reset and Base Styles */
+.theme-linen {
+    --bg: var(--c-linen);
+}
+
+.theme-dark {
+    --bg: var(--c-night);
+    --fg: var(--c-paper);
+    --fg-soft: var(--c-paper-soft);
+    --accent: var(--c-sand);
+    --line: rgb(246 241 234 / 0.16);
+    --line-strong: rgb(246 241 234 / 0.45);
+}
+
+.theme-light,
+.theme-linen,
+.theme-dark {
+    background-color: var(--bg);
+    color: var(--fg);
+}
+
+/* ==========================================================================
+   Reset
+   ========================================================================== */
+
 *,
 *::before,
 *::after {
@@ -35,31 +87,60 @@
 }
 
 html {
-    margin: 0;
-    padding: 0;
-    width: 100%;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    background-color: var(--c-bone);
 }
 
 body {
     margin: 0;
-    padding: 0;
-    width: 100%;
-    overflow-x: hidden;
-    background-color: var(--color-bg);
-    color: var(--color-ink);
-}
-
-/* Se ha eliminado visualmente ocultar el ratón para mejor usabilidad con el cursor interactivo */
-.pointer-events-none {
-    pointer-events: none !important;
+    min-height: 100vh;
+    min-height: 100svh;
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--ff-sans);
+    font-size: var(--fs-base);
+    font-weight: 400;
+    line-height: 1.65;
+    font-optical-sizing: auto;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
 }
 
 img,
+picture,
 video,
 svg {
     display: block;
     max-width: 100%;
+}
+
+img {
     height: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure,
+blockquote,
+dl,
+dd {
+    margin: 0;
+}
+
+ul,
+ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 a {
@@ -67,58 +148,628 @@ a {
     text-decoration: none;
 }
 
-ul,
-ol {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+button,
+input,
+select,
+textarea {
+    font: inherit;
+    color: inherit;
 }
 
 button {
+    padding: 0;
+    border: 0;
     background: none;
-    border: none;
-    font: inherit;
-    color: inherit;
-    cursor: inherit;
-    /* to inherit none on fine pointer */
+    cursor: pointer;
 }
 
-/* Texture Pattern Utility */
-.texture-bg {
-    position: relative;
+address {
+    font-style: normal;
 }
 
-.texture-bg::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    opacity: 0.04;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+dialog {
+    padding: 0;
+    border: 0;
+    max-width: none;
+    max-height: none;
 }
 
-/* Container */
-.container {
-    width: 100%;
-    max-width: var(--container-width);
-    margin-inline: auto;
-    padding-inline: var(--container-padding);
+::selection {
+    background-color: var(--c-bronze);
+    color: var(--c-paper);
 }
 
-/* Visibility Utilities */
-.hidden {
+/* Visible, consistent keyboard focus everywhere */
+:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+    border-radius: 2px;
+}
+
+:focus:not(:focus-visible) {
+    outline: none;
+}
+
+[hidden] {
     display: none !important;
 }
 
-@media (min-width: 768px) {
-    .hidden-md-up {
-        display: none !important;
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+.serif,
+h1,
+h2,
+h3,
+h4 {
+    font-family: var(--ff-serif);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+}
+
+h1 em,
+h2 em,
+h3 em,
+.serif em,
+.accent-italic {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+}
+
+p {
+    text-wrap: pretty;
+}
+
+.t-display {
+    font-family: var(--ff-serif);
+    font-size: var(--fs-display);
+    font-weight: 300;
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+}
+
+.t-h1 {
+    font-size: var(--fs-h1);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.03em;
+}
+
+.t-h2 {
+    font-size: var(--fs-h2);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.025em;
+}
+
+.t-h3 {
+    font-size: var(--fs-h3);
+    line-height: 1.08;
+}
+
+.t-h4 {
+    font-size: var(--fs-h4);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+}
+
+.t-lead {
+    font-family: var(--ff-serif);
+    font-size: var(--fs-lead);
+    font-weight: 300;
+    line-height: 1.16;
+    letter-spacing: -0.015em;
+    text-wrap: pretty;
+}
+
+.t-lg {
+    font-size: var(--fs-lg);
+    line-height: 1.6;
+}
+
+.t-sm {
+    font-size: var(--fs-sm);
+}
+
+.t-soft {
+    color: var(--fg-soft);
+}
+
+.t-accent {
+    color: var(--accent);
+}
+
+.eyebrow {
+    font-family: var(--ff-sans);
+    font-size: var(--fs-xs);
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+/* "01 — Proyectos" chapter marker */
+.chapter {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: var(--ff-sans);
+    font-size: var(--fs-xs);
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--fg-soft);
+}
+
+.chapter__num {
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+}
+
+.chapter::after {
+    content: "";
+    flex: 0 0 clamp(2.5rem, 6vw, 5rem);
+    height: 1px;
+    background-color: currentColor;
+    opacity: 0.5;
+}
+
+.prose > * + * {
+    margin-top: 1.25em;
+}
+
+.prose {
+    max-width: 62ch;
+}
+
+/* ==========================================================================
+   Layout primitives
+   ========================================================================== */
+
+.wrap {
+    width: 100%;
+    max-width: var(--max);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+}
+
+.section {
+    padding-block: var(--section);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--gap);
+}
+
+.rule {
+    height: 1px;
+    border: 0;
+    margin: 0;
+    background-color: var(--line);
+}
+
+.visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+/* ==========================================================================
+   Buttons & links
+   ========================================================================== */
+
+.btn {
+    --btn-fg: var(--fg);
+    --btn-bg: transparent;
+    --btn-border: var(--line-strong);
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+    min-height: 3.25rem;
+    padding: 0.9rem 1.75rem;
+    border: 1px solid var(--btn-border);
+    border-radius: 999px;
+    background-color: var(--btn-bg);
+    color: var(--btn-fg);
+    font-family: var(--ff-sans);
+    font-size: var(--fs-xs);
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    isolation: isolate;
+    transition:
+        color 0.6s var(--ease-out),
+        border-color 0.6s var(--ease-out);
+}
+
+/* Fill that rises from below on hover */
+.btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background-color: var(--fg);
+    transform: translate3d(0, 101%, 0);
+    transition: transform 0.6s var(--ease-out);
+}
+
+.btn--solid {
+    --btn-fg: var(--bg);
+    --btn-bg: var(--fg);
+    --btn-border: var(--fg);
+}
+
+.btn--solid::before {
+    background-color: var(--accent);
+}
+
+.btn__label {
+    display: inline-grid;
+    overflow: hidden;
+    padding-block: 0.15em;
+}
+
+.btn__roll {
+    grid-area: 1 / 1;
+    transition: transform 0.6s var(--ease-out);
+}
+
+.btn__roll + .btn__roll {
+    transform: translate3d(0, 115%, 0);
+}
+
+.btn__icon {
+    width: 0.9rem;
+    height: 0.9rem;
+    flex: none;
+    transition: transform 0.6s var(--ease-out);
+}
+
+@media (hover: hover) {
+    .btn:hover {
+        --btn-fg: var(--bg);
+        border-color: var(--fg);
+    }
+
+    .btn--solid:hover {
+        --btn-fg: var(--c-paper);
+        border-color: var(--accent);
+    }
+
+    .theme-dark .btn--solid:hover {
+        --btn-fg: var(--c-night);
+    }
+
+    .btn:hover::before {
+        transform: translate3d(0, 0, 0);
+    }
+
+    .btn:hover .btn__roll:first-child {
+        transform: translate3d(0, -115%, 0);
+    }
+
+    .btn:hover .btn__roll + .btn__roll {
+        transform: translate3d(0, 0, 0);
+    }
+
+    .btn:hover .btn__icon {
+        transform: translate3d(0.25rem, 0, 0);
     }
 }
 
-@media (max-width: 767px) {
-    .hidden-sm-down {
-        display: none !important;
+/* Underlined text link with arrow */
+.link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-block: 0.4rem;
+    font-size: var(--fs-xs);
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background-color: currentColor;
+    transform-origin: right;
+    transition: transform 0.7s var(--ease-out);
+}
+
+.link svg {
+    width: 0.9rem;
+    height: 0.9rem;
+    transition: transform 0.6s var(--ease-out);
+}
+
+@media (hover: hover) {
+    .link:hover::after {
+        transform: scaleX(0);
     }
+
+    .link:hover svg {
+        transform: translate3d(0.3rem, 0, 0);
+    }
+}
+
+/* Inline link inside running text */
+.text-link {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25em;
+    text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+    transition: text-decoration-color 0.3s ease;
+}
+
+.text-link:hover {
+    text-decoration-color: currentColor;
+}
+
+/* ==========================================================================
+   Media
+   ========================================================================== */
+
+.media {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--c-linen);
+}
+
+.theme-dark .media {
+    background-color: var(--c-night-2);
+}
+
+/* Hover zoom lives on <picture>; the <img> transform belongs to the parallax */
+.media picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transition: transform 1.4s var(--ease-out);
+}
+
+.media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Extra room for the inner parallax shift */
+.media--parallax img {
+    height: 118%;
+    margin-top: -9%;
+}
+
+/* ==========================================================================
+   Skip link
+   ========================================================================== */
+
+.skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 1000;
+    padding: 0.85rem 1.25rem;
+    border-radius: 999px;
+    background-color: var(--c-ink);
+    color: var(--c-paper);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    transform: translate3d(0, -200%, 0);
+    transition: transform 0.3s var(--ease-out);
+}
+
+.skip-link:focus {
+    transform: translate3d(0, 0, 0);
+}
+
+/* ==========================================================================
+   Film grain — a whisper of texture over flat colour
+   ========================================================================== */
+
+.grain {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ==========================================================================
+   Motion — initial states only apply when JS confirmed motion is allowed.
+   Without JS (or with reduced motion) everything is visible immediately.
+   ========================================================================== */
+
+.motion [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 2.5rem, 0);
+}
+
+.motion [data-reveal="fade"] {
+    transform: none;
+}
+
+.motion [data-split] {
+    opacity: 0;
+}
+
+.motion [data-media-reveal] {
+    clip-path: inset(100% 0 0 0);
+}
+
+.motion [data-draw] {
+    transform: scaleX(0);
+    transform-origin: left center;
+}
+
+/* Line masks (SplitText and intro titles): extra room so accents and italic
+   descenders are not clipped by the tight display line-height */
+.split-line-mask,
+.intro-mask {
+    padding-block: 0.14em 0.16em;
+    margin-block: -0.14em -0.16em;
+}
+
+/* Entrance choreography for above-the-fold content. Pure CSS, so it starts on
+   first paint and never delays the largest contentful paint behind JavaScript. */
+.intro-mask {
+    display: block;
+    overflow: clip;
+}
+
+.intro-line {
+    display: block;
+}
+
+.motion .intro-line {
+    animation: intro-line 1.5s var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * 0.1s + 0.1s);
+}
+
+.motion [data-intro] {
+    animation: intro-rise 1.4s var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * 0.1s + 0.25s);
+}
+
+/* The photo settles inside its frame; it is visible from the first paint */
+.motion [data-intro-zoom] > picture {
+    animation: intro-zoom 2.6s var(--ease-out) both;
+}
+
+@keyframes intro-line {
+    from {
+        transform: translate3d(0, 110%, 0);
+    }
+}
+
+@keyframes intro-rise {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 1.25rem, 0);
+    }
+}
+
+@keyframes intro-zoom {
+    from {
+        scale: 1.14;
+    }
+}
+
+/* ==========================================================================
+   Smooth scroll (Lenis)
+   ========================================================================== */
+
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+    overflow: clip;
+}
+
+.lenis [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   Page transitions (View Transitions API via Astro ClientRouter)
+   The new page wipes up over the previous one, which drifts and dims.
+   ========================================================================== */
+
+@keyframes vt-leave {
+    to {
+        opacity: 0.35;
+        transform: translate3d(0, -6vh, 0) scale(0.98);
+    }
+}
+
+@keyframes vt-enter {
+    from {
+        clip-path: inset(100% 0 0 0);
+    }
+
+    to {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+::view-transition-old(root) {
+    animation: 0.9s var(--ease-in-out) both vt-leave;
+}
+
+::view-transition-new(root) {
+    animation: 0.9s var(--ease-in-out) both vt-enter;
+}
+
+::view-transition-group(*) {
+    animation-duration: 0.9s;
+    animation-timing-function: var(--ease-in-out);
+}
+
+/* ==========================================================================
+   Reduced motion — honour both the OS setting and the on-site toggle
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation: none !important;
+    }
+}
+
+html[data-motion="off"] *,
+html[data-motion="off"] *::before,
+html[data-motion="off"] *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+}
+
+html[data-motion="off"] {
+    scroll-behavior: auto !important;
+}
+
+html[data-motion="off"]::view-transition-group(*),
+html[data-motion="off"]::view-transition-old(*),
+html[data-motion="off"]::view-transition-new(*) {
+    animation: none !important;
 }

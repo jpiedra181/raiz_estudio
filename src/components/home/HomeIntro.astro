@@ -1,0 +1,157 @@
+---
+import Chapter from "../ui/Chapter.astro";
+import Media from "../ui/Media.astro";
+import Button from "../ui/Button.astro";
+import { images, stats } from "../../data/studio";
+---
+
+<section id="intro" class="intro section" aria-labelledby="intro-title">
+    <div class="wrap">
+        <div class="intro__head">
+            <Chapter num="01" label="El estudio" />
+            <h2 id="intro-title" class="visually-hidden">Sobre Raíz Estudio</h2>
+            <p class="t-lead intro__statement" data-words>
+                Creemos que un hogar no se decora: se descubre. Diseñamos espacios serenos y atemporales a partir de
+                quien eres, con materiales honestos, luz natural y la calma de las cosas bien hechas.
+            </p>
+        </div>
+
+        <dl class="intro__stats">
+            {
+                stats.map((stat) => (
+                    <div class="intro__stat" data-reveal>
+                        <dt class="t-soft t-sm">{stat.label}</dt>
+                        <dd class="intro__value">{stat.value}</dd>
+                    </div>
+                ))
+            }
+        </dl>
+
+        <div class="intro__body">
+            <Media
+                src={images.homeIntroA}
+                alt="Salón luminoso con sofá blanco, cestería natural y plantas junto a la ventana"
+                ratio="4 / 5"
+                preset="large"
+                sizes="(min-width: 900px) 46vw, 100vw"
+                reveal
+                parallax={0.12}
+                class="intro__img-a"
+            />
+
+            <div class="intro__copy">
+                <p class="t-lg" data-reveal>
+                    Somos un estudio de interiorismo residencial con sede en Madrid. Acompañamos cada proyecto de
+                    principio a fin, en persona o a distancia, cuidando cada decisión como si fuera para nuestra
+                    propia casa.
+                </p>
+                <div data-reveal>
+                    <Button href="/estudio">Conoce el estudio</Button>
+                </div>
+            </div>
+
+            <Media
+                src={images.homeIntroB}
+                alt="Recibidor sereno con espejo redondo, aparador de rejilla y lámpara de fibra natural"
+                ratio="3 / 4"
+                preset="medium"
+                sizes="(min-width: 900px) 28vw, 70vw"
+                reveal
+                parallax={0.1}
+                class="intro__img-b"
+            />
+        </div>
+    </div>
+</section>
+
+<style>
+    .intro__head {
+        display: grid;
+        gap: 2rem;
+    }
+
+    @media (width >= 900px) {
+        .intro__head {
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            column-gap: var(--gap);
+        }
+
+        .intro__head :global(.chapter) {
+            grid-column: 1 / 4;
+            align-self: start;
+            padding-top: 1.1em;
+        }
+
+        .intro__statement {
+            grid-column: 4 / 13;
+        }
+    }
+
+    .intro__stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--gap);
+        margin-top: clamp(4rem, 9vw, 9rem);
+    }
+
+    .intro__stat {
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: flex-end;
+        gap: 0.75rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--line);
+    }
+
+    .intro__value {
+        font-family: var(--ff-serif);
+        font-size: clamp(2.75rem, 1.6rem + 4.6vw, 7rem);
+        font-weight: 300;
+        line-height: 0.9;
+        letter-spacing: -0.03em;
+        font-variant-numeric: lining-nums;
+    }
+
+    .intro__body {
+        display: grid;
+        gap: 3rem;
+        margin-top: clamp(4rem, 9vw, 9rem);
+    }
+
+    .intro__copy {
+        display: grid;
+        gap: 2rem;
+        justify-items: start;
+        max-width: 34rem;
+    }
+
+    .intro__body :global(.intro__img-b) {
+        width: 70%;
+        justify-self: end;
+    }
+
+    @media (width >= 900px) {
+        .intro__body {
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            column-gap: var(--gap);
+            row-gap: clamp(3rem, 6vw, 6rem);
+        }
+
+        .intro__body :global(.intro__img-a) {
+            grid-column: 1 / 7;
+            grid-row: 1 / 3;
+        }
+
+        .intro__copy {
+            grid-column: 8 / 12;
+            align-self: start;
+            padding-top: clamp(2rem, 6vw, 6rem);
+        }
+
+        .intro__body :global(.intro__img-b) {
+            grid-column: 9 / 13;
+            width: 100%;
+            align-self: end;
+        }
+    }
+</style>

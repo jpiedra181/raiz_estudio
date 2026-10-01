@@ -1,40 +1,58 @@
 ---
-// Components
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Navbar from "../components/layout/Navbar.astro";
-import Footer from "../components/layout/Footer.astro";
-import HeroHome from "../components/home/HeroHome.astro";
-import StatsBar from "../components/home/StatsBar.astro";
-import FeaturedProjects from "../components/home/FeaturedProjects.astro";
-import ServicesPreview from "../components/home/ServicesPreview.astro";
-import Philosophy from "../components/home/Philosophy.astro";
-import ProcessTeaser from "../components/home/ProcessTeaser.astro";
-import Testimonials from "../components/home/Testimonials.astro";
-import CTABanner from "../components/shared/CTABanner.astro";
+import HomeHero from "../components/home/HomeHero.astro";
+import HomeIntro from "../components/home/HomeIntro.astro";
+import HomeProjects from "../components/home/HomeProjects.astro";
+import HomeServices from "../components/home/HomeServices.astro";
+import HomeManifesto from "../components/home/HomeManifesto.astro";
+import HomeProcess from "../components/home/HomeProcess.astro";
+import HomeTestimonials from "../components/home/HomeTestimonials.astro";
+import Marquee from "../components/ui/Marquee.astro";
+import { site } from "../data/site";
+import { images } from "../data/studio";
 
-// Setup ScrollProgress (optional, client-side only)
-import ScrollProgress from "../components/shared/ScrollProgress.astro";
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "InteriorDesigner",
+    name: site.name,
+    url: site.url,
+    email: site.email,
+    telephone: site.phone,
+    description: site.description,
+    address: {
+        "@type": "PostalAddress",
+        streetAddress: site.address.street,
+        postalCode: site.address.postalCode,
+        addressLocality: site.address.city,
+        addressCountry: "ES",
+    },
+    geo: { "@type": "GeoCoordinates", latitude: site.coords[0], longitude: site.coords[1] },
+    areaServed: "ES",
+    sameAs: site.social.map((s) => s.href),
+};
 ---
 
-<BaseLayout title="Home">
-	<ScrollProgress />
-	<Navbar />
+<BaseLayout title={site.name} image={images.homeHero} headerTheme="light">
+    <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
 
-	<main>
-		<HeroHome />
-		<StatsBar />
-		<FeaturedProjects />
-		<ServicesPreview />
-		<Philosophy />
-		<ProcessTeaser />
-		<Testimonials />
-		<CTABanner
-			title="¿Lista para empezar?"
-			description="Cuéntanos sobre tu espacio, tus ideas y qué te gustaría conseguir. Nos pondremos en contacto contigo para ver cómo podemos ayudarte."
-			buttonText="Cuéntanos tu proyecto"
-			buttonUrl="/contacto"
-		/>
-	</main>
-
-	<Footer />
+    <HomeHero />
+    <HomeIntro />
+    <HomeProjects />
+    <HomeServices />
+    <HomeManifesto />
+    <HomeProcess />
+    <HomeTestimonials />
+    <Marquee
+        class="home-marquee"
+        italic
+        items={["Interiorismo residencial", "Consultoría online", "Materiales honestos", "Hogares atemporales"]}
+    />
 </BaseLayout>
+
+<style>
+    :global(.home-marquee) {
+        padding-block: clamp(3rem, 7vw, 6rem);
+        background-color: var(--c-linen);
+        border-top: 1px solid var(--line);
+    }
+</style>

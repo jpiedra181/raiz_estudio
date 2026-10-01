@@ -1,348 +1,186 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Navbar from '../components/layout/Navbar.astro';
-import Footer from '../components/layout/Footer.astro';
-import CTABanner from '../components/shared/CTABanner.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/ui/PageHero.astro";
+import Chapter from "../components/ui/Chapter.astro";
+import Media from "../components/ui/Media.astro";
+import Faq from "../components/ui/Faq.astro";
+import { images, processSteps } from "../data/studio";
 
-const timelineSteps = [
-  {
-    num: "01",
-    title: "Primera llamada",
-    desc: "Nos conocemos. Te escuchamos, entendemos tus necesidades y vemos si encajamos. Una charla sin compromiso para empezar a dar forma a tu idea.",
-    img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=90&fit=crop"
-  },
-  {
-    num: "02",
-    title: "Visita y análisis",
-    desc: "Si avanzamos, visitamos el espacio (o nos reunimos online si es consultoría). Tomamos medidas, hacemos fotos y nos empapamos de la luz y las posibilidades del lugar.",
-    img: "https://images.unsplash.com/photo-1542889601-399c4f3a8402?w=800&q=90&fit=crop"
-  },
-  {
-    num: "03",
-    title: "Propuesta de diseño",
-    desc: "Elaboramos moodboards, planos de distribución y selección de materiales. Te presentamos nuestra visión para tu hogar, ajustando hasta que la sientas tuya 100%.",
-    img: '/images_process/process_1.webp'
-  },
-  {
-    num: "04",
-    title: "Ejecución y compras",
-    desc: "Coordinamos a los industriales, hacemos el seguimiento presupuestario y gestionamos los pedidos de mobiliario y decoración para evitarte dolores de cabeza.",
-    img: '/images_process/process_2.webp'
-  },
-  {
-    num: "05",
-    title: "Entrega y estilismo",
-    desc: "El día más emocionante. Dejamos todo montado, limpio y decorado hasta el último cojín. Tu casa, lista para empezar a vivirla.",
-    img: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&q=90&fit=crop"
-  }
+const faqs = [
+    {
+        question: "¿Qué pasa si mi presupuesto es ajustado?",
+        answer: "La honestidad desde la primera llamada es clave. Si conocemos tus números reales desde el principio, adaptaremos nuestras propuestas a ese marco para evitar sorpresas.",
+    },
+    {
+        question: "¿Puedo conservar muebles que ya tengo?",
+        answer: "Por supuesto. De hecho, nos encanta integrar piezas con historia personal. Solo necesitamos saberlo antes de diseñar, para que el conjunto tenga sentido.",
+    },
 ];
 ---
 
-<BaseLayout title="El Proceso">
-  <Navbar />
-  
-  <main>
-    <section class="process-hero relative">
-            <div class="hero-bg">
-                <img
-                    src="https://images.unsplash.com/photo-1497215842964-222b430dc094?w=1800&q=90&fit=crop"
-                    alt="Interiorismo cálido con lino y madera"
-                    decoding="async"
-                    fetchpriority="high"
-                    class="bg-img"
-                    sizes="100vw"
-                />
-                <div class="hero-overlay"></div>
-            </div>
-
-            <div class="container relative z-10 process-hero-content anim-up slide-up">
-                <h1 class="font-heading text-hero text-white mb-6">
-                    Así trabajamos juntas
-                </h1>
-                <p class="font-body text-xl text-surface max-w-2xl font-light">
-                    Un proceso claro, organizado y transparente para que disfrutes del camino tanto como del resultado final.
-                </p>
-            </div>
-        </section>
-
-    <section class="timeline-container py-24 pb-32">
-      <div class="container max-w-5xl mx-auto relative content-wrap">
-        <!-- SVG Line Track -->
-        <div class="line-track absolute top-0 bottom-0 left-8 md:left-1/2 md:-translate-x-1/2 w-1 bg-surface-deep z-0"></div>
-        <!-- Animated Drawing Line -->
-        <div class="line-draw absolute top-0 left-8 md:left-1/2 md:-translate-x-1/2 w-1 bg-accent z-0" style="height: 0%;"></div>
-
-        {timelineSteps.map((step, index) => (
-          <div class={`timeline-step flex items-center w-full mb-16 md:mb-24 relative z-10 ${index % 2 === 0 ? 'md:justify-start' : 'md:justify-end'}`}>
-            
-            <div class={`step-content w-full md:w-[45%] pl-20 md:pl-0 ${index % 2 === 0 ? 'md:pr-16 text-left md:text-right' : 'md:pl-16 text-left'} reveal-item`}>
-              <span class="step-num font-heading text-4xl text-surface-deep block mb-4">{step.num}</span>
-              <h2 class="font-heading text-3xl mb-4">{step.title}</h2>
-              <p class="font-light text-ink-muted mb-6">{step.desc}</p>
-              <div class="step-image rounded-sm overflow-hidden aspect-[4/3]">
-                <img src={step.img} alt={step.title} class="w-full h-full object-cover" loading="lazy" />
-              </div>
-            </div>
-
-            <!-- Focus Dot -->
-            <div class="step-dot absolute hidden md:block left-1/2 top-8 -translate-x-1/2 w-4 h-4 rounded-full border-2 border-accent bg-bg reveal-item"></div>
-            <!-- Mobile dot -->
-            <div class="step-dot absolute md:hidden left-8 top-8 -translate-x-1/2 w-4 h-4 rounded-full border-2 border-accent bg-bg reveal-item"></div>
-
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="faq-section bg-surface py-24">
-      <div class="container max-w-3xl mx-auto">
-        <h2 class="font-heading text-3xl mb-12 text-center">Dudas comunes sobre el proceso</h2>
-        
-        <div class="faq-item">
-          <details class="faq-details">
-            <summary class="faq-summary font-heading text-xl">¿Qué pasa si mi presupuesto es ajustado?</summary>
-            <div class="faq-content font-light text-ink-muted mt-4 pb-4">
-              La honestidad desde la primera llamada es clave. Si conocemos tus números reales desde el principio, adaptaremos nuestras propuestas dentro de ese marco para evitar sorpresas.
-            </div>
-          </details>
-        </div>
-        
-        <div class="faq-item border-top">
-          <details class="faq-details">
-            <summary class="faq-summary font-heading text-xl">¿Puedo conservar muebles que ya tengo?</summary>
-            <div class="faq-content font-light text-ink-muted mt-4 pb-4">
-              ¡Por supuesto! De hecho, nos encanta integrar piezas con historia personal. Solo necesitamos saberlo antes de hacer el diseño para que todo el conjunto tenga sentido visual.
-            </div>
-          </details>
-        </div>
-      </div>
-    </section>
-
-    <CTABanner
-      title="¿Preparada para empezar?"
-      description="Si la filosofía de nuestro estudio resuena contigo, el primer paso es muy sencillo."
-      buttonText="Escríbenos"
-      buttonUrl="/contacto"
+<BaseLayout
+    title="Proceso"
+    description="Así trabajamos en Raíz Estudio: un proceso claro, organizado y transparente, desde la primera llamada hasta la entrega y el estilismo final."
+    image={images.processHero}
+    headerTheme="light"
+>
+    <PageHero
+        variant="image"
+        eyebrow="El proceso"
+        title="Así damos forma|<em>a tu hogar</em>"
+        intro="Un proceso claro, organizado y transparente, para que disfrutes del camino tanto como del resultado."
+        image={images.processHero}
+        imageAlt="Cocina lineal de madera clara que se abre a un jardín frondoso"
+        position="50% 60%"
     />
-  </main>
-  
-  <Footer />
+
+    <section class="timeline section" aria-labelledby="timeline-title" data-timeline>
+        <div class="wrap">
+            <header class="timeline__head">
+                <Chapter num="01" label="Paso a paso" />
+                <h2 id="timeline-title" class="t-h1" data-split>Cinco etapas, <em>un mismo cuidado</em></h2>
+            </header>
+
+            <div class="timeline__body">
+                <span class="timeline__track" aria-hidden="true"><span class="timeline__progress" data-timeline-progress></span></span>
+                <ol class="timeline__list">
+                    {
+                        processSteps.map((step, i) => (
+                            <li class:list={["tstep", i % 2 === 1 && "tstep--alt"]}>
+                                <span class="tstep__dot" aria-hidden="true" />
+                                <div class="tstep__text">
+                                    <span class="tstep__num" aria-hidden="true" data-reveal>
+                                        {step.num}
+                                    </span>
+                                    <h3 class="t-h2" data-split>
+                                        {step.title}
+                                    </h3>
+                                    <p class="t-lg t-soft" data-reveal>
+                                        {step.description}
+                                    </p>
+                                </div>
+                                <Media
+                                    src={step.image}
+                                    alt=""
+                                    ratio="4 / 3"
+                                    preset="medium"
+                                    sizes="(min-width: 1024px) 40vw, 100vw"
+                                    reveal
+                                    parallax={0.1}
+                                    class="tstep__media"
+                                />
+                            </li>
+                        ))
+                    }
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <Faq num="02" title="Dudas sobre <em>el proceso</em>" items={faqs} />
 </BaseLayout>
 
-<script>
-  import { gsap, ScrollTrigger } from '../scripts/gsap-init';
-  import { animateWithReducedMotion } from '../scripts/gsap-init';
-
-  document.addEventListener('astro:page-load', () => {
-    animateWithReducedMotion(() => {
-        // Hero animation
-        gsap.fromTo('.slide-up', 
-            { opacity: 0, y: 50 },
-            { opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: "power3.out" }
-        );
-
-        // Timeline line draw
-        const lineDraw = document.querySelector('.line-draw');
-        if(lineDraw) {
-            ScrollTrigger.create({
-                trigger: ".timeline-container",
-                start: "top 50%",
-                end: "bottom 80%",
-                animation: gsap.to(lineDraw, { height: "100%", ease: "none" }),
-                scrub: 1
-            });
-        }
-
-        // Timeline steps reveal
-        const steps = document.querySelectorAll('.reveal-item');
-        steps.forEach(step => {
-            gsap.fromTo(step,
-                { opacity: 0, y: 40 },
-                {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.8,
-                    ease: "power2.out",
-                    scrollTrigger: {
-                        trigger: step,
-                        start: "top 80%",
-                        once: true
-                    }
-                }
-            );
-        });
-    });
-  });
-</script>
 
 <style>
-    .process-hero {
-        height: 100vh;
-        height: 100svh;
-        display: flex;
-        align-items: center;
-        overflow: hidden;
+    .timeline__head {
+        display: grid;
+        gap: 2rem;
+        margin-bottom: clamp(4rem, 9vw, 8rem);
     }
 
-    .bg-video,
-    .bg-img {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: 0;
-    }
-
-    .hero-overlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-            180deg,
-            rgba(255, 255, 255, 0.85) 0%,
-            rgba(30, 23, 16, 0.2) 15%,
-            rgba(30, 23, 16, 0.9) 100%
-        );
-    }
-
-    .process-hero-content {
-        margin-top: 15vh;
+    .timeline__body {
         position: relative;
-        z-index: 10;
     }
 
-  /* Utils used */
-  .w-full { width: 100%; }
-  .h-full { height: 100%; }
-  .object-cover { object-fit: cover; }
-  .absolute { position: absolute; }
-  .relative { position: relative; }
-  .bottom-0 { bottom: 0; }
-  .left-0 { left: 0; }
-  .top-0 { top: 0; }
-  .z-10 { z-index: 10; }
-  .z-0 { z-index: 0; }
-  .mb-4 { margin-bottom: 1rem; }
-  .text-white { color: var(--color-white); }
-  .text-surface { color: var(--color-surface); }
-  .max-w-2xl { max-width: 42rem; }
-  .max-w-3xl { max-width: 48rem; }
-  .max-w-5xl { max-width: 64rem; }
-  .mx-auto { margin-inline: auto; }
-  .py-24 { padding-block: 6rem; }
-  .pb-12 { padding-bottom: 3rem; }
-  .pb-32 { padding-bottom: 8rem; }
-  .p-8 { padding: 2rem; }
-  @media(min-width: 768px){ .md\:p-16 { padding: 4rem; } }
-  
-  /* Timeline Grid Utils */
-  .w-1 { width: 4px; }
-  .left-8 { left: 2rem; }
-  .pl-20 { padding-left: 5rem; }
-  .flex { display: flex; }
-  .items-center { align-items: center; }
-  .mb-16 { margin-bottom: 4rem; }
-  @media(min-width: 768px){
-    .md\:mb-24 { margin-bottom: 6rem; }
-    .md\:left-1\/2 { left: 50%; }
-    .md\:-translate-x-1\/2 { transform: translateX(-50%); }
-    .md\:w-\[45\%\] { width: 45%; }
-    .md\:pl-0 { padding-left: 0; }
-    .md\:pr-16 { padding-right: 4rem; }
-    .md\:pl-16 { padding-left: 4rem; }
-    .md\:text-right { text-align: right; }
-    .md\:text-left { text-align: left; }
-    .md\:justify-start { justify-content: flex-start; }
-    .md\:justify-end { justify-content: flex-end; }
-    .md\:block { display: block; }
-    .md\:hidden { display: none; }
-  }
-  .left-1\/2 { left: 50%; }
-  .-translate-x-1\/2 { transform: translateX(-50%); }
-  .top-8 { top: 2rem; }
-  .w-4 { width: 1rem; }
-  .h-4 { height: 1rem; }
-  .rounded-full { border-radius: 9999px; }
-  .border-2 { border-width: 2px; }
-  
-  /* Generic custom mappings */
-  .bg-surface-deep { background-color: var(--color-surface-deep); }
-  .bg-accent { background-color: var(--color-accent); }
-  .bg-surface { background-color: var(--color-surface); }
-  .bg-bg { background-color: var(--color-bg); }
-  .border-accent { border-color: var(--color-accent); }
-  .block { display: block; }
-  .text-4xl { font-size: 2.25rem; }
-  .text-3xl { font-size: var(--text-3xl); }
-  .mb-4 { margin-bottom: 1rem; }
-  .mb-6 { margin-bottom: 1.5rem; }
-  .rounded-sm { border-radius: 2px; }
-  .overflow-hidden { overflow: hidden; }
-  .aspect-\[4\/3\] { aspect-ratio: 4 / 3; }
-  .text-center { text-align: center; }
-  .text-xl { font-size: var(--text-xl); }
-  .mb-12 { margin-bottom: 3rem; }
-  
-  /* FAQ repeated, could componentize, but simple enough to reuse CSS */
-  .faq-section {
-    padding-block: var(--section-padding);
-  }
+    .timeline__track {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0.4rem;
+        width: 1px;
+        background-color: var(--line);
+    }
 
-  .faq-item {
-    border-bottom: 1px solid var(--color-surface-deep);
-  }
+    .timeline__progress {
+        position: absolute;
+        inset: 0;
+        background-color: var(--accent);
+        transform-origin: top;
+    }
 
-  .faq-item.border-top {
-    border-top: 1px solid var(--color-surface-deep);
-    border-bottom: none;
-  }
+    .timeline__list {
+        display: grid;
+        gap: clamp(5rem, 12vw, 11rem);
+    }
 
-  .faq-item:last-child {
-    border-bottom: 1px solid var(--color-surface-deep);
-  }
+    .tstep {
+        position: relative;
+        display: grid;
+        gap: 2.5rem;
+        padding-left: 2.5rem;
+    }
 
-  .faq-details {
-    padding-block: 1.5rem;
-  }
+    .tstep__dot {
+        position: absolute;
+        top: 1.25rem;
+        left: 0;
+        width: 0.8125rem;
+        height: 0.8125rem;
+        border: 1px solid var(--accent);
+        border-radius: 50%;
+        background-color: var(--bg);
+    }
 
-  .faq-details > summary::-webkit-details-marker {
-    display: none;
-  }
+    .tstep__text {
+        display: grid;
+        gap: 1.5rem;
+        align-content: start;
+        max-width: 34rem;
+    }
 
-  .faq-summary {
-    cursor: pointer;
-    position: relative;
-    padding-right: 2rem;
-    transition: color 0.3s;
-    list-style: none;
-  }
+    .tstep__num {
+        font-family: var(--ff-serif);
+        font-size: clamp(3.5rem, 2.5rem + 3vw, 6rem);
+        font-style: italic;
+        font-weight: 300;
+        line-height: 0.9;
+        color: var(--accent);
+    }
 
-  .faq-summary:hover {
-    color: var(--color-accent);
-  }
+    @media (width >= 1024px) {
+        .timeline__track {
+            left: 50%;
+        }
 
-  .faq-summary::after {
-    content: '+';
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.5rem;
-    font-weight: 300;
-    transition: transform 0.3s ease;
-  }
+        .tstep {
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            column-gap: var(--gap);
+            padding-left: 0;
+            align-items: center;
+        }
 
-  .faq-details[open] .faq-summary::after {
-    transform: translateY(-50%) rotate(45deg);
-  }
+        .tstep__dot {
+            left: 50%;
+            translate: -50% 0;
+            top: 50%;
+        }
 
-  .faq-content {
-    animation: fadeInDown 0.4s ease forwards;
-  }
+        .tstep__text {
+            grid-column: 1 / 6;
+            grid-row: 1;
+        }
 
-  @keyframes fadeInDown {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+        .tstep :global(.tstep__media) {
+            grid-column: 8 / 13;
+            grid-row: 1;
+        }
+
+        .tstep--alt .tstep__text {
+            grid-column: 8 / 13;
+        }
+
+        .tstep--alt :global(.tstep__media) {
+            grid-column: 1 / 6;
+        }
+    }
 </style>

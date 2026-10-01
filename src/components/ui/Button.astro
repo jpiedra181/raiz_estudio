@@ -1,0 +1,35 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import Arrow from "./Arrow.astro";
+
+interface Props extends HTMLAttributes<"a"> {
+    href?: string;
+    variant?: "outline" | "solid";
+    arrow?: boolean;
+    type?: "button" | "submit";
+}
+
+const { href, variant = "outline", arrow = true, type = "button", class: className, ...rest } = Astro.props;
+const classes = ["btn", variant === "solid" && "btn--solid", className];
+const label = await Astro.slots.render("default");
+---
+
+{
+    href ? (
+        <a href={href} class:list={classes} {...rest}>
+            <span class="btn__label">
+                <span class="btn__roll" set:html={label} />
+                <span class="btn__roll" aria-hidden="true" set:html={label} />
+            </span>
+            {arrow && <Arrow class="btn__icon" />}
+        </a>
+    ) : (
+        <button type={type} class:list={classes} {...(rest as HTMLAttributes<"button">)}>
+            <span class="btn__label">
+                <span class="btn__roll" set:html={label} />
+                <span class="btn__roll" aria-hidden="true" set:html={label} />
+            </span>
+            {arrow && <Arrow class="btn__icon" />}
+        </button>
+    )
+}

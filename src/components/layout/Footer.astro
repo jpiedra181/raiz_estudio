@@ -1,187 +1,257 @@
 ---
-import "../../styles/global.css";
+import { nav, site } from "../../data/site";
+import Arrow from "../ui/Arrow.astro";
+
+const year = new Date().getFullYear();
 ---
 
-<footer class="footer">
-    <div class="container footer-grid">
-        <div class="footer-brand">
-            <a href="/" class="logo font-heading">
-                <span>Raíz</span>
-                <br />
-                <strong>Estudio</strong>
+<footer class="footer theme-dark">
+    <div class="wrap">
+        <div class="footer__cta">
+            <p class="eyebrow t-accent" data-reveal>¿Empezamos?</p>
+            <a href="/contacto" class="footer__headline" data-cursor="Escríbenos">
+                <span class="t-h1" data-split>Hablemos de <em>tu casa</em></span>
+                <Arrow class="footer__arrow" direction="up-right" />
             </a>
-            <p class="tagline font-body font-light">
-                Diseño cálido, honesto y atemporal.
-            </p>
         </div>
 
-        <div class="footer-links">
-            <h3 class="label-accent">Navegación</h3>
-            <ul>
-                <li>
-                    <a href="/estudio" class="font-body hover-accent"
-                        >El Estudio</a
-                    >
-                </li>
-                <li>
-                    <a href="/proyectos" class="font-body hover-accent"
-                        >Proyectos</a
-                    >
-                </li>
-                <li>
-                    <a href="/proceso" class="font-body hover-accent">Proceso</a
-                    >
-                </li>
-            </ul>
-        </div>
+        <div class="footer__grid">
+            <div class="footer__col">
+                <h2 class="eyebrow t-soft">Estudio</h2>
+                <address class="footer__text">
+                    {site.address.street}<br />
+                    {site.address.postalCode} {site.address.city}, {site.address.country}
+                </address>
+                <p class="footer__text t-soft t-sm">{site.hours}</p>
+            </div>
 
-        <div class="footer-links">
-            <h3 class="label-accent">Servicios</h3>
-            <ul>
-                <li>
-                    <a href="/servicios" class="font-body hover-accent"
-                        >Interiorismo Residencial</a
-                    >
-                </li>
-                <li>
-                    <a href="/consultoria-online" class="font-body hover-accent"
-                        >Consultoría Online</a
-                    >
-                </li>
-            </ul>
-        </div>
+            <div class="footer__col">
+                <h2 class="eyebrow t-soft">Contacto</h2>
+                <ul class="footer__list">
+                    <li><a href={`mailto:${site.email}`} class="footer__link">{site.email}</a></li>
+                    <li><a href={site.phoneHref} class="footer__link">{site.phone}</a></li>
+                </ul>
+            </div>
 
-        <div class="footer-contact">
-            <h3 class="label-accent">Contacto</h3>
-            <p class="font-body">
-                <a href="mailto:hola@raizestudio.es" class="hover-accent"
-                    >hola@raizestudio.es</a
-                >
-            </p>
-            <div class="social-links mt-4">
-                <a
-                    href="https://instagram.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="hover-accent label-accent"
-                    aria-label="Instagram">IG</a
-                >
-                <a
-                    href="https://pinterest.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="hover-accent label-accent"
-                    aria-label="Pinterest">PI</a
-                >
-                <a
-                    href="https://linkedin.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="hover-accent label-accent"
-                    aria-label="LinkedIn">IN</a
-                >
+            <nav class="footer__col" aria-label="Pie de página">
+                <h2 class="eyebrow t-soft">Navegación</h2>
+                <ul class="footer__list">
+                    {
+                        nav.map((link) => (
+                            <li>
+                                <a href={link.href} class="footer__link">
+                                    {link.label}
+                                </a>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </nav>
+
+            <div class="footer__col">
+                <h2 class="eyebrow t-soft">Síguenos</h2>
+                <ul class="footer__list">
+                    {
+                        site.social.map((s) => (
+                            <li>
+                                <a href={s.href} target="_blank" rel="noopener noreferrer" class="footer__link">
+                                    {s.label}
+                                    <span class="visually-hidden">(se abre en una pestaña nueva)</span>
+                                </a>
+                            </li>
+                        ))
+                    }
+                </ul>
             </div>
         </div>
-    </div>
 
-    <div class="footer-bottom">
-        <div class="container">
-            <p class="font-body font-light text-sm">
-                © {new Date().getFullYear()} Raíz Estudio. Diseñado con cuidado. Como
-                tus espacios.
-            </p>
+        <p class="footer__wordmark" aria-hidden="true">
+            <span>Raíz</span><em>Estudio</em>
+        </p>
+
+        <div class="footer__bottom">
+            <p class="t-sm t-soft">© {year} {site.name}. Interiorismo residencial en España.</p>
+            <div class="footer__tools">
+                <button type="button" class="footer__tool" aria-pressed="true" data-motion-toggle>
+                    <span class="footer__dot" aria-hidden="true"></span>
+                    Animaciones
+                </button>
+                <a href="#top" class="footer__tool" data-back-to-top>
+                    Volver arriba
+                    <Arrow class="footer__tool-icon" direction="up" />
+                </a>
+            </div>
         </div>
     </div>
 </footer>
 
+
 <style>
     .footer {
-        background-color: var(--color-dark-section);
-        color: var(--color-white);
-        padding-top: var(--section-padding);
+        position: relative;
+        padding-top: var(--section);
+        overflow: hidden;
     }
 
-    .footer-grid {
+    .footer > .wrap {
+        container-type: inline-size;
+    }
+
+    .footer__cta {
         display: grid;
-        grid-template-columns: 1fr;
-        gap: 3rem;
-        padding-bottom: 4rem;
+        gap: 1.5rem;
+        padding-bottom: clamp(4rem, 10vw, 9rem);
     }
 
-    @media (min-width: 768px) {
-        .footer-grid {
-            grid-template-columns: 2fr 1fr 1fr 1.5fr;
-            gap: 2rem;
+    .footer__headline {
+        display: inline-flex;
+        align-items: flex-end;
+        gap: clamp(1rem, 3vw, 3rem);
+        width: fit-content;
+    }
+
+    .footer__headline .t-h1 {
+        font-family: var(--ff-serif);
+        display: block;
+    }
+
+    .footer__headline :global(.footer__arrow) {
+        flex: none;
+        width: clamp(2.5rem, 6vw, 6rem);
+        height: clamp(2.5rem, 6vw, 6rem);
+        margin-bottom: 0.6em;
+        color: var(--accent);
+        stroke-width: 0.6;
+        transition: transform 0.8s var(--ease-out);
+    }
+
+    @media (hover: hover) {
+        .footer__headline:hover :global(.footer__arrow) {
+            transform: translate3d(0.75rem, -0.75rem, 0);
         }
     }
 
-    .logo {
+    .footer__grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 3rem var(--gap);
+        padding-block: clamp(3rem, 6vw, 5rem);
+        border-top: 1px solid var(--line);
+    }
+
+    @media (width >= 900px) {
+        .footer__grid {
+            grid-template-columns: 1.4fr 1.2fr 1fr 1fr;
+        }
+    }
+
+    .footer__col .eyebrow {
+        margin-bottom: 1.25rem;
+    }
+
+    .footer__text {
+        line-height: 1.7;
+    }
+
+    .footer__text + .footer__text {
+        margin-top: 0.75rem;
+    }
+
+    .footer__list {
+        display: grid;
+        gap: 0.35rem;
+    }
+
+    .footer__link {
         display: inline-block;
-        color: var(--color-white);
-        text-decoration: none;
-        line-height: 1;
-        margin-bottom: 1rem;
+        padding-block: 0.2rem;
+        background-image: linear-gradient(currentColor, currentColor);
+        background-size: 0% 1px;
+        background-position: 0 100%;
+        background-repeat: no-repeat;
+        transition: background-size 0.6s var(--ease-out);
     }
 
-    .logo span {
-        font-size: var(--text-2xl);
-        font-weight: var(--font-weight-regular);
+    .footer__link:hover {
+        background-size: 100% 1px;
     }
 
-    .logo strong {
-        font-size: var(--text-lg);
-        font-weight: var(--font-weight-bold);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        opacity: 0.8;
-    }
-
-    .tagline {
-        color: var(--color-surface-deep);
-        margin-top: 0.5rem;
-    }
-
-    h3.label-accent {
-        color: var(--color-accent-light);
-        margin-bottom: 1.5rem;
-    }
-
-    .footer-links ul {
+    .footer__wordmark {
         display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
+        align-items: baseline;
+        gap: 0.22em;
+        margin-block: clamp(1rem, 4vw, 3rem) clamp(1rem, 2vw, 1.5rem);
+        font-family: var(--ff-serif);
+        /* Sized so both words span the content width exactly */
+        font-size: calc(100cqw / 4.62);
+        font-weight: 300;
+        line-height: 0.8;
+        letter-spacing: -0.045em;
+        color: var(--c-paper);
+        white-space: nowrap;
+        user-select: none;
     }
 
-    .footer-links a,
-    .footer-contact a {
-        color: var(--color-surface);
+    .footer__wordmark em {
+        font-weight: 300;
+        color: var(--c-sand);
+    }
+
+    .footer__bottom {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem 2rem;
+        padding-block: 1.5rem 2rem;
+        border-top: 1px solid var(--line);
+    }
+
+    .footer__tools {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 2rem;
+    }
+
+    .footer__tool {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.65rem;
+        min-height: 2.75rem;
+        font-size: var(--fs-xs);
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        color: var(--fg-soft);
         transition: color 0.3s ease;
     }
 
-    .hover-accent:hover {
-        color: var(--color-accent-light);
+    .footer__tool:hover {
+        color: var(--fg);
     }
 
-    .social-links {
-        display: flex;
-        gap: 1.5rem;
-        margin-top: 1.5rem;
+    .footer__tool :global(.footer__tool-icon) {
+        width: 0.8rem;
+        height: 0.8rem;
     }
 
-    .social-links a {
-        color: var(--color-white);
-    }
-
-    .footer-bottom {
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        padding-block: 2rem;
-        text-align: center;
-        color: var(--color-surface-deep);
-    }
-
-    @media (min-width: 768px) {
-        .footer-bottom {
-            text-align: left;
+    @media (prefers-reduced-motion: reduce) {
+        [data-motion-toggle] {
+            display: none;
         }
+    }
+
+    .footer__dot {
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+        border: 1px solid currentColor;
+        transition: background-color 0.3s ease;
+    }
+
+    .footer__tool[aria-pressed="true"] .footer__dot {
+        background-color: var(--c-sand);
+        border-color: var(--c-sand);
     }
 </style>

@@ -1,0 +1,207 @@
+---
+import Chapter from "../ui/Chapter.astro";
+import Arrow from "../ui/Arrow.astro";
+import { testimonials } from "../../data/studio";
+
+const total = String(testimonials.length).padStart(2, "0");
+---
+
+<section
+    class="testimonials section theme-linen"
+    aria-roledescription="carrusel"
+    aria-labelledby="testimonials-title"
+    data-carousel
+>
+    <div class="wrap testimonials__grid">
+        <div class="testimonials__side">
+            <Chapter num="05" label="Testimonios" />
+            <h2 id="testimonials-title" class="t-h3" data-split>Lo que sienten <em>al volver a casa</em></h2>
+
+            <div class="testimonials__controls" data-carousel-controls hidden>
+                <button type="button" class="testimonials__btn" data-carousel-prev aria-label="Testimonio anterior">
+                    <Arrow direction="left" />
+                </button>
+                <p class="testimonials__count" aria-hidden="true">
+                    <span data-carousel-current>01</span>
+                    <span class="testimonials__total">/ {total}</span>
+                </p>
+                <button type="button" class="testimonials__btn" data-carousel-next aria-label="Testimonio siguiente">
+                    <Arrow />
+                </button>
+            </div>
+        </div>
+
+        <div class="testimonials__slides" aria-live="polite" data-carousel-track>
+            {
+                testimonials.map((t, i) => (
+                    <div
+                        class="tslide"
+                        role="group"
+                        aria-roledescription="testimonio"
+                        aria-label={`${i + 1} de ${testimonials.length}`}
+                        data-carousel-slide
+                    >
+                        <figure class="tslide__figure">
+                            <span class="tslide__mark" aria-hidden="true">
+                                “
+                            </span>
+                            <blockquote class="tslide__quote">
+                                <p>{t.quote}</p>
+                            </blockquote>
+                            <figcaption class="tslide__author">
+                                <span class="tslide__name">{t.name}</span>
+                                <span class="eyebrow t-soft">{t.info}</span>
+                            </figcaption>
+                        </figure>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>
+
+
+<style>
+    .testimonials__grid {
+        display: grid;
+        gap: 3rem;
+    }
+
+    .testimonials__side {
+        display: grid;
+        align-content: start;
+        gap: 2rem;
+    }
+
+    @media (width >= 1024px) {
+        .testimonials__grid {
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            column-gap: var(--gap);
+        }
+
+        .testimonials__side {
+            grid-column: 1 / 5;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .testimonials__slides {
+            grid-column: 6 / 13;
+        }
+    }
+
+    .testimonials__controls {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        margin-top: auto;
+        padding-top: 1rem;
+    }
+
+    .testimonials__controls[hidden] {
+        display: none;
+    }
+
+    .testimonials__btn {
+        display: inline-grid;
+        place-items: center;
+        width: 3.5rem;
+        height: 3.5rem;
+        border: 1px solid var(--line-strong);
+        border-radius: 50%;
+        transition:
+            background-color 0.5s var(--ease-out),
+            color 0.5s var(--ease-out),
+            border-color 0.5s var(--ease-out);
+    }
+
+    .testimonials__btn :global(svg) {
+        width: 1rem;
+        height: 1rem;
+    }
+
+    @media (hover: hover) {
+        .testimonials__btn:hover {
+            background-color: var(--c-ink);
+            border-color: var(--c-ink);
+            color: var(--c-paper);
+        }
+    }
+
+    .testimonials__count {
+        font-size: var(--fs-sm);
+        font-variant-numeric: tabular-nums;
+        letter-spacing: 0.08em;
+    }
+
+    .testimonials__total {
+        color: var(--fg-soft);
+    }
+
+    /* Without JS: a simple stacked list */
+    .testimonials__slides {
+        display: grid;
+        gap: 4rem;
+    }
+
+    /* With JS: slides share one cell so height never jumps */
+    .testimonials__slides.is-carousel {
+        gap: 0;
+    }
+
+    .is-carousel .tslide {
+        grid-area: 1 / 1;
+        opacity: 0;
+        visibility: hidden;
+        transform: translate3d(0, 1.5rem, 0);
+        transition:
+            opacity 0.8s var(--ease-out),
+            transform 1s var(--ease-out),
+            visibility 0s linear 0.8s;
+    }
+
+    .is-carousel .tslide.is-active {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        transition:
+            opacity 1s var(--ease-out) 0.15s,
+            transform 1.2s var(--ease-out) 0.15s,
+            visibility 0s;
+    }
+
+    .tslide__figure {
+        display: grid;
+        align-content: start;
+        gap: 2rem;
+    }
+
+    .tslide__mark {
+        font-family: var(--ff-serif);
+        font-size: clamp(5rem, 3rem + 6vw, 9rem);
+        line-height: 0.5;
+        height: 0.4em;
+        color: var(--accent);
+    }
+
+    .tslide__quote p {
+        font-family: var(--ff-serif);
+        font-size: clamp(1.75rem, 1.15rem + 2.3vw, 3.5rem);
+        font-weight: 300;
+        line-height: 1.15;
+        letter-spacing: -0.015em;
+        text-wrap: pretty;
+    }
+
+    .tslide__author {
+        display: grid;
+        gap: 0.4rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--line);
+    }
+
+    .tslide__name {
+        font-family: var(--ff-serif);
+        font-size: var(--fs-h4);
+    }
+</style>

@@ -1,0 +1,53 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/ui/Button.astro";
+import { introLines } from "../lib/intro";
+---
+
+<BaseLayout title="Página no encontrada" description="La página que buscas no existe o ha cambiado de lugar.">
+    <section class="notfound" aria-labelledby="page-title">
+        <div class="wrap notfound__inner">
+            <p class="eyebrow t-accent" data-intro style="--i: 0">Error 404</p>
+            <h1 id="page-title" class="t-display" set:html={introLines("Esta habitación|<em>no existe</em>", 1)} />
+            <p class="t-lg t-soft notfound__text" data-intro style="--i: 3">
+                Puede que la página haya cambiado de lugar. Te acompañamos de vuelta a casa.
+            </p>
+            <div class="notfound__actions" data-intro style="--i: 4">
+                <Button href="/" variant="solid">Volver al inicio</Button>
+                <a href="/proyectos" class="link">Ver proyectos</a>
+            </div>
+        </div>
+    </section>
+</BaseLayout>
+
+<style>
+    .notfound {
+        display: flex;
+        align-items: center;
+        min-height: 100vh;
+        min-height: 100svh;
+        padding-top: calc(var(--header-h) + 3rem);
+        padding-bottom: 5rem;
+    }
+
+    .notfound__inner {
+        display: grid;
+        gap: 2rem;
+        justify-items: start;
+    }
+
+    .notfound h1 {
+        max-width: 12ch;
+    }
+
+    .notfound__text {
+        max-width: 32rem;
+    }
+
+    .notfound__actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1.25rem 2rem;
+    }
+</style>

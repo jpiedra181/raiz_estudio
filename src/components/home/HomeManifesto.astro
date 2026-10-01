@@ -1,0 +1,83 @@
+---
+import Media from "../ui/Media.astro";
+import Button from "../ui/Button.astro";
+import { images } from "../../data/studio";
+---
+
+<section class="manifesto theme-dark" aria-label="Nuestra filosofía">
+    <Media
+        src={images.manifesto}
+        alt=""
+        preset="full"
+        sizes="100vw"
+        parallax={0.15}
+        position="50% 45%"
+        class="manifesto__media"
+    />
+    <div class="manifesto__shade" aria-hidden="true"></div>
+
+    <figure class="manifesto__content wrap">
+        <blockquote class="manifesto__quote">
+            <p class="t-h1" data-split>Un buen diseño no impresiona.<br /> <em>Te hace sentir en casa.</em></p>
+        </blockquote>
+        <figcaption class="manifesto__caption" data-reveal>
+            <span class="eyebrow">Elena Vidal</span>
+            <span class="t-sm manifesto__role">Fundadora de Raíz Estudio</span>
+        </figcaption>
+        <div data-reveal>
+            <Button href="/estudio">Nuestra historia</Button>
+        </div>
+    </figure>
+</section>
+
+<style>
+    .manifesto {
+        position: relative;
+        display: grid;
+        align-items: center;
+        min-height: 100vh;
+        min-height: 100svh;
+        padding-block: var(--section);
+        overflow: hidden;
+        isolation: isolate;
+    }
+
+    .manifesto :global(.manifesto__media) {
+        position: absolute;
+        inset: 0;
+        z-index: -2;
+    }
+
+    .manifesto__shade {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background:
+            radial-gradient(ellipse at 50% 55%, rgb(21 18 16 / 0.35), rgb(21 18 16 / 0.72) 75%),
+            rgb(21 18 16 / 0.25);
+    }
+
+    .manifesto__content {
+        display: grid;
+        justify-items: center;
+        gap: 2.5rem;
+        text-align: center;
+    }
+
+    .manifesto__quote {
+        width: 100%;
+    }
+
+    .manifesto__quote p {
+        font-family: var(--ff-serif);
+    }
+
+    .manifesto__caption {
+        display: grid;
+        gap: 0.4rem;
+    }
+
+    .manifesto__role {
+        color: rgb(246 241 234 / 0.75);
+    }
+</style>

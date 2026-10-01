@@ -1,0 +1,15 @@
+---
+interface Props {
+    num: string;
+    label: string;
+    class?: string;
+}
+
+const { num, label, class: className } = Astro.props;
+---
+
+<p class:list={["chapter", className]} data-reveal="fade">
+    <span class="chapter__num">{num}</span>
+    <span aria-hidden="true">/</span>
+    <span>{label}</span>
+</p>
